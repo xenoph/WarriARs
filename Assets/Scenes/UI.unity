@@ -1078,7 +1078,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: E-Mail
+  m_Text: E-mail
 --- !u!222 &1162151145
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapIdType: 1
   _customStyle:
-    Name: Streets
+    Name: test
     Id: mapbox://styles/oisann/cj85px7jq1w3y2ro5t4th6u1g
-    Modified: 2017-09-08T20:35:13.374Z
+    Modified: 2017-10-04T20:04:13.866Z
     UserName: oisann
   _mapId: mapbox://styles/oisann/cj85px7jq1w3y2ro5t4th6u1g
   _useCompression: 1

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using SocketIO;
 
 public class NetworkServer : MonoBehaviour {

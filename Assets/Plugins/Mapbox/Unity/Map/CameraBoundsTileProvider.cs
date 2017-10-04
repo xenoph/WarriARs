@@ -32,6 +32,10 @@ namespace Mapbox.Unity.Map
 		UnwrappedTileId _cachedTile;
 		UnwrappedTileId _currentTile;
 
+        public void SetCamera(Camera cam) {
+            _camera = cam;
+        }
+
 		internal override void OnInitialized()
 		{
 			_groundPlane = new Plane(Vector3.up, Mapbox.Unity.Constants.Math.Vector3Zero);

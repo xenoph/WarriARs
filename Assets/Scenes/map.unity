@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
-  _visibleBuffer: 1
-  _disposeBuffer: 0
+  _visibleBuffer: 2
+  _disposeBuffer: 2
   _updateInterval: 0.5
 --- !u!114 &681959889
 MonoBehaviour:

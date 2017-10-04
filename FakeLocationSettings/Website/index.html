@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>WarriARs Fake Location</title>
+        <script src='./mapbox.js'></script>
+        <link href='./mapbox.css' rel='stylesheet' />
+        <style>
+            body { margin:0; padding:0; }
+            #map { position:absolute; top:0; bottom:0; width:100%; }
+            #toggle { position: absolute; top: 10px; left: 10px; z-index: 10; }
+        </style>
+        <script>
+            var startPosition = [11.499316, 64.013570];
+            function updateCoords(lat) {
+                unityAsync({
+                    className: "window.webScriptObject",
+                    funcName: "ProcessMessage",
+                    funcArgs: [JSON.stringify(
+                        {
+                            type: "INVOKE",
+                            messageID: 1,
+                            version: "0",
+                            reference: "FakeLocationWindow",
+                            destination: "FakeLocationWindow",
+                            method: "UpdateCoords",
+                            params: [lat]
+                        })],
+                    onSuccess: function (a) {
+                        console.log("returnValue:" + a)
+                    }
+                })
+            }
+            var mode = 0;
+            function UseReal() {
+                mode = 0;
+                document.getElementById("real").style.backgroundColor = "lime";
+                document.getElementById("fakert").style.backgroundColor = "gray";
+                document.getElementById("fake").style.backgroundColor = "gray";
+                ToggleMode(0); //Sets Unity to use the real location
+            }
+
+            function UseFakeRealtime() {
+                mode = 1;
+                document.getElementById("real").style.backgroundColor = "gray";
+                document.getElementById("fakert").style.backgroundColor = "lime";
+                document.getElementById("fake").style.backgroundColor = "gray";
+                ToggleMode(1); //Sets Unity to use the fake location
+            }
+
+            function UseFake() {
+                mode = 2;
+                document.getElementById("real").style.backgroundColor = "gray";
+                document.getElementById("fakert").style.backgroundColor = "gray";
+                document.getElementById("fake").style.backgroundColor = "lime";
+                ToggleMode(1); //Sets Unity to use the fake location
+            }
+
+            function ToggleMode(newMode) {
+                unityAsync({
+                    className: "window.webScriptObject",
+                    funcName: "ProcessMessage",
+                    funcArgs: [JSON.stringify(
+                        {
+                            type: "INVOKE",
+                            messageID: 1,
+                            version: "0",
+                            reference: "FakeLocationWindow",
+                            destination: "FakeLocationWindow",
+                            method: "ToggleMode",
+                            params: [newMode]
+                        })],
+                    onSuccess: function (a) {
+                        console.log("returnValue:" + a)
+                    }
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <div id='toggle'>
+            <button id='real' onmousedown="UseReal()">Real</button>
+            <button id='fakert' onmousedown="UseFakeRealtime()">Fake (Realtime)</button>
+            <button id='fake' onmousedown="UseFake()">Fake</button>
+        </div>
+        <div id='map'></div>
+        <div id='coordinates'></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1Ijoib2lzYW5uIiwiYSI6ImNqNTcwcWg4MjFqODQzNHFsMTY0cDRucG8ifQ.MpwvcIiqG-yrJvFRKEf77g';
+            // Holds mousedown state for events. if this
+            // flag is active, we move the point on `mousemove`.
+            var isDragging;
+
+            // Is the cursor over a point? if this
+            // flag is active, we listen for a mousedown event.
+            var isCursorOverPoint;
+
+            var coordinates = document.getElementById('coordinates');
+
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v10',
+                center: startPosition,
+                zoom: 13
+            });
+            // Add zoom and rotation controls to the map.
+            map.addControl(new mapboxgl.NavigationControl());
+
+            var canvas = map.getCanvasContainer();
+
+            var geojson = {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": startPosition
+                    }
+                }]
+            };
+
+            function mouseDown() {
+                if (!isCursorOverPoint) return;
+
+                isDragging = true;
+
+                // Set a cursor indicator
+                canvas.style.cursor = 'grab';
+
+                // Mouse events
+                map.on('mousemove', onMove);
+                map.once('mouseup', onUp);
+            }
+
+            function onMove(e) {
+                if (!isDragging) return;
+                var coords = e.lngLat;
+
+                // Set a UI indicator for dragging.
+                canvas.style.cursor = 'grabbing';
+
+                if(mode == 1)
+                    updateCoords("{ \"lng\": \"" + coords.lng + "\", \"lat\": \"" + coords.lat + "\" }");
+
+                // Update the Point feature in `geojson` coordinates
+                // and call setData to the source layer `point` on it.
+                geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+                map.getSource('point').setData(geojson);
+            }
+
+            function onUp(e) {
+                if (!isDragging) return;
+                var coords = e.lngLat;
+
+                // Print the coordinates of where the point had
+                // finished being dragged to on the map.
+                coordinates.style.display = 'block';
+                //coordinates.innerHTML = 'Longitude: ' + coords.lng + '<br />Latitude: ' + coords.lat;
+                canvas.style.cursor = '';
+                isDragging = false;
+
+                if(mode != 0)
+                    updateCoords("{ \"lng\": \"" + coords.lng + "\", \"lat\": \"" + coords.lat + "\" }");
+
+                // Unbind mouse events
+                map.off('mousemove', onMove);
+            }
+
+            map.on('load', function () {
+
+                // Add a single point to the map
+                map.addSource('point', {
+                    "type": "geojson",
+                    "data": geojson
+                });
+
+                map.addLayer({
+                    "id": "point",
+                    "type": "circle",
+                    "source": "point",
+                    "paint": {
+                        "circle-radius": 10,
+                        "circle-color": "#3887be"
+                    }
+                });
+
+                // When the cursor enters a feature in the point layer, prepare for dragging.
+                map.on('mouseenter', 'point', function () {
+                    map.setPaintProperty('point', 'circle-color', '#3bb2d0');
+                    canvas.style.cursor = 'move';
+                    isCursorOverPoint = true;
+                    map.dragPan.disable();
+                });
+
+                map.on('mouseleave', 'point', function () {
+                    map.setPaintProperty('point', 'circle-color', '#3887be');
+                    canvas.style.cursor = '';
+                    isCursorOverPoint = false;
+                    map.dragPan.enable();
+                });
+
+                map.on('mousedown', mouseDown);
+            });
+            
+            UseReal();
+        </script>
+    </body>
+</html>

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
@@ -13,10 +14,16 @@ public class GameController : MonoBehaviour {
 
 	[Header("Networking")]
 	public NetworkServer networkServer;
-	
 	public string currentPlayerID;
+    public PlayerController playerController;
 
-	public Location currentLocation;
+    [Header("Prefabs")]
+    public GameObject playerPrefab;
+
+    [Header("Camera")]
+    public CameraController cameraController;
+
+    public Location currentLocation;
 
 	void Awake() {
 		instance = this;
@@ -34,9 +41,16 @@ public class GameController : MonoBehaviour {
 	public void LoadGame() {
 		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
+        SpawnPlayer(true);
 	}
 
-	public void SetupMap() {
+    public void SpawnPlayer(bool local) {
+        GameObject player = (GameObject) Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        PlayerController controller = player.GetComponent<PlayerController>();
+        controller.local = local;
+    }
+
+    public void SetupMap() {
 		if(!currentLocation.Failed && currentLocation.IsActive) {
 			mapInitializer.startLat = currentLocation.Latitude;
 			mapInitializer.startLng = currentLocation.Longitude;
