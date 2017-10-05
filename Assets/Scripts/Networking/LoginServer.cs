@@ -47,6 +47,8 @@ public class LoginServer : MonoBehaviour {
 			if(!string.IsNullOrEmpty(res.error)) {
 				failed.text = res.error;
 			} else {
+				GameController.instance.loadingScreen.gameObject.SetActive(true);
+				GameController.instance.loadingScreen.LoadingText.text = "Connecting to server...";
 				GameController.instance.networkServer.SetUID(res.currentID);
 				GameController.instance.networkServer.Connect();
 			}

@@ -8,9 +8,11 @@ public class GameController : MonoBehaviour {
 	[Header("Interfaces")]
 	public Warning warning;
 	public LoginScreen loginScreen;
+	public LoadingScreen loadingScreen;
 
-	[Header("Map")]
+	[Header("Game")]
 	public MapInitializer mapInitializer;
+	public BattleController battleController;
 
 	[Header("Networking")]
 	public NetworkServer networkServer;

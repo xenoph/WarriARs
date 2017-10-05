@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8338f26893d62c1439f387800a8e1c9a, type: 3}
   m_Name: CityTerrain
   m_EditorClassIdentifier: 
-  _baseMaterial: {fileID: 0}
+  _baseMaterial: {fileID: 2100000, guid: bd880c3e3e149f64eb3734487b1b7d75, type: 2}
   _mapIdType: 0
   _customMapId: mapbox.terrain-rgb
   _mapId: mapbox.terrain-rgb

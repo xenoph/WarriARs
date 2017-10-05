@@ -12,8 +12,8 @@ public class CameraController : MonoBehaviour {
     }
 
     void Update() {
-        distance += (Input.mouseScrollDelta.y / 2f) * -1f;
-        height += ((Input.mouseScrollDelta.y / 2f) * -1f) / 2f;
+        /*distance += (Input.mouseScrollDelta.y / 2f) * -1f;
+        height += ((Input.mouseScrollDelta.y / 2f) * -1f) / 2f;*/
     }
 
     void LateUpdate() {

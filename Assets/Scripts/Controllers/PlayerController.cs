@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
     public bool local = false;
 
-    private Vector3 targetPosition;
+    public Vector3 targetPosition { get; private set; }
 
 	void Start() {
         if(local) {
             GameController.instance.playerController = this;
             GameController.instance.cameraController.target = this.transform;
         }
+        //SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("map"));
 	}
 	
 	void FixedUpdate() {
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
-        targetPosition.y = 0f;
+        targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
         float distance = Vector3.Distance(transform.position, targetPosition);
         float speed = distance > 20f ? distance : 20f;
         float step = speed * Time.deltaTime;
