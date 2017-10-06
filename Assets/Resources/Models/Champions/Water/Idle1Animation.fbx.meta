@@ -1,0 +1,228 @@
+fileFormatVersion: 2
+guid: 0434e74d6245c2849b808384a023fac7
+timeCreated: 1507281529
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Drogo2
+    100002: Drogo_Rig
+    100004: //RootNode
+    100006: Jaw2_Controller
+    100008: joint1
+    100010: joint2
+    100012: joint3
+    100014: joint4
+    100016: joint5
+    100018: L_Ankle
+    100020: L_Ball
+    100022: L_Knee
+    100024: L_Leg
+    100026: L_Leg_Base
+    100028: L_LegBall_IKHandle
+    100030: L_LegBallLift
+    100032: L_LegController
+    100034: L_LegIKHandle
+    100036: L_LegPV
+    100038: L_LegToe_IKHandle
+    100040: L_LegToeLift
+    100042: L_LegWiggle
+    100044: L_Toe
+    100046: LowerJaw
+    100048: LowerJaw1_Controller
+    100050: LowerJaw2
+    100052: LowerJaw2_Controller
+    100054: LowerJaw3
+    100056: Neck1
+    100058: Neck1_Controller
+    100060: Neck2
+    100062: Neck2_Controller
+    100064: Neck3
+    100066: Neck3_Controller
+    100068: Neck4
+    100070: NeckEnd
+    100072: R_Ankle
+    100074: R_Ball
+    100076: R_Knee
+    100078: R_Leg
+    100080: R_leg_ball_ikHandle
+    100082: R_Leg_Base
+    100084: R_Leg_IKhandle
+    100086: R_leg_toe_ikHandle
+    100088: R_LegBallLift
+    100090: R_LegController
+    100092: R_LegPV
+    100094: R_LegToeLift
+    100096: R_LegWiggle
+    100098: R_Toe
+    100100: Tail1
+    100102: Tail10
+    100104: Tail11
+    100106: Tail12
+    100108: Tail13
+    100110: Tail2
+    100112: Tail3
+    100114: Tail4
+    100116: Tail5
+    100118: Tail6
+    100120: Tail7
+    100122: Tail8
+    100124: Tail9
+    100126: Tail_JNTS_GRP
+    100128: Tail_JNTS_GRP 1
+    100130: UpperBody_Controller
+    100132: UpperJaw
+    100134: UpperJaw1_Controller
+    100136: UpperJaw2
+    100138: UpperJaw2_Controller
+    100140: UpperJaw3
+    400000: Drogo2
+    400002: Drogo_Rig
+    400004: //RootNode
+    400006: Jaw2_Controller
+    400008: joint1
+    400010: joint2
+    400012: joint3
+    400014: joint4
+    400016: joint5
+    400018: L_Ankle
+    400020: L_Ball
+    400022: L_Knee
+    400024: L_Leg
+    400026: L_Leg_Base
+    400028: L_LegBall_IKHandle
+    400030: L_LegBallLift
+    400032: L_LegController
+    400034: L_LegIKHandle
+    400036: L_LegPV
+    400038: L_LegToe_IKHandle
+    400040: L_LegToeLift
+    400042: L_LegWiggle
+    400044: L_Toe
+    400046: LowerJaw
+    400048: LowerJaw1_Controller
+    400050: LowerJaw2
+    400052: LowerJaw2_Controller
+    400054: LowerJaw3
+    400056: Neck1
+    400058: Neck1_Controller
+    400060: Neck2
+    400062: Neck2_Controller
+    400064: Neck3
+    400066: Neck3_Controller
+    400068: Neck4
+    400070: NeckEnd
+    400072: R_Ankle
+    400074: R_Ball
+    400076: R_Knee
+    400078: R_Leg
+    400080: R_leg_ball_ikHandle
+    400082: R_Leg_Base
+    400084: R_Leg_IKhandle
+    400086: R_leg_toe_ikHandle
+    400088: R_LegBallLift
+    400090: R_LegController
+    400092: R_LegPV
+    400094: R_LegToeLift
+    400096: R_LegWiggle
+    400098: R_Toe
+    400100: Tail1
+    400102: Tail10
+    400104: Tail11
+    400106: Tail12
+    400108: Tail13
+    400110: Tail2
+    400112: Tail3
+    400114: Tail4
+    400116: Tail5
+    400118: Tail6
+    400120: Tail7
+    400122: Tail8
+    400124: Tail9
+    400126: Tail_JNTS_GRP
+    400128: Tail_JNTS_GRP 1
+    400130: UpperBody_Controller
+    400132: UpperJaw
+    400134: UpperJaw1_Controller
+    400136: UpperJaw2
+    400138: UpperJaw2_Controller
+    400140: UpperJaw3
+    4300000: Drogo2
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Drogo2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

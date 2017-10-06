@@ -28,6 +28,11 @@ public class LoginServer : MonoBehaviour {
 			StartCoroutine(Login(emailField.text, passwordField.text));
 	}
 
+	public void LoginToTest() {
+		if(gameObject.activeInHierarchy)
+			StartCoroutine(Login("publictestaccount@oisann.net", "tester123"));
+	}
+
 	IEnumerator Login(string email, string password) {
 		failed.text = "";
 		passwordField.text = "";

@@ -152,6 +152,7 @@ MonoBehaviour:
   loginScreen: {fileID: 0}
   loadingScreen: {fileID: 0}
   mapInitializer: {fileID: 0}
+  battleController: {fileID: 0}
   networkServer: {fileID: 0}
   currentPlayerID: 
   playerController: {fileID: 0}

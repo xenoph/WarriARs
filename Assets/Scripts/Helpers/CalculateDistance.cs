@@ -8,10 +8,10 @@ using Mapbox.Unity.Utilities;
 public static class CalculateDistance {
 
 	public static int ReturnCalculatedDistance(double lat1, double lng1, double lat2, double lng2){
-    double a = (lat1-lat2)*DistancePerLatitude(lat1);
-    double b = (lng1-lng2)*DistancePerLongitude(lat1);
-	double result = Math.Sqrt(a * a + b * b);
-    return (int)Math.Round(result);
+        double a = (lat1-lat2)*DistancePerLatitude(lat1);
+        double b = (lng1-lng2)*DistancePerLongitude(lat1);
+	    double result = Math.Sqrt(a * a + b * b);
+        return (int) Math.Round(result);
     }
 
     private static double DistancePerLongitude(double lat){

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -44,6 +45,11 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
         SpawnPlayer(true);
+		Invoke("battle", 10f);
+	}
+
+	void battle() {
+		StartBattle("AYYlmao");
 	}
 
     public void SpawnPlayer(bool local) {
@@ -61,14 +67,38 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	void Start() {
-		
+	public void StartBattle(string battleID) {
+		loadingScreen.gameObject.SetActive(true);
+		loadingScreen.LoadingText.text = "Loading battle...";
+		SceneManager.UnloadSceneAsync("map");
+		playerController.gameObject.SetActive(false);
+		AsyncOperation load = SceneManager.LoadSceneAsync("battle", LoadSceneMode.Additive);
+		StartCoroutine(setBattleID(load, battleID));
+		Invoke("StopBattle", 10f);
+	}
+
+	IEnumerator setBattleID(AsyncOperation load, string id) {
+		while(!load.isDone)
+			yield return null;
+		while(battleController == null)
+			yield return null;
+		battleController.battleID = id;
+		yield break;
+	}
+
+	void StopBattle() {
+		loadingScreen.gameObject.SetActive(true);
+		loadingScreen.LoadingText.text = "Loading map...";
+		SceneManager.UnloadSceneAsync("battle");
+		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
+		playerController.gameObject.SetActive(true);
 	}
 
 	void LateUpdate() {
 		if(warning != null) {
 			warning.showing = currentLocation.Failed || !currentLocation.IsActive;
-			warning.text.text = "Failed to update your location.\nCheck if your Location Service is enabled.";
+			if(warning.showing)
+				warning.text.text = "Failed to update your location.\nCheck if your Location Service is enabled.";
 		}
 	}
 }
