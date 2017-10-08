@@ -2450,6 +2450,9 @@ MonoBehaviour:
   EffectText: {fileID: 470895910}
   InsaneSkillzChampion: {fileID: 129680871}
   AdrianChampion: {fileID: 1568711590}
+  Adrian: {fileID: 1105791194}
+  AdrianDeadParticles: {fileID: 1620200079923214, guid: 69d40b09110d467498c2c41f9458b967,
+    type: 2}
 --- !u!1 &1859219198
 GameObject:
   m_ObjectHideFlags: 0
