@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/battle.unity
     guid: a08e04b915b7d7e4999288ab9eeda424
+  - enabled: 1
+    path: Assets/Scenes/Midterms/levelup.unity
+    guid: 6bdd368756b774243aec511559f6a18f

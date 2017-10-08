@@ -1,21 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MidtermFightSceneController : MonoBehaviour {
 
+	[Header("UI Elements")]
 	public Button Ability1;
 	public Button Ability2;
 	public Button Ability3;
-
 	public Text EffectText;
 
+	[Header("Champions")]
 	public FightChampion InsaneSkillzChampion;
 	public FightChampion AdrianChampion;
 
+	[Header("GameObjects in Scene")]
 	public GameObject Adrian;
+	public GameObject RainPrefab;
+	public Renderer GroundRenderer;
 
+	[Header("Spawnable GameObjects")]
+	public Material FireGround;
+	public Material WaterGround;
+	public Material NormalGround;
 	public GameObject AdrianDeadParticles;
 
 	private int _currentScene;
@@ -33,6 +42,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public void SetUpScene1() {
 		_currentScene = 1;
 		ResetHealths();
+		ResetEffects();
 		Ability1.interactable = true;
 		Ability2.interactable = false;
 		Ability3.interactable = false;
@@ -41,6 +51,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public void SetUpScene2() {
 		_currentScene = 2;
 		ResetHealths();
+		ResetEffects();
 		Ability1.interactable = false;
 		Ability2.interactable = true;
 		Ability3.interactable = false;
@@ -49,6 +60,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public void SetUpScene3() {
 		_currentScene = 3;
 		ResetHealths();
+		ResetEffects();
 		Ability1.interactable = false;
 		Ability2.interactable = false;
 		Ability3.interactable = true;
@@ -59,7 +71,6 @@ public class MidtermFightSceneController : MonoBehaviour {
 		if(_wetGround) {
 			AdrianChampion.dealDamage(367);
 			EffectText.text = "Ground is Wet! You deal increased damage!";
-			_wetGround = false;
 		} else if(_fireGround) {
 			AdrianChampion.dealDamage(147);
 			EffectText.text = "Ground on Fire! You deal decreased damage!";
@@ -83,7 +94,10 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	public void UseAbility3() {
 		if(!_playerTurn) { return; }
+		ResetEffects();
+		RainPrefab.SetActive(true);
 		EffectText.text = "You use Rain. The ground is wet!";
+		//GroundRenderer.material = WaterGround;
 		_wetGround = true;
 		Ability1.interactable = true;
 		Ability2.interactable = true;
@@ -116,16 +130,18 @@ public class MidtermFightSceneController : MonoBehaviour {
 					break;
 
 				case 3:
-					if(_wetGround){
-						InsaneSkillzChampion.dealDamage(20);
+					if(_wetGround && InsaneSkillzChampion.currentHealth == InsaneSkillzChampion.maxHealth) {
 						EffectText.text = "Ground is Wet! Adrian deals decreased damage!";
+						InsaneSkillzChampion.dealDamage(20);
 					} else if(!_fireGround) {
 						EffectText.text = "Adrian puts the ground on fire!";
+						ResetEffects();
+						//GroundRenderer.material = FireGround;
 						_fireGround = true;
 					} else if(_fireGround) {
 						InsaneSkillzChampion.dealDamage(80);
 						EffectText.text = "Ground on Fire! Adrian deals increased damage!";
-						_fireGround = false;
+						//_fireGround = false;
 					} else {
 						InsaneSkillzChampion.dealDamage(40);
 						EffectText.text = "Adrian deals 40 damage!";
@@ -139,11 +155,19 @@ public class MidtermFightSceneController : MonoBehaviour {
 		}
 
 		if(_adrianDead) {
+			if(_currentScene == 3) {
+				yield break;
+			}
+			yield return new WaitForSeconds(2);
+			EffectText.text = "";
+			SceneManager.LoadScene("levelup", LoadSceneMode.Additive);
 			yield return new WaitForSeconds(5);
 			Adrian.SetActive(true);
+			SceneManager.UnloadSceneAsync("levelup");
+		} else {
+			yield return new WaitForSeconds(2);
 		}
 
-		yield return new WaitForSeconds(2);
 		RestartIenum();
 	}
 
@@ -196,5 +220,12 @@ public class MidtermFightSceneController : MonoBehaviour {
 		Adrian.SetActive(false);
 		SpawnAdrianDeadParticles();
 		_adrianDead = true;
+	}
+
+	private void ResetEffects() {
+		//GroundRenderer.material = NormalGround;
+		_wetGround = false;
+		_fireGround = false;
+		RainPrefab.SetActive(false);
 	}
 }
