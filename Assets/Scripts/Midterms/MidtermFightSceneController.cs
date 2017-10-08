@@ -14,6 +14,10 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public FightChampion InsaneSkillzChampion;
 	public FightChampion AdrianChampion;
 
+	public GameObject Adrian;
+
+	public GameObject AdrianDeadParticles;
+
 	private int _currentScene;
 	private bool _playerTurn = true;
 	private bool _adrianDead = false;
@@ -63,7 +67,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 			EffectText.text = "You deal 256 damage!";
 			AdrianChampion.dealDamage(256);
 		}
-		if(AdrianChampion.CheckDead()) { _adrianDead = true; }
+		if(AdrianChampion.CheckDead()) { AdrianDead(); }
 		_playerTurn = false;
 	}
 
@@ -131,6 +135,12 @@ public class MidtermFightSceneController : MonoBehaviour {
 				default:
 					break;
 			}
+
+		}
+
+		if(_adrianDead) {
+			yield return new WaitForSeconds(5);
+			Adrian.SetActive(true);
 		}
 
 		yield return new WaitForSeconds(2);
@@ -176,5 +186,15 @@ public class MidtermFightSceneController : MonoBehaviour {
 		EffectText.text = "";
 		_playerTurn = true;
 		StartCoroutine(PlayRound());
+	}
+
+	private void SpawnAdrianDeadParticles() {
+		Instantiate(AdrianDeadParticles, new Vector3(1f, 2f, 1f), Quaternion.identity);
+	}
+
+	private void AdrianDead() {
+		Adrian.SetActive(false);
+		SpawnAdrianDeadParticles();
+		_adrianDead = true;
 	}
 }
