@@ -22,18 +22,20 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public Renderer GroundRenderer;
 
 	[Header("Spawnable GameObjects")]
-	public Material FireGround;
-	public Material WaterGround;
-	public Material NormalGround;
 	public GameObject AdrianDeadParticles;
+
+	[Header("Grounds")]
+	public GameObject[] Grounds;
 
 	private int _currentScene;
 	private bool _playerTurn = true;
 	private bool _adrianDead = false;
 	private bool _wetGround = false;
 	private bool _fireGround = false;
+	private bool _adrianUsedGroundFire = false;
 
 	void Start () {
+		SetGround("NormalGround");
 		SetUpButtons();
 		SetUpScene1();
 		StartCoroutine(PlayRound());
@@ -97,7 +99,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 		ResetEffects();
 		RainPrefab.SetActive(true);
 		EffectText.text = "You use Rain. The ground is wet!";
-		//GroundRenderer.material = WaterGround;
+		SetGround("WetGround");
 		_wetGround = true;
 		Ability1.interactable = true;
 		Ability2.interactable = true;
@@ -133,10 +135,11 @@ public class MidtermFightSceneController : MonoBehaviour {
 					if(_wetGround && InsaneSkillzChampion.currentHealth == InsaneSkillzChampion.maxHealth) {
 						EffectText.text = "Ground is Wet! Adrian deals decreased damage!";
 						InsaneSkillzChampion.dealDamage(20);
-					} else if(!_fireGround) {
+					} else if(!_fireGround && !_adrianUsedGroundFire) {
 						EffectText.text = "Adrian puts the ground on fire!";
 						ResetEffects();
-						//GroundRenderer.material = FireGround;
+						_adrianUsedGroundFire = true;
+						SetGround("FireGround");
 						_fireGround = true;
 					} else if(_fireGround) {
 						InsaneSkillzChampion.dealDamage(80);
@@ -223,9 +226,19 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void ResetEffects() {
-		//GroundRenderer.material = NormalGround;
+		SetGround("NormalGround");
 		_wetGround = false;
 		_fireGround = false;
 		RainPrefab.SetActive(false);
+	}
+
+	private void SetGround(string ground) {
+		foreach(var g in Grounds) {
+			if(g.name == ground) {
+				g.SetActive(true);
+			} else {
+				g.SetActive(false);
+			}
+		}
 	}
 }
