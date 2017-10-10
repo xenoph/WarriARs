@@ -126,15 +126,17 @@ public class MidtermFightSceneController : MonoBehaviour {
 						AdrianChampion.ChanceToHit -= 20;
 					} else {
 						AdrianChampion.ChanceToHit = 100;
-						InsaneSkillzChampion.dealDamage(40);
-						EffectText.text = "Adrian deals 40 damage!";
+						if(InsaneSkillzChampion.dealDamage(40)) {
+							EffectText.text = "Adrian deals 40 damage!";
+						}
 					}
 					break;
 
 				case 3:
 					if(_wetGround && InsaneSkillzChampion.currentHealth == InsaneSkillzChampion.maxHealth) {
-						EffectText.text = "Ground is Wet! Adrian deals decreased damage!";
-						InsaneSkillzChampion.dealDamage(20);
+						if(InsaneSkillzChampion.dealDamage(20)) {
+							EffectText.text = "Ground is Wet! Adrian deals decreased damage!";
+						}
 					} else if(!_fireGround && !_adrianUsedGroundFire) {
 						EffectText.text = "Adrian puts the ground on fire!";
 						ResetEffects();
@@ -142,12 +144,13 @@ public class MidtermFightSceneController : MonoBehaviour {
 						SetGround("FireGround");
 						_fireGround = true;
 					} else if(_fireGround) {
-						InsaneSkillzChampion.dealDamage(80);
-						EffectText.text = "Ground on Fire! Adrian deals increased damage!";
-						//_fireGround = false;
+						if(InsaneSkillzChampion.dealDamage(80)) {
+							EffectText.text = "Ground on Fire! Adrian deals increased damage!";
+						}
 					} else {
-						InsaneSkillzChampion.dealDamage(40);
-						EffectText.text = "Adrian deals 40 damage!";
+						if(InsaneSkillzChampion.dealDamage(40)) {
+							EffectText.text = "Adrian deals 40 damage!";
+						}
 					}
 					break;
 
