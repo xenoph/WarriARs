@@ -893,8 +893,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Clear waters: \nMakes its water body so clear it becomes invisible.\r\nreduces
-    chance to hit drasticly. "
+  m_Text: "Clear waters: \nMake your body as clear as water.\r\nreduces chance to
+    get hit drasticly. "
 --- !u!222 &728138725
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1245,6 +1245,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!4 &1161826770 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1683761722}
 --- !u!1 &1191558713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,6 +2699,7 @@ Transform:
   m_Children:
   - {fileID: 1975024887}
   - {fileID: 2082346104}
+  - {fileID: 1161826770}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2765,6 +2771,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1655526432}
+--- !u!1001 &1683761722
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1618928201}
+    m_Modifications:
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.0036968829
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.163677
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.9097096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301486257117120, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d44e8217626a10b45b98606f7021c0c3, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1685649821
 GameObject:
   m_ObjectHideFlags: 0
