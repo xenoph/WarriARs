@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/battle.unity
     guid: a08e04b915b7d7e4999288ab9eeda424
   - enabled: 1
+    path: Assets/Scenes/Midterms/map.unity
+    guid: ddb89950af206384784eab98f6eb9d0e
+  - enabled: 1
     path: Assets/Scenes/Midterms/fight1.unity
     guid: 24e6a2491f77cf84aadddaa493b950bb
   - enabled: 1

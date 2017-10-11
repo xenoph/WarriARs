@@ -55,6 +55,9 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void Start () {
+		PlayerCtrl player = GameObject.FindObjectOfType<PlayerCtrl>();
+		player.midtermFightScene = this;
+		player.register();
 		SetGround("NormalGround");
 		SetUpButtons();
 		//SetUpScene1();
