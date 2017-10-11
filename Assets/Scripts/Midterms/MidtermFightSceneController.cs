@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -34,7 +35,13 @@ public class MidtermFightSceneController : MonoBehaviour {
 	private bool _fireGround = false;
 	private bool _adrianUsedGroundFire = false;
 
-	void Start () {
+	private Animator _aniCont;
+
+	private void Awake() {
+		_aniCont = transform.GetChild(0).GetComponent<Animator>();
+	}
+
+	private void Start () {
 		SetGround("NormalGround");
 		SetUpButtons();
 		SetUpScene1();
@@ -108,8 +115,9 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	private IEnumerator PlayRound() {
 		while(_playerTurn) {
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(0.1f);
 		}
+		_aniCont.SetBool("Hide", true);
 
 		if(!_adrianDead) {
 			yield return new WaitForSeconds(2);
@@ -215,6 +223,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 		EffectText.text = "";
 		_playerTurn = true;
+		_aniCont.SetBool("Hide", false);
 		StartCoroutine(PlayRound());
 	}
 
