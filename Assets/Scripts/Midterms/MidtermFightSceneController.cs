@@ -150,7 +150,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	public void GetPlayerDamage(int dmg) {
-		if(!_adrianChamp.dealDamage(dmg)) {
+		if(_adrianChamp.dealDamage(dmg)) {
 			StartCoroutine(SpawnInfoText(dmg, "DAMAGE", AdrianChampion));
 			if(_adrianChamp.CheckDead()) { AdrianDead(); }
 		}
