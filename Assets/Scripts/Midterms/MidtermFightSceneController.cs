@@ -28,6 +28,8 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	[Header("SpawnableText")]
 	public GameObject InfoText;
+	public GameObject AdrianTextSpawnLocation;
+	public GameObject InsaneTextSpawnLocation;
 
 	[Header("Grounds")]
 	public GameObject[] Grounds;
@@ -265,7 +267,13 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	private IEnumerator SpawnInfoText(int dmg, string effect, GameObject dragon) {
 		var spawnPos = new Vector3(dragon.transform.position.x, -2f, 1f);
-		var spawnedText = Instantiate(InfoText, spawnPos, Quaternion.identity, dragon.transform.GetChild(2).transform);
+		Transform parent;
+		if(dragon.name == "Opponent") {
+			parent = AdrianTextSpawnLocation.transform;
+		} else {
+			parent = InsaneTextSpawnLocation.transform;
+		}
+		var spawnedText = Instantiate(InfoText, spawnPos, Quaternion.identity, parent);
 		spawnedText.transform.localEulerAngles = new Vector3(0f, 90f, 0f);
 
 		spawnedText.transform.GetChild(0).GetComponent<TextMeshPro>().text = dmg.ToString();
