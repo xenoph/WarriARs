@@ -29,7 +29,8 @@ public class CombatNeedleBar : MonoBehaviour {
 
 	private void Update() {
 		if(_runningCombat) {
-			if(Input.GetKeyUp(KeyCode.Return)) {
+			if(Input.GetMouseButtonUp(0)) {
+				_runningCombat = false;
 				_moveNeedle = false;
 				var dmgDone = CalculateNewDamage();
 				if(dmgDone == _initDamage) {
@@ -54,8 +55,14 @@ public class CombatNeedleBar : MonoBehaviour {
 		_anim.SetBool("Show", true);
 		_initDamage = initDamage;
 		_moveLeft = (Random.value > 0.5f);
-		_runningCombat = true;
 		_moveNeedle = true;
+		//_runningCombat = true;
+		StartCoroutine(EnableCombat());
+	}
+
+	private IEnumerator EnableCombat() {
+		yield return new WaitForSeconds(1);
+		_runningCombat = true;
 	}
 
 	private int CalculateNewDamage() {
