@@ -27,10 +27,11 @@ public class LoadingMap : MonoBehaviour {
 			yield return null;
 		loadingBar.value = .95f;
 		while(world.transform.childCount == 0)
-			yield return null;
+			yield return new WaitForSeconds(1f);
 		loadingBar.value = 1f;
 		loadingBar.transform.parent.gameObject.SetActive(false);
 		transform.GetComponent<Camera>().enabled = false;
+		transform.GetComponent<AudioListener>().enabled = false;
 		player.setActiveCamAndLight(true);
 		SceneManager.UnloadSceneAsync("LoadMap");
 	}
