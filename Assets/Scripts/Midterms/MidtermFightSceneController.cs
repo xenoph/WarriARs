@@ -62,7 +62,6 @@ public class MidtermFightSceneController : MonoBehaviour {
 		_player.register();
 		SetGround("NormalGround");
 		SetUpButtons();
-		//SetUpScene1();
 	}
 
 	public void SetUpScene(int fight) {
@@ -120,6 +119,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 		if(_wetGround) {
 			NeedleBar.StartCombat(367);
 		} else if(_fireGround) {
+			NeedleBar.StartCombat(167);
 		} else {
 			NeedleBar.StartCombat(256);
 		}
@@ -150,9 +150,10 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	public void GetPlayerDamage(int dmg) {
-		StartCoroutine(SpawnInfoText(dmg, "DAMAGE", AdrianChampion));
-		_adrianChamp.dealDamage(dmg);
-		if(_adrianChamp.CheckDead()) { AdrianDead(); }
+		if(!_adrianChamp.dealDamage(dmg)) {
+			StartCoroutine(SpawnInfoText(dmg, "DAMAGE", AdrianChampion));
+			if(_adrianChamp.CheckDead()) { AdrianDead(); }
+		}
 		_playerTurn = false;
 	}
 
