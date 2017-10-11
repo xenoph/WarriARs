@@ -25,9 +25,15 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public void UnloadFightScene() {
+		AsyncOperation ao = SceneManager.UnloadSceneAsync("fight1");
+		StartCoroutine(unloadedFight(ao));
+	}
+
+	IEnumerator unloadedFight(AsyncOperation ao) {
+		while(!ao.isDone)
+			yield return null;
 		_cam.gameObject.SetActive(true);
 		dirLight.gameObject.SetActive(true);
-		SceneManager.UnloadSceneAsync("fight1");
 	}
 
 	IEnumerator clickedDragon(MapDragons md) {

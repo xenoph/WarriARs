@@ -218,7 +218,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 			EffectText.text = "";
 			SceneManager.LoadScene("levelup", LoadSceneMode.Additive);
 			yield return new WaitForSeconds(5);
-			Adrian.SetActive(true);
+			//Adrian.SetActive(true);
 			SceneManager.UnloadSceneAsync("levelup");
 			yield return new WaitForSeconds(1);
 			_player.UnloadFightScene();
