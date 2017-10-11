@@ -11,11 +11,16 @@ public class PlayerCtrl : MonoBehaviour {
 	public float turnSpeed = 50f;
 	public float moveSpeed = 50f;
 
+	public List<GameObject> dragons = new List<GameObject>();
+
 	public MidtermFightSceneController midtermFightScene;
 	private int dragonID = 0;
 
 	void Start() {
 		targetPosition = transform.position;
+		for(int i = 1; i < dragons.Count; i++) {
+			dragons[i].SetActive(false);
+		}
 	}
 
 	public void register() {
@@ -25,6 +30,17 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public void UnloadFightScene() {
+		if(dragonID <= dragons.Count) {
+			//Removes the dragon you just killed
+			dragons[dragonID - 1].transform.GetChild(0).gameObject.SetActive(false);
+			//Adds the reward chest for the killed dragon
+			dragons[dragonID - 1].transform.GetChild(1).gameObject.SetActive(true);
+			//next dragon
+			dragonID++;
+			//enable the next dragon
+			if(dragonID <= dragons.Count)
+				dragons[dragonID - 1].SetActive(true);
+		}
 		AsyncOperation ao = SceneManager.UnloadSceneAsync("fight1");
 		StartCoroutine(unloadedFight(ao));
 	}
