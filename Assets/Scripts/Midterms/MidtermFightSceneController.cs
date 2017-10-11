@@ -14,6 +14,8 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public Button Ability3;
 	public Text EffectText;
 
+	public CombatNeedleBar NeedleBar;
+
 	[Header("Champions")]
 	public GameObject InsaneSkillzChampion;
 	public GameObject AdrianChampion;
@@ -55,8 +57,26 @@ public class MidtermFightSceneController : MonoBehaviour {
 	private void Start () {
 		SetGround("NormalGround");
 		SetUpButtons();
-		SetUpScene1();
-		StartCoroutine(PlayRound());
+		//SetUpScene1();
+	}
+
+	public void SetUpScene(int fight) {
+		switch(fight) {
+			case 1:
+				SetUpScene1();
+				break;
+
+			case 2:
+				SetUpScene2();
+				break;
+
+			case 3:
+				SetUpScene3();
+				break;
+
+			default:
+				break;
+		}
 	}
 	
 	public void SetUpScene1() {
@@ -66,6 +86,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 		Ability1.interactable = true;
 		Ability2.interactable = false;
 		Ability3.interactable = false;
+		StartCoroutine(PlayRound());
 	}
 
 	public void SetUpScene2() {
@@ -75,6 +96,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 		Ability1.interactable = false;
 		Ability2.interactable = true;
 		Ability3.interactable = false;
+		StartCoroutine(PlayRound());
 	}
 
 	public void SetUpScene3() {
@@ -84,26 +106,24 @@ public class MidtermFightSceneController : MonoBehaviour {
 		Ability1.interactable = false;
 		Ability2.interactable = false;
 		Ability3.interactable = true;
+		StartCoroutine(PlayRound());
 	}
 
 	public void UseAbility1() {
 		if(!_playerTurn) { return; }
+		_aniCont.SetBool("Hide", true);
 		if(_wetGround) {
-			_adrianChamp.dealDamage(367);
-			StartCoroutine(SpawnInfoText(367, "Super Effective!", AdrianChampion));
+			NeedleBar.StartCombat(367);
 		} else if(_fireGround) {
-			_adrianChamp.dealDamage(147);
-			StartCoroutine(SpawnInfoText(147, "Not Effective", AdrianChampion));
 		} else {
-			_adrianChamp.dealDamage(256);
-			StartCoroutine(SpawnInfoText(256, "Effective", AdrianChampion));
+			NeedleBar.StartCombat(256);
 		}
 		if(_adrianChamp.CheckDead()) { AdrianDead(); }
-		_playerTurn = false;
 	}
 
 	public void UseAbility2() {
 		if(!_playerTurn) { return; }
+		_aniCont.SetBool("Hide", true);
 		EffectText.text = "You are less likely to be hit for a round!";
 		_inzaneChamp.ChanceToHit -= 20;
 		_playerTurn = false;
@@ -114,6 +134,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	public void UseAbility3() {
 		if(!_playerTurn) { return; }
+		_aniCont.SetBool("Hide", true);
 		ResetEffects();
 		RainPrefab.SetActive(true);
 		EffectText.text = "You use Rain. The ground is wet!";
@@ -124,11 +145,16 @@ public class MidtermFightSceneController : MonoBehaviour {
 		_playerTurn = false;
 	}
 
+	public void GetPlayerDamage(int dmg) {
+		StartCoroutine(SpawnInfoText(dmg, "DAMAGE", AdrianChampion));
+		_adrianChamp.dealDamage(dmg);
+		_playerTurn = false;
+	}
+
 	private IEnumerator PlayRound() {
 		while(_playerTurn) {
 			yield return new WaitForSeconds(0.1f);
 		}
-		_aniCont.SetBool("Hide", true);
 
 		if(!_adrianDead) {
 			yield return new WaitForSeconds(2.5f);
