@@ -14,16 +14,19 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public Text EffectText;
 
 	[Header("Champions")]
-	public FightChampion InsaneSkillzChampion;
-	public FightChampion AdrianChampion;
+	public GameObject InsaneSkillzChampion;
+	public GameObject AdrianChampion;
 
 	[Header("GameObjects in Scene")]
 	public GameObject Adrian;
 	public GameObject RainPrefab;
 	public Renderer GroundRenderer;
 
-	[Header("Spawnable GameObjects")]
+	[Header("Spawnable Particles")]
 	public GameObject AdrianDeadParticles;
+
+	[Header("SpawnableText")]
+	public GameObject InfoText;
 
 	[Header("Grounds")]
 	public GameObject[] Grounds;
@@ -35,10 +38,15 @@ public class MidtermFightSceneController : MonoBehaviour {
 	private bool _fireGround = false;
 	private bool _adrianUsedGroundFire = false;
 
+	private FightChampion _inzaneChamp;
+	private FightChampion _adrianChamp;
+
 	private Animator _aniCont;
 
 	private void Awake() {
 		_aniCont = transform.GetChild(0).GetComponent<Animator>();
+		_inzaneChamp = transform.GetChild(1).GetComponent<FightChampion>();
+		_adrianChamp = transform.GetChild(2).GetComponent<FightChampion>();
 	}
 
 	private void Start () {
@@ -78,23 +86,23 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public void UseAbility1() {
 		if(!_playerTurn) { return; }
 		if(_wetGround) {
-			AdrianChampion.dealDamage(367);
-			EffectText.text = "Ground is Wet! You deal increased damage!";
+			_adrianChamp.dealDamage(367);
+			StartCoroutine(SpawnInfoText(367, "Super Effective!", AdrianChampion));
 		} else if(_fireGround) {
-			AdrianChampion.dealDamage(147);
-			EffectText.text = "Ground on Fire! You deal decreased damage!";
+			_adrianChamp.dealDamage(147);
+			StartCoroutine(SpawnInfoText(147, "Not Effective", AdrianChampion));
 		} else {
-			EffectText.text = "You deal 256 damage!";
-			AdrianChampion.dealDamage(256);
+			_adrianChamp.dealDamage(256);
+			StartCoroutine(SpawnInfoText(256, "Effective", AdrianChampion));
 		}
-		if(AdrianChampion.CheckDead()) { AdrianDead(); }
+		if(_adrianChamp.CheckDead()) { AdrianDead(); }
 		_playerTurn = false;
 	}
 
 	public void UseAbility2() {
 		if(!_playerTurn) { return; }
 		EffectText.text = "You are less likely to be hit for a round!";
-		InsaneSkillzChampion.ChanceToHit -= 20;
+		_inzaneChamp.ChanceToHit -= 20;
 		_playerTurn = false;
 		if(_currentScene > 1) {
 			Ability1.interactable = true;
@@ -120,30 +128,30 @@ public class MidtermFightSceneController : MonoBehaviour {
 		_aniCont.SetBool("Hide", true);
 
 		if(!_adrianDead) {
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(2.5f);
 
 			switch(_currentScene) {
 				case 1:
-					InsaneSkillzChampion.dealDamage(40);
-					EffectText.text = "Adrian deals 40 damage!";
+					_inzaneChamp.dealDamage(40);
+					StartCoroutine(SpawnInfoText(40, "", InsaneSkillzChampion));
 					break;
 
 				case 2:
-					if(AdrianChampion.ChanceToHit == 100) {
+					if(_adrianChamp.ChanceToHit == 100) {
 						EffectText.text = "Adrian is less likely to be hit for a round!";
-						AdrianChampion.ChanceToHit -= 20;
+						_adrianChamp.ChanceToHit -= 20;
 					} else {
-						AdrianChampion.ChanceToHit = 100;
-						if(InsaneSkillzChampion.dealDamage(40)) {
-							EffectText.text = "Adrian deals 40 damage!";
+						_adrianChamp.ChanceToHit = 100;
+						if(_inzaneChamp.dealDamage(40)) {
+							StartCoroutine(SpawnInfoText(40, "Not Effective", InsaneSkillzChampion));
 						}
 					}
 					break;
 
 				case 3:
-					if(_wetGround && InsaneSkillzChampion.currentHealth == InsaneSkillzChampion.maxHealth) {
-						if(InsaneSkillzChampion.dealDamage(20)) {
-							EffectText.text = "Ground is Wet! Adrian deals decreased damage!";
+					if(_wetGround && _inzaneChamp.currentHealth == _inzaneChamp.maxHealth) {
+						if(_inzaneChamp.dealDamage(20)) {
+							StartCoroutine(SpawnInfoText(20, "Very Not Effective", InsaneSkillzChampion));
 						}
 					} else if(!_fireGround && !_adrianUsedGroundFire) {
 						EffectText.text = "Adrian puts the ground on fire!";
@@ -152,12 +160,12 @@ public class MidtermFightSceneController : MonoBehaviour {
 						SetGround("FireGround");
 						_fireGround = true;
 					} else if(_fireGround) {
-						if(InsaneSkillzChampion.dealDamage(80)) {
-							EffectText.text = "Ground on Fire! Adrian deals increased damage!";
+						if(_inzaneChamp.dealDamage(80)) {
+							StartCoroutine(SpawnInfoText(80, "Effective", InsaneSkillzChampion));
 						}
 					} else {
-						if(InsaneSkillzChampion.dealDamage(40)) {
-							EffectText.text = "Adrian deals 40 damage!";
+						if(_inzaneChamp.dealDamage(40)) {
+							StartCoroutine(SpawnInfoText(40, "Not Effective", InsaneSkillzChampion));
 						}
 					}
 					break;
@@ -187,18 +195,18 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	private void ResetHealths() {
 		if(_currentScene == 1) {
-			InsaneSkillzChampion.SetHealth(500);
-			AdrianChampion.SetHealth(500);
+			_inzaneChamp.SetHealth(500);
+			_adrianChamp.SetHealth(500);
 		} else if (_currentScene == 2) {
-			InsaneSkillzChampion.SetHealth(750);
-			AdrianChampion.SetHealth(750);
+			_inzaneChamp.SetHealth(750);
+			_adrianChamp.SetHealth(750);
 		} else {
-			InsaneSkillzChampion.SetHealth(1000);
-			AdrianChampion.SetHealth(1000);
+			_inzaneChamp.SetHealth(1000);
+			_adrianChamp.SetHealth(1000);
 		}
 
-		AdrianChampion.ChanceToHit = 100;
-		InsaneSkillzChampion.ChanceToHit = 100;
+		_adrianChamp.ChanceToHit = 100;
+		_inzaneChamp.ChanceToHit = 100;
 	}
 
 	private void SetUpButtons() {
@@ -217,8 +225,8 @@ public class MidtermFightSceneController : MonoBehaviour {
 			_adrianDead = false;
 		}
 
-		if(InsaneSkillzChampion.ChanceToHit != 100) {
-			InsaneSkillzChampion.ChanceToHit = 100;
+		if(_inzaneChamp.ChanceToHit != 100) {
+			_inzaneChamp.ChanceToHit = 100;
 		}
 
 		EffectText.text = "";
@@ -252,5 +260,16 @@ public class MidtermFightSceneController : MonoBehaviour {
 				g.SetActive(false);
 			}
 		}
+	}
+
+	private IEnumerator SpawnInfoText(int dmg, string effect, GameObject dragon) {
+		var spawnPos = new Vector3(dragon.transform.position.x, 3f, 0f);
+		var spawnedText = Instantiate(InfoText, spawnPos, Quaternion.identity);
+
+		spawnedText.transform.GetChild(0).GetComponent<TextMesh>().text = dmg.ToString();
+		spawnedText.transform.GetChild(1).GetComponent<TextMesh>().text = effect;
+
+		yield return new WaitForSeconds(2);
+		Destroy(spawnedText);
 	}
 }

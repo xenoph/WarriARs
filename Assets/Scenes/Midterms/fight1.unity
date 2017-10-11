@@ -3087,13 +3087,14 @@ MonoBehaviour:
   Ability2: {fileID: 2090846647}
   Ability3: {fileID: 1949067229}
   EffectText: {fileID: 470895910}
-  InsaneSkillzChampion: {fileID: 129680871}
-  AdrianChampion: {fileID: 1568711590}
+  InsaneSkillzChampion: {fileID: 1885162559}
+  AdrianChampion: {fileID: 1105791194}
   Adrian: {fileID: 1105791194}
   RainPrefab: {fileID: 974712321}
   GroundRenderer: {fileID: 1618928198}
   AdrianDeadParticles: {fileID: 1620200079923214, guid: 69d40b09110d467498c2c41f9458b967,
     type: 2}
+  InfoText: {fileID: 1130935558986378, guid: cb1720b171321cd4985e917d903727e0, type: 2}
   Grounds:
   - {fileID: 1618928196}
   - {fileID: 1431138167}
