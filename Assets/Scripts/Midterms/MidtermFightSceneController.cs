@@ -240,6 +240,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 			_adrianChamp.SetHealth(1000);
 		}
 
+		_adrianDead = false;
 		_adrianChamp.ChanceToHit = 100;
 		_inzaneChamp.ChanceToHit = 100;
 	}
@@ -251,15 +252,6 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void RestartIenum() {
-		if(_adrianDead) {
-			if(_currentScene == 1) {
-				SetUpScene2();
-			} else if (_currentScene == 2) {
-				SetUpScene3();
-			}
-			_adrianDead = false;
-		}
-
 		if(_inzaneChamp.ChanceToHit != 100) {
 			_inzaneChamp.ChanceToHit = 100;
 		}
