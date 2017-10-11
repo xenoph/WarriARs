@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -263,13 +264,17 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private IEnumerator SpawnInfoText(int dmg, string effect, GameObject dragon) {
-		var spawnPos = new Vector3(dragon.transform.position.x, 3f, 0f);
-		var spawnedText = Instantiate(InfoText, spawnPos, Quaternion.identity);
+		var spawnPos = new Vector3(dragon.transform.position.x, -2f, 1f);
+		var spawnedText = Instantiate(InfoText, spawnPos, Quaternion.identity, dragon.transform.GetChild(2).transform);
+		spawnedText.transform.localEulerAngles = new Vector3(0f, 90f, 0f);
 
-		spawnedText.transform.GetChild(0).GetComponent<TextMesh>().text = dmg.ToString();
-		spawnedText.transform.GetChild(1).GetComponent<TextMesh>().text = effect;
+		spawnedText.transform.GetChild(0).GetComponent<TextMeshPro>().text = dmg.ToString();
+		spawnedText.transform.GetChild(1).GetComponent<TextMeshPro>().text = effect;
 
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(2f);
+		spawnedText.GetComponent<Animator>().SetTrigger("Vanish");
+
+		yield return new WaitForSeconds(1.5f);
 		Destroy(spawnedText);
 	}
 }
