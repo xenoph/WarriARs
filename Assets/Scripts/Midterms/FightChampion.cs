@@ -50,6 +50,8 @@ public class FightChampion : MonoBehaviour {
 
 		tempHealth = Mathf.RoundToInt(Mathf.Lerp((float) tempHealth, (float) currentHealth, .1f));
 		healthBar.value = tempHealth;
+		if(healthBar.value <= 4) //for some reason is the health bar 4 when you have 0 hp...
+			healthBar.fillRect.GetComponent<Image>().enabled = false;
 		if(healthText.text != health)
 			healthText.text = health;
 	}
