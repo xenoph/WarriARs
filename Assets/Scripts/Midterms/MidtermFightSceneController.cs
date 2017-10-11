@@ -48,6 +48,8 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	private Animator _aniCont;
 
+	private PlayerCtrl _player;
+
 	private void Awake() {
 		_aniCont = transform.GetChild(0).GetComponent<Animator>();
 		_inzaneChamp = transform.GetChild(1).GetComponent<FightChampion>();
@@ -55,9 +57,9 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void Start () {
-		PlayerCtrl player = GameObject.FindObjectOfType<PlayerCtrl>();
-		player.midtermFightScene = this;
-		player.register();
+		_player = GameObject.FindObjectOfType<PlayerCtrl>();
+		_player.midtermFightScene = this;
+		_player.register();
 		SetGround("NormalGround");
 		SetUpButtons();
 		//SetUpScene1();
@@ -121,7 +123,6 @@ public class MidtermFightSceneController : MonoBehaviour {
 		} else {
 			NeedleBar.StartCombat(256);
 		}
-		if(_adrianChamp.CheckDead()) { AdrianDead(); }
 	}
 
 	public void UseAbility2() {
@@ -151,6 +152,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public void GetPlayerDamage(int dmg) {
 		StartCoroutine(SpawnInfoText(dmg, "DAMAGE", AdrianChampion));
 		_adrianChamp.dealDamage(dmg);
+		if(_adrianChamp.CheckDead()) { AdrianDead(); }
 		_playerTurn = false;
 	}
 
@@ -218,6 +220,9 @@ public class MidtermFightSceneController : MonoBehaviour {
 			yield return new WaitForSeconds(5);
 			Adrian.SetActive(true);
 			SceneManager.UnloadSceneAsync("levelup");
+			yield return new WaitForSeconds(1);
+			_player.UnloadFightScene();
+			yield break;
 		} else {
 			yield return new WaitForSeconds(2);
 		}

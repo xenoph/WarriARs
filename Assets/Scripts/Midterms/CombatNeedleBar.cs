@@ -56,7 +56,6 @@ public class CombatNeedleBar : MonoBehaviour {
 		_initDamage = initDamage;
 		_moveLeft = (Random.value > 0.5f);
 		_moveNeedle = true;
-		//_runningCombat = true;
 		StartCoroutine(EnableCombat());
 	}
 

@@ -24,6 +24,12 @@ public class PlayerCtrl : MonoBehaviour {
 		midtermFightScene.SetUpScene(dragonID);
 	}
 
+	public void UnloadFightScene() {
+		_cam.gameObject.SetActive(true);
+		dirLight.gameObject.SetActive(true);
+		SceneManager.UnloadSceneAsync("fight1");
+	}
+
 	IEnumerator clickedDragon(MapDragons md) {
 		while(Vector3.Distance(transform.position, targetPosition) >= 0.1f)
 			yield return null;
