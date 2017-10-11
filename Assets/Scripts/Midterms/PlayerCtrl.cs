@@ -90,6 +90,10 @@ public class PlayerCtrl : MonoBehaviour {
 		if(Vector3.Distance(transform.position, targetPosition) >= 0.1f) {
         	float step = moveSpeed * Time.deltaTime;
         	transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+
+			Vector3 _direction = (targetPosition - transform.position).normalized;
+			Quaternion _lookRotation = Quaternion.LookRotation(_direction);
+			transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * 5f);
 		}
 	}
 }
