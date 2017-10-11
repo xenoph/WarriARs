@@ -212,23 +212,20 @@ public class MidtermFightSceneController : MonoBehaviour {
 		}
 
 		if(_adrianDead) {
-			if(_currentScene == 3) {
-				yield break;
-			}
 			yield return new WaitForSeconds(2);
 			EffectText.text = "";
-			SceneManager.LoadScene("levelup", LoadSceneMode.Additive);
+			if(_currentScene != 3) {
+				SceneManager.LoadScene("levelup", LoadSceneMode.Additive);
+			}
 			yield return new WaitForSeconds(5);
-			//Adrian.SetActive(true);
 			SceneManager.UnloadSceneAsync("levelup");
 			yield return new WaitForSeconds(1);
 			_player.UnloadFightScene();
 			yield break;
 		} else {
 			yield return new WaitForSeconds(2);
+			RestartIenum();
 		}
-
-		RestartIenum();
 	}
 
 	private void ResetHealths() {
