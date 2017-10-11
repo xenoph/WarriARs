@@ -18,15 +18,20 @@ public class PlayerCtrl : MonoBehaviour {
 	private bool sceneLoaded = false;
 
 	void Start() {
+		setActiveCamAndLight(false);
 		targetPosition = transform.position;
 		for(int i = 1; i < dragons.Count; i++) {
 			dragons[i].SetActive(false);
 		}
 	}
 
+	public void setActiveCamAndLight(bool enabled = false) {
+		_cam.gameObject.SetActive(enabled);
+		dirLight.gameObject.SetActive(enabled);
+	}
+
 	public void register() {
-		_cam.gameObject.SetActive(false);
-		dirLight.gameObject.SetActive(false);
+		setActiveCamAndLight(false);
 		midtermFightScene.SetUpScene(dragonID);
 	}
 
@@ -49,8 +54,7 @@ public class PlayerCtrl : MonoBehaviour {
 	IEnumerator unloadedFight(AsyncOperation ao) {
 		while(!ao.isDone)
 			yield return null;
-		_cam.gameObject.SetActive(true);
-		dirLight.gameObject.SetActive(true);
+		setActiveCamAndLight(true);
 		sceneLoaded = false;
 	}
 
