@@ -15,6 +15,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 	public MidtermFightSceneController midtermFightScene;
 	private int dragonID = 0;
+	private bool sceneLoaded = false;
 
 	void Start() {
 		targetPosition = transform.position;
@@ -50,12 +51,17 @@ public class PlayerCtrl : MonoBehaviour {
 			yield return null;
 		_cam.gameObject.SetActive(true);
 		dirLight.gameObject.SetActive(true);
+		sceneLoaded = false;
 	}
 
 	IEnumerator clickedDragon(MapDragons md) {
+		if(sceneLoaded)
+			yield break;
+		sceneLoaded = true;
 		while(Vector3.Distance(transform.position, targetPosition) >= 0.1f)
 			yield return null;
-		
+		if(SceneManager.GetSceneByName("fight1").isLoaded)
+			yield break;
 		dragonID = md.dragonID;
 		SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
 	}

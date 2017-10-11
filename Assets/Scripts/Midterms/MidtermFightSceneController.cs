@@ -216,9 +216,9 @@ public class MidtermFightSceneController : MonoBehaviour {
 			EffectText.text = "";
 			if(_currentScene != 3) {
 				SceneManager.LoadScene("levelup", LoadSceneMode.Additive);
+				yield return new WaitForSeconds(5);
+				SceneManager.UnloadSceneAsync("levelup");
 			}
-			yield return new WaitForSeconds(5);
-			SceneManager.UnloadSceneAsync("levelup");
 			yield return new WaitForSeconds(1);
 			_player.UnloadFightScene();
 			yield break;
