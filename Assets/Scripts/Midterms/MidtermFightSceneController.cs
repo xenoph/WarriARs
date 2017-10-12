@@ -151,10 +151,16 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	public void GetPlayerDamage(int dmg) {
 		if(_adrianChamp.dealDamage(dmg)) {
-			StartCoroutine(SpawnInfoText(dmg, "DAMAGE", AdrianChampion));
+			StartCoroutine(SpawnInfoText(dmg, DamageFeedback(), AdrianChampion));
 			if(_adrianChamp.CheckDead()) { AdrianDead(); }
 		}
 		_playerTurn = false;
+	}
+
+	private string DamageFeedback() {
+		if(_wetGround) { return "SUPER EFFECTIVE"; }
+		if(_fireGround) { return "HINDERED"; }
+		else return "EFFECTIVE";
 	}
 
 	private IEnumerator PlayRound() {
@@ -168,7 +174,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 			switch(_currentScene) {
 				case 1:
 					_inzaneChamp.dealDamage(40);
-					StartCoroutine(SpawnInfoText(40, "", InsaneSkillzChampion));
+					StartCoroutine(SpawnInfoText(40, "INEFFECTIVE", InsaneSkillzChampion));
 					break;
 
 				case 2:
