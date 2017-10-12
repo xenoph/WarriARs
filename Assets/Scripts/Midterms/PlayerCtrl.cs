@@ -34,7 +34,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 	public void register() {
 		setActiveCamAndLight(false);
-		midtermFightScene.SetUpScene(dragonID);
+		midtermFightScene.SetUpScene(dragonID - 1);
 	}
 
 	public void UnloadFightScene() {
@@ -68,7 +68,7 @@ public class PlayerCtrl : MonoBehaviour {
 			yield return null;
 		if(SceneManager.GetSceneByName("fight1").isLoaded)
 			yield break;
-		dragonID = md.dragonID;
+		//dragonID = md.dragonID;
 		SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
 	}
 	
@@ -85,6 +85,14 @@ public class PlayerCtrl : MonoBehaviour {
 			RaycastHit hit; 
    			Ray ray = _cam.ScreenPointToRay(Input.mousePosition); 
    			if(Physics.Raycast(ray, out hit, 1000.0f)) {
+				if(hit.transform.gameObject.name == "Water Dragon") {
+					GameObject.Find("Canvas").GetComponent<MapUserInterface>().ShowStatsButton();
+					hit.transform.gameObject.SetActive(false);
+					dragonID++;
+					//enable the next dragon
+					if(dragonID <= dragons.Count)
+						dragons[dragonID - 1].SetActive(true);
+				}
 				MapDragons md = hit.transform.GetComponent<MapDragons>();
 				targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
 				if(md != null) {
