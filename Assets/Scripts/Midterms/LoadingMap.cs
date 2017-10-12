@@ -16,19 +16,23 @@ public class LoadingMap : MonoBehaviour {
 	
 	IEnumerator loadingMap(AsyncOperation ao) {
 		while(ao.progress < 1f) {
-			loadingBar.value = ao.progress - .1f;
+			loadingBar.value = ao.progress * .5f;
 			yield return null;
 		}
 		while(!ao.isDone)
 			yield return null;
 		PlayerCtrl player = GameObject.FindObjectOfType<PlayerCtrl>();
 		GameObject world = GameObject.FindObjectOfType<BasicMap>().gameObject;
-		while(player == null || world == null)
-			yield return null;
-		loadingBar.value = .95f;
+		while(player == null || world == null) {
+			player = GameObject.FindObjectOfType<PlayerCtrl>();
+			world = GameObject.FindObjectOfType<BasicMap>().gameObject;
+			yield return new WaitForSeconds(1f);
+		}
+		loadingBar.value = .75f;
 		while(world.transform.childCount == 0)
 			yield return new WaitForSeconds(1f);
 		loadingBar.value = 1f;
+		yield return new WaitForSeconds(1f);
 		loadingBar.transform.parent.gameObject.SetActive(false);
 		transform.GetComponent<Camera>().enabled = false;
 		transform.GetComponent<AudioListener>().enabled = false;
