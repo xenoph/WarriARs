@@ -3598,6 +3598,11 @@ MonoBehaviour:
   GroundRenderer: {fileID: 1618928198}
   AdrianDeadParticles: {fileID: 1620200079923214, guid: 69d40b09110d467498c2c41f9458b967,
     type: 2}
+  SlashParticles: {fileID: 1905042494924950, guid: fd59f1d1acec32a4db7ad341c61c66eb,
+    type: 2}
+  IcicleExplosion: {fileID: 1128803221704820, guid: 6bf33f3f7dbe12b4cab37e8c98b1db1c,
+    type: 2}
+  FireBreath: {fileID: 1346957920955224, guid: dc7a7b6ae6ae6d34e882d460ed139d85, type: 2}
   InfoText: {fileID: 1585108155526278, guid: dfc657d5ae31a564693d04ac969c6f2a, type: 2}
   AdrianTextSpawnLocation: {fileID: 1600997305}
   InsaneTextSpawnLocation: {fileID: 800975917}

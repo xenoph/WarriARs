@@ -27,6 +27,9 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	[Header("Spawnable Particles")]
 	public GameObject AdrianDeadParticles;
+	public GameObject SlashParticles;
+	public GameObject IcicleExplosion;
+	public GameObject FireBreath;
 
 	[Header("SpawnableText")]
 	public GameObject InfoText;
@@ -151,10 +154,16 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	public void GetPlayerDamage(int dmg) {
 		if(_adrianChamp.dealDamage(dmg)) {
+			var parts = Instantiate(SlashParticles, new Vector3(-3f, 430f, 1.6f), Quaternion.identity);
+			Invoke("SpawnIceExplosion", 0.8f);
 			StartCoroutine(SpawnInfoText(dmg, DamageFeedback(), AdrianChampion));
 			if(_adrianChamp.CheckDead()) { AdrianDead(); }
 		}
 		_playerTurn = false;
+	}
+
+	private void SpawnIceExplosion() {
+		Instantiate(IcicleExplosion, new Vector3(1.5f, 425f, 14f), Quaternion.identity);
 	}
 
 	private string DamageFeedback() {
@@ -174,6 +183,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 			switch(_currentScene) {
 				case 1:
 					_inzaneChamp.dealDamage(40);
+					InstantiateFireBreath();
 					StartCoroutine(SpawnInfoText(40, "INEFFECTIVE", InsaneSkillzChampion));
 					break;
 
@@ -184,6 +194,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 					} else {
 						_adrianChamp.ChanceToHit = 100;
 						if(_inzaneChamp.dealDamage(40)) {
+							InstantiateFireBreath();
 							StartCoroutine(SpawnInfoText(40, "Not Effective", InsaneSkillzChampion));
 						}
 					}
@@ -192,6 +203,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 				case 3:
 					if(_wetGround && _inzaneChamp.currentHealth == _inzaneChamp.maxHealth) {
 						if(_inzaneChamp.dealDamage(20)) {
+							InstantiateFireBreath();
 							StartCoroutine(SpawnInfoText(20, "Very Not Effective", InsaneSkillzChampion));
 						}
 					} else if(!_fireGround && !_adrianUsedGroundFire) {
@@ -202,10 +214,12 @@ public class MidtermFightSceneController : MonoBehaviour {
 						_fireGround = true;
 					} else if(_fireGround) {
 						if(_inzaneChamp.dealDamage(80)) {
+							InstantiateFireBreath();
 							StartCoroutine(SpawnInfoText(80, "Effective", InsaneSkillzChampion));
 						}
 					} else {
 						if(_inzaneChamp.dealDamage(40)) {
+							InstantiateFireBreath();
 							StartCoroutine(SpawnInfoText(40, "Not Effective", InsaneSkillzChampion));
 						}
 					}
@@ -232,6 +246,10 @@ public class MidtermFightSceneController : MonoBehaviour {
 			yield return new WaitForSeconds(2);
 			RestartIenum();
 		}
+	}
+
+	private void InstantiateFireBreath() {
+		Instantiate(FireBreath, new Vector3(3f, 433f, -6f), Quaternion.identity);
 	}
 
 	private void ResetHealths() {
