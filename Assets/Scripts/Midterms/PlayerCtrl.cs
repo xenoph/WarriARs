@@ -11,6 +11,8 @@ public class PlayerCtrl : MonoBehaviour {
 	public float turnSpeed = 50f;
 	public float moveSpeed = 50f;
 
+	public bool HasDragon = false;
+
 	public List<GameObject> dragons = new List<GameObject>();
 
 	public MidtermFightSceneController midtermFightScene;
