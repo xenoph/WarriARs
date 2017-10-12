@@ -1583,6 +1583,7 @@ MonoBehaviour:
   turnSpeed: 50
   moveSpeed: 10
   HasDragon: 0
+  _mapCanvas: {fileID: 702130187}
   dragons:
   - {fileID: 2081821875}
   - {fileID: 704865726}

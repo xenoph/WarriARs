@@ -12,6 +12,7 @@ public class PlayerCtrl : MonoBehaviour {
 	public float moveSpeed = 50f;
 
 	public bool HasDragon = false;
+	public GameObject _mapCanvas;
 
 	public List<GameObject> dragons = new List<GameObject>();
 
@@ -58,6 +59,7 @@ public class PlayerCtrl : MonoBehaviour {
 			yield return null;
 		setActiveCamAndLight(true);
 		sceneLoaded = false;
+		_mapCanvas.SetActive(true);
 	}
 
 	IEnumerator clickedDragon(MapDragons md) {
@@ -68,7 +70,7 @@ public class PlayerCtrl : MonoBehaviour {
 			yield return null;
 		if(SceneManager.GetSceneByName("fight1").isLoaded)
 			yield break;
-		//dragonID = md.dragonID;
+		_mapCanvas.SetActive(false);
 		SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
 	}
 	

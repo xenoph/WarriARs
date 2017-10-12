@@ -20,6 +20,7 @@ public class CombatNeedleBar : MonoBehaviour {
 	private RectTransform _needleRectTransform;
 
 	private int _initDamage;
+	private bool _insideShake;
 
 	private void Awake() {
 		_needle = transform.GetChild(1).gameObject;
@@ -33,7 +34,7 @@ public class CombatNeedleBar : MonoBehaviour {
 				_runningCombat = false;
 				_moveNeedle = false;
 				var dmgDone = CalculateNewDamage();
-				if(dmgDone == _initDamage) {
+				if(_insideShake) {
 					_anim.SetTrigger("Shake");
 				}
 				_anim.SetBool("Show", false);
@@ -76,5 +77,18 @@ public class CombatNeedleBar : MonoBehaviour {
 		var dmgToRemove = hitPercentage * _initDamage;
 		var actualDmg = _initDamage - dmgToRemove;
 		return Mathf.RoundToInt(actualDmg);
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log(other.name);
+		if(other.name == "BarNeedle") {
+			_insideShake = true;
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other) {
+		if(other.name == "BarNeedle") {
+			_insideShake = false;
+		}
 	}
 }
