@@ -94,7 +94,11 @@ public class PlayerCtrl : MonoBehaviour {
 						dragons[dragonID - 1].SetActive(true);
 				}
 				MapDragons md = hit.transform.GetComponent<MapDragons>();
+				Chest chest = hit.transform.GetComponent<Chest>();
 				targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+				if(chest != null) {
+					chest.Collect();
+				}
 				if(md != null) {
 					StartCoroutine(clickedDragon(md));
 				}
