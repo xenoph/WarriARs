@@ -10,6 +10,16 @@ public class LoadingMap : MonoBehaviour {
 	public Slider loadingBar;
 
 	void Start() {
+		StartCoroutine(NotifySlack());
+	}
+
+	IEnumerator NotifySlack() {
+		#if !UNITY_EDITOR
+		WWW www = new WWW("https://warriars.fun/midterms/loadedGame.php?secret=MAMMA-MIA");
+		yield return www;
+		#else
+		yield return new WaitForSeconds(0.1f);
+		#endif
 		AsyncOperation ao = SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		StartCoroutine(loadingMap(ao));
 	}
