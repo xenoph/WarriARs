@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Champion : MonoBehaviour {
+public class ChampionController : MonoBehaviour {
 	public ChampionTypes type = ChampionTypes.Water;
 	public string championName, englishChampionName;
 	public int health, attack, defence, speed;

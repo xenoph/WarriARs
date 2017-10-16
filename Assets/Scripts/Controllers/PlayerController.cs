@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
     public bool local = false;
+
+    public bool ChampionAlive;
 
     public Vector3 targetPosition { get; private set; }
 

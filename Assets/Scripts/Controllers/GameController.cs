@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 	public Warning warning;
 	public LoginScreen loginScreen;
 	public LoadingScreen loadingScreen;
+	public BattleRequestController BRController;
 
 	[Header("Game")]
 	public MapInitializer mapInitializer;
@@ -45,11 +46,6 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
         SpawnPlayer(true);
-		Invoke("battle", 10f);
-	}
-
-	void battle() {
-		StartBattle("AYYlmao");
 	}
 
     public void SpawnPlayer(bool local) {
@@ -67,22 +63,21 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public void StartBattle(string battleID) {
+	public void StartBattle(JSONObject battleInfo) {
 		loadingScreen.gameObject.SetActive(true);
 		loadingScreen.LoadingText.text = "Loading battle...";
 		SceneManager.UnloadSceneAsync("map");
 		playerController.gameObject.SetActive(false);
 		AsyncOperation load = SceneManager.LoadSceneAsync("battle", LoadSceneMode.Additive);
-		StartCoroutine(setBattleID(load, battleID));
-		Invoke("StopBattle", 10f);
+		StartCoroutine(setBattleID(load, battleInfo));
 	}
 
-	IEnumerator setBattleID(AsyncOperation load, string id) {
+	IEnumerator setBattleID(AsyncOperation load, JSONObject battleInfo) {
 		while(!load.isDone)
 			yield return null;
 		while(battleController == null)
 			yield return null;
-		battleController.battleID = id;
+		battleController.SetUpBattle(battleInfo);
 		yield break;
 	}
 
