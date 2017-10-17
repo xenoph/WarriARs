@@ -31,9 +31,10 @@ public class PlayerController : MonoBehaviour {
                 Vector3 pos2world = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
                 if(pos2world != targetPosition) {
                     targetPosition = pos2world;
-                    if(CalculateDistance.ReturnCalculatedDistance(lastLocation.Latitude, lastLocation.Longitude, GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude) >= 2)
+                    double dist = CalculateDistance.CalculatedDistance(lastLocation.Latitude, lastLocation.Longitude, GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude);
+                    if(dist >= 2d) {
                         server.Move((float) GameController.instance.currentLocation.Latitude, (float) GameController.instance.currentLocation.Longitude, 0);
-                    
+                    }
                     lastLocation = GameController.instance.currentLocation;
                 }
             }

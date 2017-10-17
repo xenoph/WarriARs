@@ -50,8 +50,8 @@ public class NetworkServer : MonoBehaviour {
 	}
 
 	public void Connect() {
-		if(string.IsNullOrEmpty(GameController.instance.currentPlayerID))
-			GameController.instance.currentPlayerID = SystemInfo.deviceUniqueIdentifier;
+		/*if(string.IsNullOrEmpty(GameController.instance.currentPlayerID))
+			SetUID(SystemInfo.deviceUniqueIdentifier);*/
 		StartCoroutine(ConnectToServer());
 	}
 
@@ -62,7 +62,7 @@ public class NetworkServer : MonoBehaviour {
 	}
 
 	private void OnFailedLogin(SocketIOEvent obj) {
-		Debug.LogError(obj.data.str);
+		Debug.LogError(obj.data);
 	}
 
 	private void OnInit(SocketIOEvent obj) {
