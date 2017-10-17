@@ -12,6 +12,7 @@ public class SceneController : MonoBehaviour {
 		SceneManager.UnloadSceneAsync(currentScene);
 		GameController.instance.playerController.gameObject.SetActive(false);
 		AsyncOperation load = SceneManager.LoadSceneAsync(loadScene, LoadSceneMode.Additive);
+		StartCoroutine(AwaitLoadedScene(load, loadScene));
 	}
 
 	private IEnumerator AwaitLoadedScene(AsyncOperation load, string loadScene) {
@@ -27,6 +28,7 @@ public class SceneController : MonoBehaviour {
 			while(GameObject.Find("World").transform.childCount < 1) {
 				yield return null;
 			}
+			GameController.instance.playerController.gameObject.SetActive(true);
 		}
 
 		UserInterfaceController.ToggleLoadingScreen(null);

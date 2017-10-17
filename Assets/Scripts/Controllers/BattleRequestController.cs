@@ -13,7 +13,14 @@ public class BattleRequestController : MonoBehaviour {
 		Socket = GetComponent<SocketIOComponent>();
 	}
 
-	public void SendBattleRequest() {
+	public void SendBattleRequest(int id) {
+		var json = new JSONObject();
+		json.AddField("playerRequested", GameController.instance.playerController.PlayerID);
+		json.AddField("playerReceivingRequest", id);
+		Socket.Emit("BattleRequest", json);
+	}
+
+	public void InitialiseAIBattle() {
 
 	}
 

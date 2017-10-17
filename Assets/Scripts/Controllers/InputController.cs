@@ -24,7 +24,7 @@ public class InputController : MonoBehaviour {
 				if(hit.transform.tag == "AICompanion") {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
 					//var aicomp = hit.transform.gameObject.GetComponent<ArtificialCompanion>();
-					GameController.instance.BRController.SendBattleRequest();
+					GameController.instance.BRController.InitialiseAIBattle();
 				} else if(hit.transform.tag == "Player") {
 					Debug.Log("player");
 				} else if(hit.transform.parent.transform.tag == "Map") {
@@ -43,18 +43,11 @@ public class InputController : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit)) {
 				if(hit.transform.tag == "Player" && hit.transform.gameObject.GetComponent<PlayerController>() != GameController.instance.playerController) {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
-					//JSONObject json = new JSONObject();
-					//var otherPlayer = hit.transform.gameObject.GetComponent<OtherPlayer>();
-					//json.AddField("otherPlayerSocket", otherPlayer.SocketID);
-					//json.AddField("otherPlayerName", otherPlayer.Username);
-					//json.AddField("sendingPlayerSocket", GManager.CurrentPlayer.SocketID);
-					//json.AddField("sendingPlayerName", GManager.CurrentPlayer.Username);
-					//json.AddField("compType", GManager.CurrentPlayer.ActiveCompanion.Element.ToString());
-					//json.AddField("compHealth", GManager.CurrentPlayer.ActiveCompanion.CurrentHealth.ToString());
-					GameController.instance.BRController.SendBattleRequest();
+					//Get id from opponent
+					GameController.instance.BRController.SendBattleRequest(0);
 				} else if(hit.transform.tag == "AICompanion") {
-					//var aicomp = hit.transform.gameObject.GetComponent<ArtificialCompanion>();
-					GameController.instance.BRController.SendBattleRequest();
+					//Get ai data
+					GameController.instance.BRController.InitialiseAIBattle();
 				}
 			}
 		}

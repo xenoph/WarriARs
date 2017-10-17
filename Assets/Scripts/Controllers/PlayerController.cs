@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
 
     public bool local = false;
-
     public bool ChampionAlive;
 
     public Vector3 targetPosition { get; private set; }
+
+    [HideInInspector]
+    public int PlayerID;
 
     private NetworkServer server;
     private Location lastLocation;
