@@ -30,14 +30,15 @@ public class LoginServer : MonoBehaviour {
 
 	public void LoginToTest() {
 		if(gameObject.activeInHierarchy)
-			StartCoroutine(Login("publictestaccount@oisann.net", "tester123"));
+			StartCoroutine(Login("publictestaccount", "tester123", true));
 	}
 
-	IEnumerator Login(string email, string password) {
+	IEnumerator Login(string email, string password, bool dontRemember = false) {
 		failed.text = "";
 		passwordField.text = "";
 		thisButton.interactable = false;
-		PlayerPrefs.SetString("Prefill-email", email);
+		if(!dontRemember)
+			PlayerPrefs.SetString("Prefill-email", email);
         WWWForm details = new WWWForm();
 		details.AddField("email", email);
 		details.AddField("password", password);
