@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour {
 	[Header("Game")]
 	public MapInitializer mapInitializer;
 	public BattleController battleController;
+	public UserInterfaceController InterfaceController;
 
 	[Header("Networking")]
 	public NetworkServer networkServer;
@@ -61,24 +63,6 @@ public class GameController : MonoBehaviour {
 		} else {
 			Debug.LogError("No start location found.");
 		}
-	}
-
-	public void StartBattle(JSONObject battleInfo) {
-		loadingScreen.gameObject.SetActive(true);
-		loadingScreen.LoadingText.text = "Loading battle...";
-		SceneManager.UnloadSceneAsync("map");
-		playerController.gameObject.SetActive(false);
-		AsyncOperation load = SceneManager.LoadSceneAsync("battle", LoadSceneMode.Additive);
-		StartCoroutine(setBattleID(load, battleInfo));
-	}
-
-	IEnumerator setBattleID(AsyncOperation load, JSONObject battleInfo) {
-		while(!load.isDone)
-			yield return null;
-		while(battleController == null)
-			yield return null;
-		battleController.SetUpBattle(battleInfo);
-		yield break;
 	}
 
 	void StopBattle() {

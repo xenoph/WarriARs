@@ -1,11 +1,24 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class BattleController : MonoBehaviour {
 
 	public Camera battleCam, mainCam;
 	public string battleID;
 
+	public Transform SpawnLocationLocalChampion;
+	public Transform SpawnLocationOpponentChampion;
 
+	public string LocalChampionName;
+	public string OpponentChampionName;
+
+	public int LocalChampionHealth;
+	public int OpponentChampionHealth;
+
+	public GameObject[] ChampionPrefabs;
+
+	private Dictionary<string, string> _battleData;
 
 	private void Start() {
 		GameController.instance.battleController = this;
@@ -16,13 +29,19 @@ public class BattleController : MonoBehaviour {
 		battleCam.gameObject.SetActive(true);
 	}
 
-	public void SetUpBattle(JSONObject jSON) {
+	public void SetUpBattle(Dictionary<string, string> data) {
+		_battleData = data;
 		//receive own champion stats + ability ids
 		//receive opponent prefabname + stats
+		SpawnChampions();
+	}
+
+	private void SetInterfaceElements() {
 	}
 
 	private void SpawnChampions() {
-
+		//Spawn in prefabs from given names
+		//Give them health
 	}
 
 	private void SendAbility() {
@@ -42,6 +61,4 @@ public class BattleController : MonoBehaviour {
 		Screen.orientation = ScreenOrientation.Portrait;
 		GameController.instance.battleController = null;
 	}
-
-
 }

@@ -6,12 +6,18 @@ using SocketIO;
 public class BattleRequestController : MonoBehaviour {
 
 	public SocketIOComponent Socket;
+	public UserInterfaceController InterfaceController;
+	public SceneController SceneController;
 
 	private void Awake() {
 		Socket = GetComponent<SocketIOComponent>();
 	}
 
 	public void SendBattleRequest() {
+
+	}
+
+	public void SetUserInterface() {
 
 	}
 
@@ -25,10 +31,8 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
-		var json = new JSONObject();
-		for(int i = 0; i < obj.data.Count; i++) {
-			json.AddField(obj.data[i].str, obj.data[i].str);
-		}
-		GameController.instance.StartBattle(json);
+		SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
+		//Extract needed data to set up UI
+		//InterfaceController.SetUpBattleCanvas();
 	}
 }
