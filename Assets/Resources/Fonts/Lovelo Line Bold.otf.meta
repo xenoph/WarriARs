@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f079e5645699e37438f91408bbfaa9dc
+timeCreated: 1508334073
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Lovelo
+  fontNames:
+  - Lovelo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: addbc9d82afaf3f48b1fa0098b93d77f, type: 3}
+  - {fileID: 12800000, guid: c13eac69dc6332a49916ebb7c24afe65, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
