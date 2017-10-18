@@ -51,10 +51,11 @@ public class GameController : MonoBehaviour {
         SpawnPlayer(true);
 	}
 
-    public void SpawnPlayer(bool local) {
+    public PlayerController SpawnPlayer(bool local) {
         GameObject player = (GameObject) Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.local = local;
+		return controller;
     }
 
     public void SetupMap() {

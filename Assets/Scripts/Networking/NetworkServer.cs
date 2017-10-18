@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
 
@@ -8,7 +9,7 @@ public class NetworkServer : MonoBehaviour {
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
 
-	//public OtherPlayersManager otherPlayersManager;
+	private Dictionary<string, PlayerController> otherPlayers = new Dictionary<string, PlayerController>();
 
 	void Start() {
 		//InvokeRepeating("UpdatePlayersOnline", 0f, 10f);
@@ -17,8 +18,9 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("init", OnInit);
 		socket.On("loggedin", OnLoggedIn);
 		socket.On("failedLogin", OnFailedLogin);
-		//socket.On("login", OnLogin);
-		//socket.On("move", OnMove);
+		socket.On("login", OnLogin);
+		socket.On("move", OnMove);
+		socket.On("quit", OnQuit);
 	}
 
 	/*
@@ -90,14 +92,47 @@ public class NetworkServer : MonoBehaviour {
 	}
 
 	private void OnLogin(SocketIOEvent obj) {
-		/*if(otherPlayersManager != null) {
-			otherPlayersManager.NewLogin(obj);
-		}*/
+		if(!otherPlayers.ContainsKey(obj.data["id"].str)) {
+			PlayerController other = GameController.instance.SpawnPlayer(false);
+			other.PlayerID = obj.data["id"].str;
+			other.username = obj.data["username"].str;
+
+			Location newLoc = new Location();
+			double lat, lng;
+			double.TryParse(obj.data["lat"].str, out lat);
+			double.TryParse(obj.data["lng"].str, out lng);
+			newLoc.SetLocation(lat, lng);
+			other.targetPosition = ConvertPositions.ConvertLocationToVector3(newLoc, GameController.instance.mapInitializer.map);
+			newLoc = null;
+
+			otherPlayers.Add(obj.data["id"].str, other);
+		}
+	}
+
+	private void OnQuit(SocketIOEvent obj) {
+		if(otherPlayers.ContainsKey(obj.data["id"].str)) {
+			PlayerController other;
+			otherPlayers.TryGetValue(obj.data["id"].str, out other);
+			otherPlayers.Remove(obj.data["id"].str);
+			Destroy(other.gameObject);
+		} else {
+			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Could not delete them.");
+		}
 	}
 
 	private void OnMove(SocketIOEvent obj) {
-		/*if(otherPlayersManager != null) {
-			otherPlayersManager.UpdatePosition(obj);
-		}*/
+		if(otherPlayers.ContainsKey(obj.data["id"].str)) {
+			PlayerController other;
+			otherPlayers.TryGetValue(obj.data["id"].str, out other);
+			Location newLoc = new Location();
+			double lat, lng;
+			double.TryParse(obj.data["lat"].str, out lat);
+			double.TryParse(obj.data["lng"].str, out lng);
+			newLoc.SetLocation(lat, lng);
+			other.targetPosition = ConvertPositions.ConvertLocationToVector3(newLoc, GameController.instance.mapInitializer.map);
+			newLoc = null;
+		} else {
+			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Could not move them.");
+		}
 	}
 }

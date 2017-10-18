@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector]
     public string PlayerID;
 
+    public string username;
+
     private NetworkServer server;
     private Location lastLocation;
 
