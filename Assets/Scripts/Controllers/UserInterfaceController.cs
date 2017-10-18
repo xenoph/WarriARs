@@ -30,17 +30,17 @@ public class UserInterfaceController : MonoBehaviour {
 
 	}
 
-	public void OnGetAbilityNames(string[] abIds) {
+	public void GetAbilityInformation(Dictionary<string, string> abInfo) {
 		
 	}
 
-	public void SetAbilityButtonNames(string[] abNames) {
+	public void SetAbilityButtonNames(List<string> abNames) {
 		for(int i = 0; i < AbilityButtons.Length; i++) {
 			AbilityButtons[i].GetComponentInChildren<Text>().text = abNames[i];
 		}
 	}
 
-	public void SetAbilityButtonDelegates() {
+	public void SetAbilityButtonDelegates(List<string> abIds) {
 		
 	}
 

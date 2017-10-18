@@ -44,7 +44,7 @@ public class BattleController : MonoBehaviour {
 		//Give them health
 	}
 
-	private void SendAbility() {
+	private void SendAbility(string id) {
 		//send ability id
 	}
 

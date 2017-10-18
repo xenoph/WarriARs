@@ -9,6 +9,8 @@ public class BattleRequestController : MonoBehaviour {
 	[HideInInspector]
 	public UserInterfaceController InterfaceController;
 
+	private List<string> _abIds;
+
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
 		SetupSocketReceivers();
@@ -48,16 +50,28 @@ public class BattleRequestController : MonoBehaviour {
 		var oppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
 		InterfaceController.SetUpBattleCanvas(myHealth, oppHealth, obj.data["myChampionName"].str, obj.data["opponentChampionName"].str);
 
-		string[] abIds = new string[] { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
-		GetAbilityNames(abIds);
+		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
+		GetAbilityNames();
 	}
 
-	private void GetAbilityNames(string[] abIds) {
+	private void GetAbilityNames() {
 		var json = new JSONObject();
-		for(int i = 0; i < abIds.Length; i++) {
-			json.AddField("Ability" + (i + 1), abIds[i]);
+		for(int i = 0; i < _abIds.Count; i++) {
+			json.AddField("Ability" + (i + 1), _abIds[i]);
 		}
 
 		Socket.Emit("GetAbilityNames", json);
+	}
+
+	private void OnReceiveAbilityNames(SocketIOEvent obj) {
+		var abNames = new List<string>();
+		for(int i = 0; i < _abIds.Count; i++) {
+			abNames.Add(obj.data[_abIds[i]].str);
+		}
+
+		InterfaceController.SetAbilityButtonNames(abNames);
+		InterfaceController.SetAbilityButtonDelegates(_abIds);
+
+		_abIds = null;
 	}
 }
