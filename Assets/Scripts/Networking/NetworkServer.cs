@@ -6,6 +6,8 @@ using SocketIO;
 public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
+	private ServerVersion VERSION = new ServerVersion(0, 1, 0);
+
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
 
@@ -69,12 +71,26 @@ public class NetworkServer : MonoBehaviour {
 
 	private void OnInit(SocketIOEvent obj) {
 		Debug.Log(obj.data);
-		SERVER_SEED = obj.data["seed"].str;
-		JSONObject json = new JSONObject();
-		json.AddField("id", GameController.instance.currentPlayerID);
-		json.AddField("lat", (float) GameController.instance.currentLocation.Latitude);
-		json.AddField("lng", (float) GameController.instance.currentLocation.Longitude);
-		socket.Emit("register", json);
+		string[] v = obj.data["version"].str.Split(".".ToCharArray()[0]);
+		int major, minor, hotfix;
+		int.TryParse(v[0], out major);
+		int.TryParse(v[1], out minor);
+		int.TryParse(v[2], out hotfix);
+
+		if(major == VERSION.major && minor == VERSION.minor) {
+			if(hotfix > VERSION.hotfix)
+				Debug.LogWarning("The server is running a newer hotfix. This should be fine.");
+			if(hotfix < VERSION.hotfix)
+				Debug.LogWarning("The server is running an older hotfix. This might cause problems, but should work fine.");
+			SERVER_SEED = obj.data["seed"].str;
+			JSONObject json = new JSONObject();
+			json.AddField("id", GameController.instance.currentPlayerID);
+			json.AddField("lat", (float) GameController.instance.currentLocation.Latitude);
+			json.AddField("lng", (float) GameController.instance.currentLocation.Longitude);
+			socket.Emit("register", json);
+		} else {
+			Debug.LogError("Your version is not compatible with the server version. Try updating the game.");
+		}
 	}
 
 	private void OnLoggedIn(SocketIOEvent obj) {
@@ -133,6 +149,17 @@ public class NetworkServer : MonoBehaviour {
 			newLoc = null;
 		} else {
 			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Could not move them.");
+		}
+	}
+
+	private struct ServerVersion {
+		public int major;
+		public int minor;
+		public int hotfix;
+		public ServerVersion(int major, int minor, int hotfix) {
+			this.major = major;
+			this.minor = minor;
+			this.hotfix = hotfix;
 		}
 	}
 }
