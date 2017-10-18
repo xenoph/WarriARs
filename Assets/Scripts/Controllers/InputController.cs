@@ -23,8 +23,7 @@ public class InputController : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit, 200)) {
 				if(hit.transform.tag == "AICompanion") {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
-					//var aicomp = hit.transform.gameObject.GetComponent<ArtificialCompanion>();
-					GameController.instance.BRController.InitialiseAIBattle();
+					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
 				} else if(hit.transform.tag == "Player") {
 					Debug.Log("player");
 				} else if(hit.transform.parent.transform.tag == "Map") {
