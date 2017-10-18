@@ -9,9 +9,10 @@ public class UserInterfaceController : MonoBehaviour {
 	public GameObject BattleCanvas;
 
 	public LoadingScreen LoadingScreen;
+	public Button[] AbilityButtons;
 
 	private void Awake() {
-		GameController.instance.BRController.InterfaceController = this;
+		GameController.instance.InterfaceController = this;
 	}
 
 	public void ToggleLoadingScreen(string loadText) {
@@ -27,8 +28,10 @@ public class UserInterfaceController : MonoBehaviour {
 
 	}
 
-	private void GetAbilityNames() {
-
+	public void SetAbilityButtons(string[] abNames) {
+		for(int i = 0; i < AbilityButtons.Length; i++) {
+			AbilityButtons[i].GetComponentInChildren<Text>().text = abNames[i];
+		}
 	}
 
 	public void UpdateHealth(int health) {

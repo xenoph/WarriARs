@@ -46,7 +46,7 @@ public class InputController : MonoBehaviour {
 					GameController.instance.BRController.SendBattleRequest(0);
 				} else if(hit.transform.tag == "AICompanion") {
 					//Get ai data
-					GameController.instance.BRController.InitialiseAIBattle();
+					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
 				}
 			}
 		}

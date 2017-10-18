@@ -5,15 +5,17 @@ using SocketIO;
 
 public class BattleRequestController : MonoBehaviour {
 
-	[HideInInspector]
 	public SocketIOComponent Socket;
 	[HideInInspector]
 	public UserInterfaceController InterfaceController;
 
 	private void Awake() {
-		Socket = GetComponent<SocketIOComponent>();
-		InterfaceController = GameController.instance.InterfaceController;
+		//Socket = GetComponent<SocketIOComponent>();
 		SetupSocketReceivers();
+	}
+
+	private void Start() {
+		InterfaceController = GameController.instance.InterfaceController;
 	}
 
 	public void SendBattleRequest(int id) {
@@ -35,8 +37,8 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void SetupSocketReceivers() {
-		Socket.On("getBattleRequest", OnReceiveBattleRequest);
-		Socket.On("getBattleInfo", OnReceiveBattleInformation);
+		//Socket.On("getBattleRequest", OnReceiveBattleRequest);
+		//Socket.On("getBattleInfo", OnReceiveBattleInformation);
 	}
 
 	private void OnReceiveBattleRequest(SocketIOEvent obj) {
@@ -49,5 +51,8 @@ public class BattleRequestController : MonoBehaviour {
 		var myHealth = int.Parse(obj.data["myChampionHealth"].str);
 		var oppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
 		InterfaceController.SetUpBattleCanvas(myHealth, oppHealth, obj.data["myChampionName"].str, obj.data["opponentChampionName"].str);
+
+		string[] abNames = new string[] { obj.data["ability1"].str, obj.data["ability1"].str, obj.data["ability1"].str };
+		InterfaceController.SetAbilityButtons(abNames);
 	}
 }

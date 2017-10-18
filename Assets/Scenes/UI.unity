@@ -362,7 +362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &78124447
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2500,7 +2500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &760334860
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3597,8 +3597,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapCanvas: {fileID: 1248618399}
   BattleCanvas: {fileID: 615514610}
-  SceneController: {fileID: 0}
   LoadingScreen: {fileID: 0}
+  AbilityButtons: []
 --- !u!4 &1097554092
 Transform:
   m_ObjectHideFlags: 0
@@ -3627,7 +3627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1106015005
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4210,7 +4210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1248618400
 MonoBehaviour:
   m_ObjectHideFlags: 0

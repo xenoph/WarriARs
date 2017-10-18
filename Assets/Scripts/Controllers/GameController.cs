@@ -35,7 +35,6 @@ public class GameController : MonoBehaviour {
 	void Awake() {
 		instance = this;
 		SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-		InterfaceController = GameObject.Find("InterfaceController").GetComponent<UserInterfaceController>();
 		currentLocation = new Location();
 		#if UNITY_EDITOR
 			currentLocation.Latitude = 64.0186d;
