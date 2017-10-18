@@ -11,6 +11,12 @@ public class UserInterfaceController : MonoBehaviour {
 	public LoadingScreen LoadingScreen;
 	public Button[] AbilityButtons;
 
+	public Text MyHealth;
+	public Text MyName;
+
+	public Text OpponentHealth;
+	public Text OpponentName;
+
 	private Dictionary<string, string> _abilityInfo;
 
 	private void Awake() {
@@ -27,11 +33,11 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void SetUpBattleCanvas(int myHealth, int oppHealth, string myName, string oppName) {
+		MyHealth.text = myHealth.ToString();
+		MyName.text = myName;
 
-	}
-
-	public void GetAbilityInformation(Dictionary<string, string> abInfo) {
-		
+		OpponentHealth.text = oppHealth.ToString();
+		OpponentName.text = oppName;
 	}
 
 	public void SetAbilityButtonNames(List<string> abNames) {
@@ -41,7 +47,10 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void SetAbilityButtonDelegates(List<string> abIds) {
-		
+		for(int i = 0; i < abIds.Count; i++) {
+			AbilityButtons[i].onClick.RemoveAllListeners();
+			AbilityButtons[i].onClick.AddListener(delegate { GameController.instance.battleController.SendAbility(abIds[i]); });
+		}
 	}
 
 	public void UpdateHealth(int health) {

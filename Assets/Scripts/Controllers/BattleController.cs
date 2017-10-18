@@ -44,7 +44,9 @@ public class BattleController : MonoBehaviour {
 		//Give them health
 	}
 
-	private void SendAbility(string id) {
+	public void SendAbility(string id) {
+		var json = new JSONObject();
+		//json.AddField("")
 		//send ability id
 	}
 
