@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour {
     public bool local = false;
     public bool ChampionAlive;
 
-    public Vector3 targetPosition { get; private set; }
+    public Vector3 targetPosition;// { get; private set; }
+    public Vector3 lastWorldpos;
 
     [HideInInspector]
     public int PlayerID;
@@ -21,21 +22,22 @@ public class PlayerController : MonoBehaviour {
             GameController.instance.cameraController.target = this.transform;
             server = GameController.instance.networkServer;
         }
-        lastLocation = GameController.instance.currentLocation;        
+        //lastLocation = GameController.instance.currentLocation;
+        lastLocation = new Location();
         //SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("map"));
 	}
 	
 	void FixedUpdate() {
         if(local) {
             if(GameController.instance.mapInitializer != null) {
-                Vector3 pos2world = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
-                if(pos2world != targetPosition) {
-                    targetPosition = pos2world;
-                    double dist = CalculateDistance.CalculatedDistance(lastLocation.Latitude, lastLocation.Longitude, GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude);
-                    if(dist >= 2d) {
-                        server.Move((float) GameController.instance.currentLocation.Latitude, (float) GameController.instance.currentLocation.Longitude, 0);
-                    }
-                    lastLocation = GameController.instance.currentLocation;
+                targetPosition = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
+                lastWorldpos = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
+                lastWorldpos = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
+
+                float dist = Vector3.Distance(targetPosition, lastWorldpos);
+                if(dist > 1f) {
+                    server.Move((float) GameController.instance.currentLocation.Latitude, (float) GameController.instance.currentLocation.Longitude, 0);
+                    lastLocation.SetLocation(GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude);
                 }
             }
         }
