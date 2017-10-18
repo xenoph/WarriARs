@@ -189,7 +189,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 467022358}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &267777949
 GameObject:
@@ -433,11 +433,61 @@ Transform:
   m_LocalPosition: {x: 5.5, y: 0.56, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1900993923}
   - {fileID: 142026976}
+  - {fileID: 1900993923}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &914885322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 914885324}
+  - component: {fileID: 914885323}
+  m_Layer: 0
+  m_Name: BattleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &914885323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 914885322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931fd3b640fd01d4f8e266527c45d5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleCam: {fileID: 1617621025}
+  mainCam: {fileID: 0}
+  battleID: 
+  SpawnLocationLocalChampion: {fileID: 1236415195}
+  SpawnLocationOpponentChampion: {fileID: 467022358}
+  LocalChampionName: 
+  OpponentChampionName: 
+  LocalChampionHealth: 0
+  OpponentChampionHealth: 0
+  ChampionPrefabs: []
+--- !u!4 &914885324
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 914885322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.53351676, y: -34.469555, z: 102.41773}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1236415194
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +619,13 @@ MonoBehaviour:
   battleCam: {fileID: 1617621025}
   mainCam: {fileID: 0}
   battleID: 
+  SpawnLocationLocalChampion: {fileID: 0}
+  SpawnLocationOpponentChampion: {fileID: 0}
+  LocalChampionName: 
+  OpponentChampionName: 
+  LocalChampionHealth: 0
+  OpponentChampionHealth: 0
+  ChampionPrefabs: []
 --- !u!1 &1617621021
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +753,10 @@ Prefab:
     - target: {fileID: 4732821149013588, guid: 5d4cc1f8fd949e34db42fa019703d94b, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302480410893578, guid: 5d4cc1f8fd949e34db42fa019703d94b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d4cc1f8fd949e34db42fa019703d94b, type: 2}

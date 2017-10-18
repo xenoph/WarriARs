@@ -9,13 +9,9 @@ public class BattleRequestController : MonoBehaviour {
 	[HideInInspector]
 	public UserInterfaceController InterfaceController;
 
-	private void Awake() {
-		//Socket = GetComponent<SocketIOComponent>();
-		SetupSocketReceivers();
-	}
-
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
+		SetupSocketReceivers();
 	}
 
 	public void SendBattleRequest(int id) {
@@ -37,8 +33,8 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void SetupSocketReceivers() {
-		//Socket.On("getBattleRequest", OnReceiveBattleRequest);
-		//Socket.On("getBattleInfo", OnReceiveBattleInformation);
+		Socket.On("getBattleRequest", OnReceiveBattleRequest);
+		Socket.On("getBattleInfo", OnReceiveBattleInformation);
 	}
 
 	private void OnReceiveBattleRequest(SocketIOEvent obj) {

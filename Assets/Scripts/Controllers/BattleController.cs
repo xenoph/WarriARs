@@ -29,8 +29,8 @@ public class BattleController : MonoBehaviour {
 		battleCam.gameObject.SetActive(true);
 	}
 
-	public void SetUpBattle(Dictionary<string, string> data) {
-		_battleData = data;
+	public void SetUpBattle() {
+		//_battleData = data;
 		//receive own champion stats + ability ids
 		//receive opponent prefabname + stats
 		SpawnChampions();

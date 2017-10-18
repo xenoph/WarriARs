@@ -24,6 +24,7 @@ public class SceneController : MonoBehaviour {
 					!UserInterfaceController.BattleCanvas.activeSelf) {
 				yield return null;
 			}
+			GameController.instance.battleController.SetUpBattle();
 		} else {
 			while(GameObject.Find("World").transform.childCount < 1) {
 				yield return null;
