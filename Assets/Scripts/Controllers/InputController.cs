@@ -43,7 +43,7 @@ public class InputController : MonoBehaviour {
 				if(hit.transform.tag == "Player" && hit.transform.gameObject.GetComponent<PlayerController>() != GameController.instance.playerController) {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
 					//Get id from opponent
-					GameController.instance.BRController.SendBattleRequest(0);
+					GameController.instance.BRController.SendBattleRequest("0");
 				} else if(hit.transform.tag == "AICompanion") {
 					//Get ai data
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
