@@ -8,9 +8,11 @@ public class UserInterfaceController : MonoBehaviour {
 	public GameObject MapCanvas;
 	public GameObject BattleCanvas;
 
-	public SceneController SceneController;
-
 	public LoadingScreen LoadingScreen;
+
+	private void Awake() {
+		GameController.instance.BRController.InterfaceController = this;
+	}
 
 	public void ToggleLoadingScreen(string loadText) {
 		if(LoadingScreen.gameObject.activeSelf) {

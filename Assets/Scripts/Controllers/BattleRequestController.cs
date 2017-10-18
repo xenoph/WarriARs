@@ -5,12 +5,15 @@ using SocketIO;
 
 public class BattleRequestController : MonoBehaviour {
 
+	[HideInInspector]
 	public SocketIOComponent Socket;
+	[HideInInspector]
 	public UserInterfaceController InterfaceController;
-	public SceneController SceneController;
 
 	private void Awake() {
 		Socket = GetComponent<SocketIOComponent>();
+		InterfaceController = GameController.instance.InterfaceController;
+		SetupSocketReceivers();
 	}
 
 	public void SendBattleRequest(int id) {
@@ -20,8 +23,11 @@ public class BattleRequestController : MonoBehaviour {
 		Socket.Emit("BattleRequest", json);
 	}
 
-	public void InitialiseAIBattle() {
-
+	public void InitialiseAIBattle(int id) {
+		var json = new JSONObject();
+		json.AddField("playerRequested", GameController.instance.playerController.PlayerID);
+		json.AddField("aiID", id);
+		Socket.Emit("AIBattle", json);
 	}
 
 	public void SetUserInterface() {
@@ -38,8 +44,10 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
-		SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
-		//Extract needed data to set up UI
-		//InterfaceController.SetUpBattleCanvas();
+		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
+
+		var myHealth = int.Parse(obj.data["myChampionHealth"].str);
+		var oppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
+		InterfaceController.SetUpBattleCanvas(myHealth, oppHealth, obj.data["myChampionName"].str, obj.data["opponentChampionName"].str);
 	}
 }
