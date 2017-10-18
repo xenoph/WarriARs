@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour {
 
-	public int AId;
+	public string AId;
 
 	void Start () {
 		

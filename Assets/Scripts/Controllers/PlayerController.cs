@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     public Vector3 lastWorldpos;
 
     [HideInInspector]
-    public int PlayerID;
+    public string PlayerID;
 
     private NetworkServer server;
     private Location lastLocation;
