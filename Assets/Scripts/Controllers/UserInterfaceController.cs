@@ -11,6 +11,8 @@ public class UserInterfaceController : MonoBehaviour {
 	public LoadingScreen LoadingScreen;
 	public Button[] AbilityButtons;
 
+	private Dictionary<string, string> _abilityInfo;
+
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
 	}
@@ -28,10 +30,18 @@ public class UserInterfaceController : MonoBehaviour {
 
 	}
 
-	public void SetAbilityButtons(string[] abNames) {
+	public void OnGetAbilityNames(string[] abIds) {
+		
+	}
+
+	public void SetAbilityButtonNames(string[] abNames) {
 		for(int i = 0; i < AbilityButtons.Length; i++) {
 			AbilityButtons[i].GetComponentInChildren<Text>().text = abNames[i];
 		}
+	}
+
+	public void SetAbilityButtonDelegates() {
+		
 	}
 
 	public void UpdateHealth(int health) {

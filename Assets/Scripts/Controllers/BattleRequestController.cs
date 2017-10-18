@@ -48,7 +48,16 @@ public class BattleRequestController : MonoBehaviour {
 		var oppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
 		InterfaceController.SetUpBattleCanvas(myHealth, oppHealth, obj.data["myChampionName"].str, obj.data["opponentChampionName"].str);
 
-		string[] abNames = new string[] { obj.data["ability1"].str, obj.data["ability1"].str, obj.data["ability1"].str };
-		InterfaceController.SetAbilityButtons(abNames);
+		string[] abIds = new string[] { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
+		GetAbilityNames(abIds);
+	}
+
+	private void GetAbilityNames(string[] abIds) {
+		var json = new JSONObject();
+		for(int i = 0; i < abIds.Length; i++) {
+			json.AddField("Ability" + (i + 1), abIds[i]);
+		}
+
+		Socket.Emit("GetAbilityNames", json);
 	}
 }
