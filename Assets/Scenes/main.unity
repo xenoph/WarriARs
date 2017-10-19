@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Socket: {fileID: 772119155}
+  RequestTimer: 10
   InterfaceController: {fileID: 0}
 --- !u!4 &181394711
 Transform:

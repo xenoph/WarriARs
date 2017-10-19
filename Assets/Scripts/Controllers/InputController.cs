@@ -24,13 +24,13 @@ public class InputController : MonoBehaviour {
 				if(hit.transform.tag == "AICompanion") {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
-				} else if(hit.transform.tag == "Player") {
-					Debug.Log("player");
-				} else if(hit.transform.parent.transform.tag == "Map") {
+				} else if(hit.transform.tag == "Player" && hit.transform.GetComponent<PlayerController>() != GameController.instance.playerController) {
+					GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
+				} /*else if(hit.transform.parent.transform.tag == "Map") {
 					var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
 					var loc = hit.point.GetGeoPosition(abMap.CenterMercator, abMap.WorldRelativeScale);
 					//GManager.CurrentPlayer.SetNewLocation((float)loc.x, (float)loc.y, GManager);
-				}
+				}*/
 			}
 		}
 	}
@@ -42,8 +42,8 @@ public class InputController : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit)) {
 				if(hit.transform.tag == "Player" && hit.transform.gameObject.GetComponent<PlayerController>() != GameController.instance.playerController) {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
-					//Get id from opponent
-					GameController.instance.BRController.SendBattleRequest("0");
+					//(GameController.instance.BRController.SendBattleRequest(hit.transform.GetComponent<PlayerController>().PlayerID);
+					GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
 				} else if(hit.transform.tag == "AICompanion") {
 					//Get ai data
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);

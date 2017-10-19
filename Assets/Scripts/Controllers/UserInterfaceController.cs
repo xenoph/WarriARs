@@ -8,9 +8,22 @@ public class UserInterfaceController : MonoBehaviour {
 	public GameObject MapCanvas;
 	public GameObject BattleCanvas;
 
+	[Header("Send Request Panel")]
+	public Animator SendRequestAnimator;
+	public Text SendRequestInfoText;
+	public Button SendRequestButton;
+	public Button CancelRequestButton;
+
+	[Header("Receive Request Panel")]
+	public Animator ReceiveRequestAnimator;
+	public Text ReceiveReqestInfoText;
+	public Button AcceptRequestButton;
+	public Button DeclineRequestButton;
+
 	public LoadingScreen LoadingScreen;
 	public Button[] AbilityButtons;
 
+	[Header("Battle Interface Elements")]
 	public Text MyHealth;
 	public Text MyName;
 
@@ -21,6 +34,21 @@ public class UserInterfaceController : MonoBehaviour {
 
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
+	}
+
+	public void ShowBattleRequestPanel(string id) {
+		SendRequestInfoText.text = "Request battle with " + id + "?";
+		SendRequestAnimator.SetTrigger("Show");
+
+		SendRequestButton.onClick.RemoveAllListeners();
+		SendRequestButton.onClick.AddListener(delegate { SendBattleRequest(id); });
+
+		CancelRequestButton.onClick.RemoveAllListeners();
+		CancelRequestButton.onClick.AddListener(delegate { CancelBattleRequest(); });
+	}
+
+	public void HideBattleRequestPanel() {
+		SendRequestAnimator.SetTrigger("Hide");
 	}
 
 	public void ToggleLoadingScreen(string loadText) {
@@ -53,7 +81,15 @@ public class UserInterfaceController : MonoBehaviour {
 		}
 	}
 
-	public void UpdateHealth(int health) {
+	private void SendBattleRequest(string id) {
+		SendRequestInfoText.text = "Requesting battle....";
+		GameController.instance.BRController.AwaitRequestFeedback = true;
+		StartCoroutine(GameController.instance.BRController.BattleRequestTimer());
+		GameController.instance.BRController.SendBattleRequest(id);
+	}
 
+	private void CancelBattleRequest() {
+		StopCoroutine(GameController.instance.BRController.BattleRequestTimer());
+		GameController.instance.BRController.StopRequest();
 	}
 }

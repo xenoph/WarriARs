@@ -6,8 +6,13 @@ using SocketIO;
 public class BattleRequestController : MonoBehaviour {
 
 	public SocketIOComponent Socket;
+
+	public int RequestTimer;
+
 	[HideInInspector]
 	public UserInterfaceController InterfaceController;
+	[HideInInspector]
+	public bool AwaitRequestFeedback = false;
 
 	private List<string> _abIds;
 
@@ -73,5 +78,22 @@ public class BattleRequestController : MonoBehaviour {
 		InterfaceController.SetAbilityButtonDelegates(_abIds);
 
 		_abIds = null;
+	}
+
+	public IEnumerator BattleRequestTimer() {
+		int timer = 0;
+		Debug.Log("awaiting request status");
+		while(timer <= RequestTimer && AwaitRequestFeedback) {
+			timer++;
+			if(timer == RequestTimer) {
+				StopRequest();
+			}
+			yield return new WaitForSeconds(1);
+		}
+	}
+
+	public void StopRequest() {
+		AwaitRequestFeedback = false;
+		GameController.instance.InterfaceController.HideBattleRequestPanel();
 	}
 }
