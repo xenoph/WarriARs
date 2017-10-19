@@ -113,6 +113,10 @@ public class NetworkServer : MonoBehaviour {
 			other.PlayerID = obj.data["id"].str;
 			other.username = obj.data["username"].str;
 
+			if(obj.data["ai"].str == "true") {
+				other.gameObject.AddComponent<AIController>();
+			}
+
 			Location newLoc = new Location();
 			double lat, lng;
 			double.TryParse(obj.data["lat"].str, out lat);
