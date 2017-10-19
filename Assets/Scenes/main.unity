@@ -199,13 +199,14 @@ MonoBehaviour:
   mapInitializer: {fileID: 0}
   battleController: {fileID: 0}
   InterfaceController: {fileID: 0}
-  SceneController: {fileID: 0}
+  SceneController: {fileID: 601822231}
   networkServer: {fileID: 0}
   currentPlayerID: 
   playerController: {fileID: 0}
   playerPrefab: {fileID: 1271297665027458, guid: 136bab2f01e84fb4597b47641fa2a93f,
     type: 2}
   cameraController: {fileID: 0}
+  PlayerBusy: 0
 --- !u!1 &360268426
 GameObject:
   m_ObjectHideFlags: 0

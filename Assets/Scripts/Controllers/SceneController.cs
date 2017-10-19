@@ -8,7 +8,7 @@ public class SceneController : MonoBehaviour {
 	public UserInterfaceController UserInterfaceController;
 
 	public void ToggleBattleScene(string currentScene, string loadScene, string loadText) {
-		UserInterfaceController.ToggleLoadingScreen(loadText);
+		GameController.instance.InterfaceController.ToggleLoadingScreen(loadText);
 		SceneManager.UnloadSceneAsync(currentScene);
 		GameController.instance.playerController.gameObject.SetActive(false);
 		AsyncOperation load = SceneManager.LoadSceneAsync(loadScene, LoadSceneMode.Additive);
@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour {
 		}
 		if(loadScene == "battle") {
 			while(GameController.instance.battleController == null &&
-					!UserInterfaceController.BattleCanvas.activeSelf) {
+					!GameController.instance.InterfaceController.BattleCanvas.activeSelf) {
 				yield return null;
 			}
 			GameController.instance.battleController.SetUpBattle();

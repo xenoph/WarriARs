@@ -11,8 +11,8 @@ public class BattleController : MonoBehaviour {
 
 	public int BattleTimer;
 
-	public Transform SpawnLocationLocalChampion;
-	public Transform SpawnLocationOpponentChampion;
+	public GameObject SpawnLocationLocalChampion;
+	public GameObject SpawnLocationOpponentChampion;
 
 	public GameObject[] ChampionPrefabs;
 
@@ -47,19 +47,22 @@ public class BattleController : MonoBehaviour {
 		var myName = GameController.instance.InterfaceController.MyName.text;
 		var oppName = GameController.instance.InterfaceController.OpponentName.text;
 
-		_myHealth = int.Parse(GameController.instance.InterfaceController.MyHealth.text);
-		_oppHealth = int.Parse(GameController.instance.InterfaceController.OpponentHealth.text);
+		//_myHealth = int.Parse(GameController.instance.InterfaceController.MyHealth.text);
+		//_oppHealth = int.Parse(GameController.instance.InterfaceController.OpponentHealth.text);
 
 		SpawnChampions(myName, oppName);
 		StartCoroutine(RunBattleTimer());
 	}
 
 	private void SpawnChampions(string myname, string oppname) {
+		Debug.Log(myname);
+		Debug.Log(ChampionPrefabs.Length);
 		var myPrefab = ChampionPrefabs.Where(n => n.name == myname).FirstOrDefault();
-		var myChamp = Instantiate(myPrefab, SpawnLocationLocalChampion.position, Quaternion.identity);
+		Debug.Log(myPrefab.name);
+		var myChamp = Instantiate(myPrefab, new Vector3(-5.5f, 0.5f, 1f), Quaternion.identity);
 
 		var oppPrefab = ChampionPrefabs.Where(n => n.name == oppname).FirstOrDefault();
-		var oppChamp = Instantiate(oppPrefab, SpawnLocationOpponentChampion.position, Quaternion.identity);
+		var oppChamp = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.identity);
 	}
 
 	public void SendAbility(string id) {
@@ -86,7 +89,6 @@ public class BattleController : MonoBehaviour {
 
 	private void OnDisable() {
 		mainCam.gameObject.SetActive(true);
-		Screen.orientation = ScreenOrientation.Portrait;
 		GameController.instance.battleController = null;
 	}
 }

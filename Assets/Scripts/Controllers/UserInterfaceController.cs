@@ -79,6 +79,9 @@ public class UserInterfaceController : MonoBehaviour {
 
 		OpponentHealth.text = oppHealth.ToString();
 		OpponentName.text = oppName;
+		
+		MapCanvas.SetActive(false);
+		BattleCanvas.SetActive(true);
 	}
 
 	public void SetAbilityButtonNames(List<string> abNames) {
