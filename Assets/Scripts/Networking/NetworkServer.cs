@@ -113,6 +113,8 @@ public class NetworkServer : MonoBehaviour {
 			other.PlayerID = obj.data["id"].str;
 			other.username = obj.data["username"].str;
 
+			Debug.Log(obj.data["ai"].str);
+
 			if(obj.data["ai"].str == "true") {
 				other.gameObject.AddComponent<AIController>();
 			}

@@ -206,6 +206,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 1271297665027458, guid: 136bab2f01e84fb4597b47641fa2a93f,
     type: 2}
   cameraController: {fileID: 0}
+  PlayerBusy: 0
 --- !u!1 &360268426
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,10 +327,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
-      propertyPath: url
-      value: wss://warriars.fun/game/socket.io/?EIO=4&transport=websocket
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
   m_IsPrefabParent: 0
@@ -445,18 +442,3 @@ MonoBehaviour:
   height: 5
   heightDamping: 2
   rotationDamping: 3
---- !u!1 &1247267674 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
-  m_PrefabInternal: {fileID: 772119154}
---- !u!114 &1247267675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1247267674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38128da059834ac47b6819d6a4b93db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
