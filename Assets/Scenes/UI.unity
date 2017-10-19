@@ -3597,8 +3597,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapCanvas: {fileID: 1248618399}
   BattleCanvas: {fileID: 615514610}
-  LoadingScreen: {fileID: 0}
-  AbilityButtons: []
+  LoadingScreen: {fileID: 78124448}
+  AbilityButtons:
+  - {fileID: 2008825474}
+  - {fileID: 779334190}
+  - {fileID: 958093718}
+  MyHealth: {fileID: 842742032}
+  MyName: {fileID: 628292907}
+  OpponentHealth: {fileID: 2065692048}
+  OpponentName: {fileID: 1009862635}
 --- !u!4 &1097554092
 Transform:
   m_ObjectHideFlags: 0
