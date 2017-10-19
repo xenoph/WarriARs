@@ -26,8 +26,13 @@ public class InputController : MonoBehaviour {
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
 				} else if(hit.transform.tag == "Player" && hit.transform.GetComponent<PlayerController>() != GameController.instance.playerController) {
-					GameController.instance.PlayerBusy = true;
-					GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
+					if(hit.transform.GetComponent<AIController>()) {
+						GameController.instance.PlayerBusy = true;
+						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().PlayerID);
+					} else {
+						GameController.instance.PlayerBusy = true;
+						GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
+					}
 				} /*else if(hit.transform.parent.transform.tag == "Map") {
 					var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
 					var loc = hit.point.GetGeoPosition(abMap.CenterMercator, abMap.WorldRelativeScale);

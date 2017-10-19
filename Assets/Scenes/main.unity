@@ -199,7 +199,7 @@ MonoBehaviour:
   mapInitializer: {fileID: 0}
   battleController: {fileID: 0}
   InterfaceController: {fileID: 0}
-  SceneController: {fileID: 0}
+  SceneController: {fileID: 601822231}
   networkServer: {fileID: 0}
   currentPlayerID: 
   playerController: {fileID: 0}
