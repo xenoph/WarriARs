@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SocketIO;
 
 public class BattleController : MonoBehaviour {
 
 	public Camera battleCam, mainCam;
 	public string battleID;
 
+	public int BattleTimer;
+
 	public Transform SpawnLocationLocalChampion;
 	public Transform SpawnLocationOpponentChampion;
-
-	public string LocalChampionName;
-	public string OpponentChampionName;
-
-	public int LocalChampionHealth;
-	public int OpponentChampionHealth;
 
 	public GameObject[] ChampionPrefabs;
 
 	private Dictionary<string, string> _battleData;
+	private SocketIOComponent Socket;
+
+	private float _myHealth;
+	private float _oppHealth;
+	private bool _dead;
 
 	private void Start() {
 		GameController.instance.battleController = this;
@@ -27,35 +30,58 @@ public class BattleController : MonoBehaviour {
 		mainCam = Camera.main;
 		mainCam.gameObject.SetActive(false);
 		battleCam.gameObject.SetActive(true);
+
+		Socket = GameController.instance.BRController.Socket;
+		SetUpSocketConnections();
+	}
+
+	public IEnumerator RunBattleTimer() {
+		var timer = 0;
+		while(timer < BattleTimer) {
+			timer++;
+			yield return new WaitForSeconds(1);
+		}
 	}
 
 	public void SetUpBattle() {
-		//_battleData = data;
-		//receive own champion stats + ability ids
-		//receive opponent prefabname + stats
-		SpawnChampions();
+		var myName = GameController.instance.InterfaceController.MyName.text;
+		var oppName = GameController.instance.InterfaceController.OpponentName.text;
+
+		_myHealth = int.Parse(GameController.instance.InterfaceController.MyHealth.text);
+		_oppHealth = int.Parse(GameController.instance.InterfaceController.OpponentHealth.text);
+
+		SpawnChampions(myName, oppName);
+		StartCoroutine(RunBattleTimer());
 	}
 
-	private void SetInterfaceElements() {
-	}
+	private void SpawnChampions(string myname, string oppname) {
+		var myPrefab = ChampionPrefabs.Where(n => n.name == myname).FirstOrDefault();
+		var myChamp = Instantiate(myPrefab, SpawnLocationLocalChampion.position, Quaternion.identity);
 
-	private void SpawnChampions() {
-		//Spawn in prefabs from given names
-		//Give them health
+		var oppPrefab = ChampionPrefabs.Where(n => n.name == oppname).FirstOrDefault();
+		var oppChamp = Instantiate(oppPrefab, SpawnLocationOpponentChampion.position, Quaternion.identity);
 	}
 
 	public void SendAbility(string id) {
 		var json = new JSONObject();
-		//json.AddField("")
-		//send ability id
+		json.AddField("ability", id);
+		Socket.Emit("usedAbility", json);
+		StopCoroutine(RunBattleTimer());
 	}
 
-	private void GetOpponentAbilityUsed(JSONObject jSON) {
-		//receive ability used by opponent
+	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
+		var dmgTaken = int.Parse(obj.data["damage"].str);
+		_myHealth -= dmgTaken;
+		if(_myHealth <= 0) { _dead = true; }
+		PlayAbilities(obj.data["ability"].str);
 	}
 
-	private void PlayAbilities() {
+	private void PlayAbilities(string abilityName) {
 		//Make prefabs play abilities in turn and show changes in UI.
+	}
+
+	private void SetUpSocketConnections() {
+		Socket.On("usedAbility", OnOpponentAbilityUsed);
 	}
 
 	private void OnDisable() {

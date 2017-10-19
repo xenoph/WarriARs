@@ -83,7 +83,6 @@ public class BattleRequestController : MonoBehaviour {
 
 	public IEnumerator BattleRequestTimer() {
 		int timer = 0;
-		Debug.Log("awaiting request status");
 		while(timer <= RequestTimer && AwaitRequestFeedback) {
 			timer++;
 			if(timer == RequestTimer) {
