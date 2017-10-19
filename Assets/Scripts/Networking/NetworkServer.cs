@@ -148,7 +148,8 @@ public class NetworkServer : MonoBehaviour {
 			other.targetPosition = ConvertPositions.ConvertLocationToVector3(newLoc, GameController.instance.mapInitializer.map);
 			newLoc = null;
 		} else {
-			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Could not move them.");
+			OnLogin(obj);
+			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Adding them.");
 		}
 	}
 
