@@ -13,6 +13,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 	public Button Ability2;
 	public Button Ability3;
 	public Text EffectText;
+	public Text yourName, opponentName;
 
 	public CombatNeedleBar NeedleBar;
 
@@ -51,7 +52,7 @@ public class MidtermFightSceneController : MonoBehaviour {
 
 	private Animator _aniCont;
 
-	private PlayerCtrl _player;
+	private PlayerController _player;
 
 	private void Awake() {
 		_aniCont = transform.GetChild(0).GetComponent<Animator>();
@@ -60,9 +61,13 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void Start () {
-		_player = GameObject.FindObjectOfType<PlayerCtrl>();
-		_player.midtermFightScene = this;
-		_player.register();
+		_player = GameController.instance.playerController;
+		GameController.instance.cameraController.gameObject.SetActive(false);
+		SetUpScene(_player.diff);
+		yourName.text = _player.username;
+		opponentName.text = _player.opponentUsername;
+		//_player.midtermFightScene = this;
+		//_player.register();
 		SetGround("NormalGround");
 		SetUpButtons();
 	}
@@ -157,13 +162,15 @@ public class MidtermFightSceneController : MonoBehaviour {
 			var parts = Instantiate(SlashParticles, new Vector3(-3f, 430f, 1.6f), Quaternion.identity);
 			Invoke("SpawnIceExplosion", 0.8f);
 			StartCoroutine(SpawnInfoText(dmg, DamageFeedback(), AdrianChampion));
+			Destroy(parts.gameObject, 10f);
 			if(_adrianChamp.CheckDead()) { AdrianDead(); }
 		}
 		_playerTurn = false;
 	}
 
 	private void SpawnIceExplosion() {
-		Instantiate(IcicleExplosion, new Vector3(1.5f, 425f, 14f), Quaternion.identity);
+		GameObject ice = (GameObject) Instantiate(IcicleExplosion, new Vector3(1.5f, 425f, 14f), Quaternion.identity);
+		Destroy(ice, 10f);
 	}
 
 	private string DamageFeedback() {
@@ -240,7 +247,13 @@ public class MidtermFightSceneController : MonoBehaviour {
 				SceneManager.UnloadSceneAsync("levelup");
 			}
 			yield return new WaitForSeconds(1);
-			_player.UnloadFightScene();
+			GameController.instance.PlayerBusy = false;
+
+			if(GameController.instance.playerController.diff < 3)
+				GameController.instance.playerController.diff++;
+			
+			GameController.instance.cameraController.gameObject.SetActive(true);
+			GameController.instance.UnloadFightScene();
 			yield break;
 		} else {
 			yield return new WaitForSeconds(2);
@@ -249,7 +262,8 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void InstantiateFireBreath() {
-		Instantiate(FireBreath, new Vector3(3f, 433f, -6f), Quaternion.identity);
+		GameObject fire = (GameObject) Instantiate(FireBreath, new Vector3(3f, 433f, -6f), Quaternion.identity);
+		Destroy(fire, 10f);
 	}
 
 	private void ResetHealths() {
@@ -287,7 +301,8 @@ public class MidtermFightSceneController : MonoBehaviour {
 	}
 
 	private void SpawnAdrianDeadParticles() {
-		Instantiate(AdrianDeadParticles, new Vector3(1f, 2f, 1f), Quaternion.identity);
+		GameObject dp = (GameObject) Instantiate(AdrianDeadParticles, new Vector3(1f, 2f, 1f), Quaternion.identity);
+		Destroy(dp, 10f);
 	}
 
 	private void AdrianDead() {

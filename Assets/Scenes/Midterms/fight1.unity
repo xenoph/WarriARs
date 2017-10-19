@@ -2696,7 +2696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1536095369
 Light:
   m_ObjectHideFlags: 0
@@ -3528,6 +3528,8 @@ MonoBehaviour:
   Ability2: {fileID: 2090846647}
   Ability3: {fileID: 1949067229}
   EffectText: {fileID: 470895910}
+  yourName: {fileID: 288593637}
+  opponentName: {fileID: 1873223883}
   NeedleBar: {fileID: 1830297882}
   InsaneSkillzChampion: {fileID: 1885162559}
   AdrianChampion: {fileID: 1105791194}

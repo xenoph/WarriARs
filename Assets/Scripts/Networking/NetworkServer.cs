@@ -95,7 +95,7 @@ public class NetworkServer : MonoBehaviour {
 
 	private void OnLoggedIn(SocketIOEvent obj) {
 		//interfaceManager.LoadPlayer(obj);
-		GameController.instance.LoadGame();
+		GameController.instance.LoadGame(obj.data["username"].str);
 	}
 
 	public void Move(float lat, float lng, int dist) {
@@ -109,9 +109,8 @@ public class NetworkServer : MonoBehaviour {
 
 	private void OnLogin(SocketIOEvent obj) {
 		if(!otherPlayers.ContainsKey(obj.data["id"].str)) {
-			PlayerController other = GameController.instance.SpawnPlayer(false);
+			PlayerController other = GameController.instance.SpawnPlayer(false, obj.data["username"].str);
 			other.PlayerID = obj.data["id"].str;
-			other.username = obj.data["username"].str;
 
 			Debug.Log(obj.data["ai"].str);
 

@@ -50,7 +50,6 @@ public class BattleController : MonoBehaviour {
 		_myHealth = GameController.instance.BRController.MyHealth;
 		_oppHealth = GameController.instance.BRController.OppHealth;
 
-		Debug.Log(_myHealth + " " + _oppHealth);
 		SpawnChampions(myName, oppName);
 		StartCoroutine(RunBattleTimer());
 	}

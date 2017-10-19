@@ -47,15 +47,16 @@ public class GameController : MonoBehaviour {
 		#endif
 	}
 
-	public void LoadGame() {
+	public void LoadGame(string username) {
 		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
-        SpawnPlayer(true);
+        SpawnPlayer(true, username);
 	}
 
-    public PlayerController SpawnPlayer(bool local) {
+    public PlayerController SpawnPlayer(bool local, string username) {
         GameObject player = (GameObject) Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         PlayerController controller = player.GetComponent<PlayerController>();
+		controller.username = username;
         controller.local = local;
 		return controller;
     }
@@ -83,5 +84,16 @@ public class GameController : MonoBehaviour {
 			if(warning.showing)
 				warning.text.text = "Failed to update your location.\nCheck if your Location Service is enabled.";
 		}
+	}
+
+	public void UnloadFightScene() {
+		AsyncOperation ao = SceneManager.UnloadSceneAsync("fight1");
+		StartCoroutine(unloadedFight(ao));
+	}
+
+	IEnumerator unloadedFight(AsyncOperation ao) {
+		while(!ao.isDone)
+			yield return null;
+		//InterfaceController.
 	}
 }

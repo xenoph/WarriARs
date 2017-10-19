@@ -10,7 +10,11 @@ public class LoadingMap : MonoBehaviour {
 	public Slider loadingBar;
 
 	void Start() {
-		StartCoroutine(NotifySlack());
+		//StartCoroutine(NotifySlack());
+
+		AsyncOperation ao = SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
+		StartCoroutine(loadingMap(ao));
+
 	}
 
 	IEnumerator NotifySlack() {

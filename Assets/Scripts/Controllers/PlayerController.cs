@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour {
     public Vector3 targetPosition;// { get; private set; }
     public Vector3 lastWorldpos;
 
+    public int diff = 1;
+    public string opponentUsername;
+
     [HideInInspector]
     public string PlayerID;
 
