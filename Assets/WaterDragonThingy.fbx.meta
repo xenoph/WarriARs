@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: af429d4e37fef0a4e826e5d53474e2bf
+timeCreated: 1508412332
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: curve1
+    100002: Drogo_Rig
+    100004: L_Ankle
+    100006: L_Ball
+    100008: L_Knee
+    100010: L_Leg
+    100012: L_Leg_Base
+    100014: L_Toe
+    100016: LowerJaw
+    100018: LowerJaw2
+    100020: LowerJaw3
+    100022: Neck1
+    100024: Neck2
+    100026: Neck3
+    100028: Neck4
+    100030: NeckEnd
+    100032: R_Ankle
+    100034: R_Ball
+    100036: R_Knee
+    100038: R_Leg
+    100040: R_Leg_Base
+    100042: R_Toe
+    100044: Tail1
+    100046: Tail10
+    100048: Tail11
+    100050: Tail12
+    100052: Tail13
+    100054: Tail2
+    100056: Tail3
+    100058: Tail4
+    100060: Tail5
+    100062: Tail6
+    100064: Tail7
+    100066: Tail8
+    100068: Tail9
+    100070: Tail_JNTS_GRP
+    100072: Tail_JNTS_GRP 1
+    100074: Tale1_CTRL
+    100076: Tale2_CTRL
+    100078: Tale3_CTRL
+    100080: Tale4_CTRL
+    100082: Tale5_CTRL
+    100084: Tale6_CTRL
+    100086: Tale7_CTRL
+    100088: Tale_CTRL_JNTS_GRP
+    100090: UpperJaw
+    100092: UpperJaw2
+    100094: UpperJaw3
+    100096: Water
+    100098: //RootNode
+    400000: curve1
+    400002: Drogo_Rig
+    400004: L_Ankle
+    400006: L_Ball
+    400008: L_Knee
+    400010: L_Leg
+    400012: L_Leg_Base
+    400014: L_Toe
+    400016: LowerJaw
+    400018: LowerJaw2
+    400020: LowerJaw3
+    400022: Neck1
+    400024: Neck2
+    400026: Neck3
+    400028: Neck4
+    400030: NeckEnd
+    400032: R_Ankle
+    400034: R_Ball
+    400036: R_Knee
+    400038: R_Leg
+    400040: R_Leg_Base
+    400042: R_Toe
+    400044: Tail1
+    400046: Tail10
+    400048: Tail11
+    400050: Tail12
+    400052: Tail13
+    400054: Tail2
+    400056: Tail3
+    400058: Tail4
+    400060: Tail5
+    400062: Tail6
+    400064: Tail7
+    400066: Tail8
+    400068: Tail9
+    400070: Tail_JNTS_GRP
+    400072: Tail_JNTS_GRP 1
+    400074: Tale1_CTRL
+    400076: Tale2_CTRL
+    400078: Tale3_CTRL
+    400080: Tale4_CTRL
+    400082: Tale5_CTRL
+    400084: Tale6_CTRL
+    400086: Tale7_CTRL
+    400088: Tale_CTRL_JNTS_GRP
+    400090: UpperJaw
+    400092: UpperJaw2
+    400094: UpperJaw3
+    400096: Water
+    400098: //RootNode
+    4300000: Water
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Water
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
