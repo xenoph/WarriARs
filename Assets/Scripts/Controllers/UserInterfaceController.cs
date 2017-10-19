@@ -7,6 +7,7 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public GameObject MapCanvas;
 	public GameObject BattleCanvas;
+	public LoadingScreen LoadingScreen;
 
 	[Header("Send Request Panel")]
 	public Animator SendRequestAnimator;
@@ -20,17 +21,19 @@ public class UserInterfaceController : MonoBehaviour {
 	public Button AcceptRequestButton;
 	public Button DeclineRequestButton;
 
-	public LoadingScreen LoadingScreen;
-	public Button[] AbilityButtons;
-
 	[Header("Battle Interface Elements")]
-	public Text MyHealth;
-	public Text MyName;
+	[Header("Health Bars")]
+	public Text MyHealthText;
+	public Slider MyHealthBar;
+	public Text OpponentHealthText;
+	public Slider OpponentHealthBar;
 
-	public Text OpponentHealth;
+	[Header("Nameplates")]
+	public Text MyName;
 	public Text OpponentName;
 
-	private Dictionary<string, string> _abilityInfo;
+	public Button[] AbilityButtons;
+
 
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
@@ -74,10 +77,10 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void SetUpBattleCanvas(int myHealth, int oppHealth, string myName, string oppName) {
-		MyHealth.text = myHealth.ToString();
+		MyHealthText.text = myHealth.ToString();
 		MyName.text = myName;
 
-		OpponentHealth.text = oppHealth.ToString();
+		OpponentHealthText.text = oppHealth.ToString();
 		OpponentName.text = oppName;
 		
 		MapCanvas.SetActive(false);
@@ -109,4 +112,31 @@ public class UserInterfaceController : MonoBehaviour {
 		GameController.instance.BRController.StopRequest();
 		GameController.instance.PlayerBusy = false;
 	}
+
+	/*private void UpdateHealth(int health) {
+		healthBar.maxValue = maxHealth;
+		currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+		float percent = ((float) currentHealth / (float) maxHealth) * 100f;
+
+		if(percent <= lowPercent) {
+			if(colorLerpTime < 1f) {
+				healthFill.color = Color.Lerp(healthBarColor, new Color(healthBarColor.r, healthBarColor.g, healthBarColor.b, 0f), colorLerpTime);
+				colorLerpTime += Time.deltaTime / healthBlinkDuration;
+			} else if(colorLerpTime > 1f && colorLerpTime < 2f) {
+				healthFill.color = Color.Lerp(healthBarColor, new Color(healthBarColor.r, healthBarColor.g, healthBarColor.b, 0f), 2f - colorLerpTime);
+				colorLerpTime += Time.deltaTime / healthBlinkDuration;
+				if(colorLerpTime >= 2f)
+					colorLerpTime -= 2f;
+			}
+		} else {
+			healthFill.color = healthBarColor;
+		}
+
+		tempHealth = Mathf.RoundToInt(Mathf.Lerp((float) tempHealth, (float) currentHealth, .1f));
+		healthBar.value = tempHealth;
+		if(healthBar.value <= 4) //for some reason is the health bar 4 when you have 0 hp...
+			healthBar.fillRect.GetComponent<Image>().enabled = false;
+		if(healthText.text != health)
+			healthText.text = health;
+	}*/
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1268,7 +1268,7 @@ GameObject:
   - component: {fileID: 422574475}
   - component: {fileID: 422574474}
   m_Layer: 5
-  m_Name: Background
+  m_Name: YourHealthBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2191,7 +2191,7 @@ GameObject:
   - component: {fileID: 628292908}
   - component: {fileID: 628292907}
   m_Layer: 5
-  m_Name: username
+  m_Name: YourUsername
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2809,7 +2809,7 @@ GameObject:
   - component: {fileID: 842742033}
   - component: {fileID: 842742032}
   m_Layer: 5
-  m_Name: Health
+  m_Name: HealthBarText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3078,7 +3078,7 @@ GameObject:
   - component: {fileID: 889853480}
   - component: {fileID: 889853479}
   m_Layer: 5
-  m_Name: Dragon Name
+  m_Name: OpponentDragonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3325,7 +3325,7 @@ GameObject:
   - component: {fileID: 1009862636}
   - component: {fileID: 1009862635}
   m_Layer: 5
-  m_Name: username
+  m_Name: OpponentUsername
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3633,6 +3633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapCanvas: {fileID: 1248618399}
   BattleCanvas: {fileID: 615514610}
+  LoadingScreen: {fileID: 78124448}
   SendRequestAnimator: {fileID: 846483279}
   SendRequestInfoText: {fileID: 248903735}
   SendRequestButton: {fileID: 563446454}
@@ -3641,15 +3642,16 @@ MonoBehaviour:
   ReceiveReqestInfoText: {fileID: 677698}
   AcceptRequestButton: {fileID: 1885319055}
   DeclineRequestButton: {fileID: 516732961}
-  LoadingScreen: {fileID: 78124448}
+  MyHealthText: {fileID: 842742032}
+  MyHealthBar: {fileID: 1924616428}
+  OpponentHealthText: {fileID: 2065692048}
+  OpponentHealthBar: {fileID: 1965151498}
+  MyName: {fileID: 628292907}
+  OpponentName: {fileID: 1009862635}
   AbilityButtons:
   - {fileID: 2008825474}
   - {fileID: 779334190}
   - {fileID: 958093718}
-  MyHealth: {fileID: 842742032}
-  MyName: {fileID: 628292907}
-  OpponentHealth: {fileID: 2065692048}
-  OpponentName: {fileID: 1009862635}
 --- !u!4 &1097554092
 Transform:
   m_ObjectHideFlags: 0
@@ -5297,7 +5299,7 @@ GameObject:
   - component: {fileID: 1731563428}
   - component: {fileID: 1731563427}
   m_Layer: 5
-  m_Name: Dragon Name
+  m_Name: YourDragonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5764,7 +5766,7 @@ GameObject:
   - component: {fileID: 1905720628}
   - component: {fileID: 1905720627}
   m_Layer: 5
-  m_Name: Background
+  m_Name: OpponentHealthBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5831,7 +5833,7 @@ GameObject:
   - component: {fileID: 1924616427}
   - component: {fileID: 1924616428}
   m_Layer: 5
-  m_Name: HP
+  m_Name: YourHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5916,7 +5918,7 @@ GameObject:
   - component: {fileID: 1965151497}
   - component: {fileID: 1965151498}
   m_Layer: 5
-  m_Name: HP
+  m_Name: OpponentHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5949,7 +5951,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1965151496}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -6389,7 +6391,7 @@ GameObject:
   - component: {fileID: 2065692049}
   - component: {fileID: 2065692048}
   m_Layer: 5
-  m_Name: Health
+  m_Name: OpponentHealthBarText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
