@@ -93,7 +93,7 @@ public class UserInterfaceController : MonoBehaviour {
 	public void SetAbilityButtonDelegates(List<string> abIds) {
 		for(int i = 0; i < abIds.Count; i++) {
 			AbilityButtons[i].onClick.RemoveAllListeners();
-			AbilityButtons[i].onClick.AddListener(delegate { GameController.instance.battleController.SendAbility(abIds[i]); });
+			AbilityButtons[i].onClick.AddListener(delegate { GameController.instance.battleController.SendAbility(abIds[i - 1]); });
 		}
 	}
 

@@ -19,8 +19,8 @@ public class BattleController : MonoBehaviour {
 	private Dictionary<string, string> _battleData;
 	private SocketIOComponent Socket;
 
-	private float _myHealth;
-	private float _oppHealth;
+	private int _myHealth;
+	private int _oppHealth;
 	private bool _dead;
 
 	private void Start() {
@@ -47,18 +47,16 @@ public class BattleController : MonoBehaviour {
 		var myName = GameController.instance.InterfaceController.MyName.text;
 		var oppName = GameController.instance.InterfaceController.OpponentName.text;
 
-		//_myHealth = int.Parse(GameController.instance.InterfaceController.MyHealth.text);
-		//_oppHealth = int.Parse(GameController.instance.InterfaceController.OpponentHealth.text);
+		_myHealth = GameController.instance.BRController.MyHealth;
+		_oppHealth = GameController.instance.BRController.OppHealth;
 
+		Debug.Log(_myHealth + " " + _oppHealth);
 		SpawnChampions(myName, oppName);
 		StartCoroutine(RunBattleTimer());
 	}
 
 	private void SpawnChampions(string myname, string oppname) {
-		Debug.Log(myname);
-		Debug.Log(ChampionPrefabs.Length);
 		var myPrefab = ChampionPrefabs.Where(n => n.name == myname).FirstOrDefault();
-		Debug.Log(myPrefab.name);
 		var myChamp = Instantiate(myPrefab, new Vector3(-5.5f, 0.5f, 1f), Quaternion.identity);
 
 		var oppPrefab = ChampionPrefabs.Where(n => n.name == oppname).FirstOrDefault();
@@ -76,7 +74,7 @@ public class BattleController : MonoBehaviour {
 		var dmgTaken = int.Parse(obj.data["damage"].str);
 		_myHealth -= dmgTaken;
 		if(_myHealth <= 0) { _dead = true; }
-		PlayAbilities(obj.data["ability"].str);
+		//PlayAbilities(obj.data["ability"].str);
 	}
 
 	private void PlayAbilities(string abilityName) {

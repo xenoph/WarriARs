@@ -32,7 +32,7 @@ public class SceneController : MonoBehaviour {
 			GameController.instance.playerController.gameObject.SetActive(true);
 		}
 
-		UserInterfaceController.ToggleLoadingScreen(null);
+		GameController.instance.InterfaceController.ToggleLoadingScreen(null);
 		yield break;
 	}
 }
