@@ -42,10 +42,11 @@ public class BattleRequestController : MonoBehaviour {
 	private void SetupSocketReceivers() {
 		Socket.On("getBattleRequest", OnReceiveBattleRequest);
 		Socket.On("getBattleInfo", OnReceiveBattleInformation);
+		Socket.On("getAbilityNames", OnReceiveAbilityNames);
 	}
 
 	private void OnReceiveBattleRequest(SocketIOEvent obj) {
-
+		GameController.instance.InterfaceController.ShowReceivedRequestPanel(obj.data["sender"].str);
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {

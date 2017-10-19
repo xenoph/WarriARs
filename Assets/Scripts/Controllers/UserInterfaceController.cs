@@ -51,6 +51,19 @@ public class UserInterfaceController : MonoBehaviour {
 		SendRequestAnimator.SetTrigger("Hide");
 	}
 
+	public void ShowReceivedRequestPanel(string name) {
+		ReceiveReqestInfoText.text = name + " has requested a battle!";
+		ReceiveRequestAnimator.SetTrigger("Show");
+
+		AcceptRequestButton.onClick.RemoveAllListeners();
+
+		DeclineRequestButton.onClick.RemoveAllListeners();
+	}
+
+	public void HideReceivedRequestPanel() {
+
+	}
+
 	public void ToggleLoadingScreen(string loadText) {
 		if(LoadingScreen.gameObject.activeSelf) {
 			LoadingScreen.LoadingText.text = loadText;
