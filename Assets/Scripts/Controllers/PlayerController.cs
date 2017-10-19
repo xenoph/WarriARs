@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
 
     public bool local = false;
-    public bool ChampionAlive;
+    public bool ChampionAlive = true;
 
     public Vector3 targetPosition;// { get; private set; }
     public Vector3 lastWorldpos;

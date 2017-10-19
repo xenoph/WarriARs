@@ -104,5 +104,6 @@ public class UserInterfaceController : MonoBehaviour {
 	private void CancelBattleRequest() {
 		StopCoroutine(GameController.instance.BRController.BattleRequestTimer());
 		GameController.instance.BRController.StopRequest();
+		GameController.instance.PlayerBusy = false;
 	}
 }

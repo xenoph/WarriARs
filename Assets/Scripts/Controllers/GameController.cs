@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour {
 
     public Location currentLocation;
 
+	public bool PlayerBusy;
+
 	void Awake() {
 		instance = this;
 		SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);

@@ -7,7 +7,7 @@ using UnityEngine;
 public class InputController : MonoBehaviour {
 
 	private void Update() {
-		if(GameController.instance.battleController != null) { return; }
+		if(GameController.instance.battleController != null || GameController.instance.PlayerBusy) { return; }
 #if UNITY_EDITOR || UNITY_WEBGL
 		GetMouseClick();
 #elif UNITY_IOS || UNITY_ANDROID
@@ -23,8 +23,10 @@ public class InputController : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit, 200)) {
 				if(hit.transform.tag == "AICompanion") {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
+					GameController.instance.PlayerBusy = true;
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
 				} else if(hit.transform.tag == "Player" && hit.transform.GetComponent<PlayerController>() != GameController.instance.playerController) {
+					GameController.instance.PlayerBusy = true;
 					GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
 				} /*else if(hit.transform.parent.transform.tag == "Map") {
 					var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
@@ -42,11 +44,11 @@ public class InputController : MonoBehaviour {
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit)) {
 				if(hit.transform.tag == "Player" && hit.transform.gameObject.GetComponent<PlayerController>() != GameController.instance.playerController) {
-					if(!GameController.instance.playerController.ChampionAlive) { return; }
-					//(GameController.instance.BRController.SendBattleRequest(hit.transform.GetComponent<PlayerController>().PlayerID);
+					//if(!GameController.instance.playerController.ChampionAlive) { return; }
+					GameController.instance.PlayerBusy = true;
 					GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
 				} else if(hit.transform.tag == "AICompanion") {
-					//Get ai data
+					GameController.instance.PlayerBusy = true;
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
 				}
 			}

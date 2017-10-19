@@ -88,6 +88,7 @@ public class BattleRequestController : MonoBehaviour {
 			timer++;
 			if(timer == RequestTimer) {
 				StopRequest();
+				GameController.instance.PlayerBusy = false;
 			}
 			yield return new WaitForSeconds(1);
 		}

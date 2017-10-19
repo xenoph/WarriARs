@@ -18,7 +18,7 @@ public class MapInitializer : MonoBehaviour {
         tileProvider.SetCamera(Camera.main);
 		GameController.instance.SetupMap();
 		map.Initialize(new Vector2d(startLat, startLng), map.Zoom);
-		Screen.orientation = ScreenOrientation.Portrait;
+		//Screen.orientation = ScreenOrientation.Portrait;
 	}
 
 	void LateUpdate() {
