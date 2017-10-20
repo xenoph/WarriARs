@@ -261,6 +261,13 @@ public class MidtermFightSceneController : MonoBehaviour {
 		}
 	}
 
+	public void LeaveBattle() {
+		EffectText.text = "";
+		GameController.instance.PlayerBusy = false;
+		GameController.instance.cameraController.gameObject.SetActive(true);
+		GameController.instance.UnloadFightScene();
+	}
+
 	private void InstantiateFireBreath() {
 		GameObject fire = (GameObject) Instantiate(FireBreath, new Vector3(3f, 433f, -6f), Quaternion.identity);
 		Destroy(fire, 10f);

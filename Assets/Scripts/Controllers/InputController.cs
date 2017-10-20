@@ -52,9 +52,15 @@ public class InputController : MonoBehaviour {
 			RaycastHit hit;
 			if(Physics.Raycast(ray, out hit)) {
 				if(hit.transform.tag == "Player" && hit.transform.gameObject.GetComponent<PlayerController>() != GameController.instance.playerController) {
-					//if(!GameController.instance.playerController.ChampionAlive) { return; }
-					GameController.instance.PlayerBusy = true;
-					GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
+					if(hit.transform.GetComponent<AIController>()) {
+						GameController.instance.PlayerBusy = true;
+						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
+						SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
+					} else {
+						//if(!GameController.instance.playerController.ChampionAlive) { return; }
+						GameController.instance.PlayerBusy = true;
+						GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
+					}
 				} else if(hit.transform.tag == "AICompanion") {
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
