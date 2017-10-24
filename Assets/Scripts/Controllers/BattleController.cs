@@ -25,6 +25,9 @@ public class BattleController : MonoBehaviour {
 
 	private string _usedAbility;
 
+	private GameObject _myChampion;
+	private GameObject _oppChampion;
+
 	private void Start() {
 		GameController.instance.battleController = this;
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -60,6 +63,7 @@ public class BattleController : MonoBehaviour {
 		_usedAbility = id;
 		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
 		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+		_myChampion.GetComponent<ChampionAbilityController>().Ability1Effect.Play();
 	}
 
 	public void SendAbility(float percentage) {
@@ -74,10 +78,10 @@ public class BattleController : MonoBehaviour {
 
 	private void SpawnChampions(string myname, string oppname) {
 		var myPrefab = ChampionPrefabs.Where(n => n.name == myname).FirstOrDefault();
-		var myChamp = Instantiate(myPrefab, new Vector3(-5.5f, 0.5f, 1f), Quaternion.identity);
+		_myChampion = Instantiate(myPrefab, new Vector3(-5.5f, 0.5f, 1f), Quaternion.Euler(0f, 90f, 0f));
 
 		var oppPrefab = ChampionPrefabs.Where(n => n.name == oppname).FirstOrDefault();
-		var oppChamp = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.identity);
+		_oppChampion = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.Euler(0f, -90f, 0f));
 	}
 
 
