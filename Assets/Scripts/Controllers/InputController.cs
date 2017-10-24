@@ -30,8 +30,8 @@ public class InputController : MonoBehaviour {
 					if(hit.transform.GetComponent<AIController>()) {
 						GameController.instance.PlayerBusy = true;
 						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
-						SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
-						//GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().PlayerID);
+						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
+						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().PlayerID);
 					} else {
 						GameController.instance.PlayerBusy = true;
 						//GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
@@ -55,7 +55,8 @@ public class InputController : MonoBehaviour {
 					if(hit.transform.GetComponent<AIController>()) {
 						GameController.instance.PlayerBusy = true;
 						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
-						SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
+						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
+						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().PlayerID);
 					} else {
 						//if(!GameController.instance.playerController.ChampionAlive) { return; }
 						GameController.instance.PlayerBusy = true;

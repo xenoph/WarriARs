@@ -32,6 +32,13 @@ public class UserInterfaceController : MonoBehaviour {
 	public Text MyName;
 	public Text OpponentName;
 
+	[Header("Animations")]
+	public Animator AbilityBarAnimator;
+
+	[Header("GameObjects")]
+	public CombatNeedleBar NeedleBar;
+
+	[Header("Ability Buttons")]
 	public Button[] AbilityButtons;
 
 
@@ -96,7 +103,7 @@ public class UserInterfaceController : MonoBehaviour {
 	public void SetAbilityButtonDelegates(List<string> abIds) {
 		for(int i = 0; i < abIds.Count; i++) {
 			AbilityButtons[i].onClick.RemoveAllListeners();
-			AbilityButtons[i].onClick.AddListener(delegate { GameController.instance.battleController.SendAbility(abIds[i - 1]); });
+			AbilityButtons[i].onClick.AddListener(delegate { GameController.instance.battleController.UseAbility(abIds[i - 1]); });
 		}
 	}
 

@@ -33,12 +33,11 @@ public class CombatNeedleBar : MonoBehaviour {
 			if(Input.GetMouseButtonUp(0)) {
 				_runningCombat = false;
 				_moveNeedle = false;
-				var dmgDone = CalculateNewDamage();
 				if(_insideShake) {
 					_anim.SetTrigger("Shake");
 				}
 				_anim.SetBool("Show", false);
-				MFSceneController.GetPlayerDamage(dmgDone);
+				GameController.instance.battleController.SendAbility(CalculatePercentageHit());
 			}
 		}
 		if(_moveNeedle) {
@@ -50,6 +49,13 @@ public class CombatNeedleBar : MonoBehaviour {
 				if(Vector3.Distance(_needleRectTransform.anchoredPosition, _rightEndPos) < 1f) { _moveLeft = true; }
 			}
 		}
+	}
+
+	public void StartNeedle() {
+		_anim.SetBool("Show", true);
+		_moveLeft = (Random.value > 0.5f);
+		_moveNeedle = true;
+		StartCoroutine(EnableCombat());
 	}
 
 	public void StartCombat(int initDamage) {
@@ -65,22 +71,21 @@ public class CombatNeedleBar : MonoBehaviour {
 		_runningCombat = true;
 	}
 
-	private int CalculateNewDamage() {
-		var maxDmg = _initDamage;
+	private int CalculatePercentageHit() {
 		Vector3 currentSide;
-		if(_moveLeft) {
+		if(_needleRectTransform.anchoredPosition.x < 0) {
 			currentSide = _leftEndPos;
 		} else {
 			currentSide = _rightEndPos;
 		}
-		var hitPercentage = Vector3.Distance(_needleRectTransform.anchoredPosition, _midPos) / Vector3.Distance(currentSide, _midPos);
-		var dmgToRemove = hitPercentage * _initDamage;
-		var actualDmg = _initDamage - dmgToRemove;
-		return Mathf.RoundToInt(actualDmg);
+		
+		var fullLength = Vector3.Distance(currentSide, _midPos);
+		var remainingLength = fullLength - Vector3.Distance(_needleRectTransform.anchoredPosition, _midPos);
+		var hitPercentage = remainingLength / fullLength;
+		return Mathf.RoundToInt(hitPercentage * 100);
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log(other.name);
 		if(other.name == "BarNeedle") {
 			_insideShake = true;
 		}

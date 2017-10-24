@@ -23,6 +23,8 @@ public class BattleController : MonoBehaviour {
 	private int _oppHealth;
 	private bool _dead;
 
+	private string _usedAbility;
+
 	private void Start() {
 		GameController.instance.battleController = this;
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -54,6 +56,22 @@ public class BattleController : MonoBehaviour {
 		StartCoroutine(RunBattleTimer());
 	}
 
+	public void UseAbility(string id) {
+		_usedAbility = id;
+		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
+		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+	}
+
+	public void SendAbility(float percentage) {
+		var json = new JSONObject();
+		json.AddField("ability", _usedAbility);
+		json.AddField("percentage", percentage);
+		Socket.Emit("usedAbility", json);
+		StopCoroutine(RunBattleTimer());
+
+		_usedAbility = null;
+	}
+
 	private void SpawnChampions(string myname, string oppname) {
 		var myPrefab = ChampionPrefabs.Where(n => n.name == myname).FirstOrDefault();
 		var myChamp = Instantiate(myPrefab, new Vector3(-5.5f, 0.5f, 1f), Quaternion.identity);
@@ -62,12 +80,6 @@ public class BattleController : MonoBehaviour {
 		var oppChamp = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.identity);
 	}
 
-	public void SendAbility(string id) {
-		var json = new JSONObject();
-		json.AddField("ability", id);
-		Socket.Emit("usedAbility", json);
-		StopCoroutine(RunBattleTimer());
-	}
 
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
 		var dmgTaken = int.Parse(obj.data["damage"].str);
