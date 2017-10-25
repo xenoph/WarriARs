@@ -19,7 +19,6 @@ public class CombatNeedleBar : MonoBehaviour {
 
 	private RectTransform _needleRectTransform;
 
-	private int _initDamage;
 	private bool _insideShake;
 
 	private void Awake() {
@@ -53,14 +52,6 @@ public class CombatNeedleBar : MonoBehaviour {
 
 	public void StartNeedle() {
 		_anim.SetBool("Show", true);
-		_moveLeft = (Random.value > 0.5f);
-		_moveNeedle = true;
-		StartCoroutine(EnableCombat());
-	}
-
-	public void StartCombat(int initDamage) {
-		_anim.SetBool("Show", true);
-		_initDamage = initDamage;
 		_moveLeft = (Random.value > 0.5f);
 		_moveNeedle = true;
 		StartCoroutine(EnableCombat());

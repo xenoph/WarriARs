@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SocketIO;
+using System;
 
 public class BattleController : MonoBehaviour {
 
@@ -13,8 +14,9 @@ public class BattleController : MonoBehaviour {
 
 	public GameObject SpawnLocationLocalChampion;
 	public GameObject SpawnLocationOpponentChampion;
-
 	public GameObject[] ChampionPrefabs;
+
+	public float AbilityTimer;
 
 	private Dictionary<string, string> _battleData;
 	private SocketIOComponent Socket;
@@ -23,7 +25,11 @@ public class BattleController : MonoBehaviour {
 	private int _oppHealth;
 	private bool _dead;
 
-	private string _usedAbility;
+	private string _usedAbilityID;
+	private int _myUsedAbility;
+	private int _oppUsedAbility;
+	private int _goingFirst;
+	private bool _oppDead;
 
 	private GameObject _myChampion;
 	private GameObject _oppChampion;
@@ -59,8 +65,9 @@ public class BattleController : MonoBehaviour {
 		StartCoroutine(RunBattleTimer());
 	}
 
-	public void UseAbility(string id) {
-		_usedAbility = id;
+	public void UseAbility(string id, int abNumber) {
+		_myUsedAbility = abNumber;
+		_usedAbilityID = id;
 		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
 		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
 		_myChampion.GetComponent<ChampionAbilityController>().Ability1Effect.Play();
@@ -68,12 +75,13 @@ public class BattleController : MonoBehaviour {
 
 	public void SendAbility(float percentage) {
 		var json = new JSONObject();
-		json.AddField("ability", _usedAbility);
+		json.AddField("ability", _usedAbilityID);
 		json.AddField("percentage", percentage);
+		json.AddField("abilityNumber", _myUsedAbility);
 		Socket.Emit("usedAbility", json);
 		StopCoroutine(RunBattleTimer());
 
-		_usedAbility = null;
+		_usedAbilityID = null;
 	}
 
 	private void SpawnChampions(string myname, string oppname) {
@@ -87,17 +95,55 @@ public class BattleController : MonoBehaviour {
 
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
 		var dmgTaken = int.Parse(obj.data["damage"].str);
-		_myHealth -= dmgTaken;
+		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
+		_goingFirst = int.Parse(obj.data["goingFirst"].str);
+		if(int.Parse(obj.data["opponentDead"].str) == 0) {
+			_oppDead = false;
+			_myHealth -= dmgTaken;
+		} else {
+			_oppDead = true;
+		}
 		if(_myHealth <= 0) { _dead = true; }
-		//PlayAbilities(obj.data["ability"].str);
+		PlayAbilities();
 	}
 
-	private void PlayAbilities(string abilityName) {
-		//Make prefabs play abilities in turn and show changes in UI.
+	private void PlayAbilities() {
+		if(_goingFirst == 1) {
+			_myChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_myUsedAbility);
+			StartCoroutine(PlayOtherAbility(false));
+		} else {
+			_oppChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_oppUsedAbility);
+			StartCoroutine(PlayOtherAbility(true));
+		}
+	}
+
+	private IEnumerator PlayOtherAbility(bool player) {
+		yield return new WaitForSeconds(AbilityTimer);
+		if(player) {
+			_myChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_myUsedAbility);
+		} else {
+			_oppChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_oppUsedAbility);
+		}
+
+		if(_dead || _oppDead) { EndBattle(); }
+		else { SetNewRound(); }
+	}
+
+	private void EndBattle() {
+
+	}
+
+	private void SetNewRound() {
+
+	}
+
+	private void TimedOut(SocketIOEvent obj) {
+		GameController.instance.InterfaceController.ToggleAbilityButtons();
 	}
 
 	private void SetUpSocketConnections() {
 		Socket.On("usedAbility", OnOpponentAbilityUsed);
+		Socket.On("timedOut", TimedOut);
 	}
 
 	private void OnDisable() {

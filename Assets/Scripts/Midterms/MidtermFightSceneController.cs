@@ -125,11 +125,11 @@ public class MidtermFightSceneController : MonoBehaviour {
 		if(!_playerTurn) { return; }
 		_aniCont.SetBool("Hide", true);
 		if(_wetGround) {
-			NeedleBar.StartCombat(367);
+			//NeedleBar.StartCombat(367);
 		} else if(_fireGround) {
-			NeedleBar.StartCombat(167);
+			//NeedleBar.StartCombat(167);
 		} else {
-			NeedleBar.StartCombat(256);
+			//NeedleBar.StartCombat(256);
 		}
 	}
 
