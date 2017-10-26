@@ -34,6 +34,9 @@ public class BattleController : MonoBehaviour {
 	private GameObject _myChampion;
 	private GameObject _oppChampion;
 
+	private ChampionAbilityController _myAbController;
+	private ChampionAbilityController _oppAbController;
+
 	private void Start() {
 		GameController.instance.battleController = this;
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -46,14 +49,6 @@ public class BattleController : MonoBehaviour {
 		SetUpSocketConnections();
 	}
 
-	public IEnumerator RunBattleTimer() {
-		var timer = 0;
-		while(timer < BattleTimer) {
-			timer++;
-			yield return new WaitForSeconds(1);
-		}
-	}
-
 	public void SetUpBattle() {
 		var myName = GameController.instance.InterfaceController.MyName.text;
 		var oppName = GameController.instance.InterfaceController.OpponentName.text;
@@ -62,7 +57,6 @@ public class BattleController : MonoBehaviour {
 		_oppHealth = GameController.instance.BRController.OppHealth;
 
 		SpawnChampions(myName, oppName);
-		StartCoroutine(RunBattleTimer());
 	}
 
 	public void UseAbility(string id, int abNumber) {
@@ -79,7 +73,6 @@ public class BattleController : MonoBehaviour {
 		json.AddField("percentage", percentage);
 		json.AddField("abilityNumber", _myUsedAbility);
 		Socket.Emit("usedAbility", json);
-		StopCoroutine(RunBattleTimer());
 
 		_usedAbilityID = null;
 	}
@@ -87,9 +80,11 @@ public class BattleController : MonoBehaviour {
 	private void SpawnChampions(string myname, string oppname) {
 		var myPrefab = ChampionPrefabs.Where(n => n.name == myname).FirstOrDefault();
 		_myChampion = Instantiate(myPrefab, new Vector3(-5.5f, 0.5f, 1f), Quaternion.Euler(0f, 90f, 0f));
+		_myAbController = _myChampion.GetComponent<ChampionAbilityController>();
 
 		var oppPrefab = ChampionPrefabs.Where(n => n.name == oppname).FirstOrDefault();
 		_oppChampion = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.Euler(0f, -90f, 0f));
+		_oppAbController = _oppChampion.GetComponent<ChampionAbilityController>();
 	}
 
 
@@ -109,10 +104,10 @@ public class BattleController : MonoBehaviour {
 
 	private void PlayAbilities() {
 		if(_goingFirst == 1) {
-			_myChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_myUsedAbility);
+			_myAbController.PlayAbilityEffect(_myUsedAbility);
 			StartCoroutine(PlayOtherAbility(false));
 		} else {
-			_oppChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_oppUsedAbility);
+			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
 			StartCoroutine(PlayOtherAbility(true));
 		}
 	}
@@ -120,9 +115,9 @@ public class BattleController : MonoBehaviour {
 	private IEnumerator PlayOtherAbility(bool player) {
 		yield return new WaitForSeconds(AbilityTimer);
 		if(player) {
-			_myChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_myUsedAbility);
+			_myAbController.PlayAbilityEffect(_myUsedAbility);
 		} else {
-			_oppChampion.GetComponent<ChampionAbilityController>().PlayAbilityEffect(_oppUsedAbility);
+			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
 		}
 
 		if(_dead || _oppDead) { EndBattle(); }
@@ -130,11 +125,29 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void EndBattle() {
-
+		ClearUsedAbilities();
+		ClearChampions();
+		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
 
 	private void SetNewRound() {
+		ClearUsedAbilities();
+	}
 
+	private void ClearUsedAbilities() {
+		_usedAbilityID = null;
+		//Since 0 is an ability number (0-2), we set 9 when resetting as that would never be used
+		_myUsedAbility = 9;
+		_oppUsedAbility = 9;
+	}
+
+	private void ClearChampions() {
+		_myAbController = null;
+		_oppAbController = null;
+		_myHealth = 0;
+		_oppHealth = 0;
+		_myChampion = null;
+		_oppChampion = null;
 	}
 
 	private void TimedOut(SocketIOEvent obj) {
