@@ -6,7 +6,7 @@ using SocketIO;
 public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
-	private ServerVersion VERSION = new ServerVersion(0, 1, 0);
+	private ServerVersion VERSION = new ServerVersion(0, 2, 0);
 
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
@@ -111,6 +111,7 @@ public class NetworkServer : MonoBehaviour {
 		if(!otherPlayers.ContainsKey(obj.data["id"].str)) {
 			PlayerController other = GameController.instance.SpawnPlayer(false, obj.data["username"].str);
 			other.PlayerID = obj.data["id"].str;
+			other.SocketID = obj.data["socket"].str;
 
 			Debug.Log(obj.data["ai"].str);
 
