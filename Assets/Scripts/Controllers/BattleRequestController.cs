@@ -18,7 +18,8 @@ public class BattleRequestController : MonoBehaviour {
 	public int OppHealth;
 
 	private List<string> _abIds;
-	private string _playerRequested;
+	public string RequestedPlayerID;
+	public string RequestedSocketID;
 
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
@@ -45,8 +46,11 @@ public class BattleRequestController : MonoBehaviour {
 
 	public void AcceptRequest() {
 		var json = new JSONObject();
-		json.AddField("playerAccepted", GameController.instance.playerController.PlayerID);
-		json.AddField("playerRequested", _playerRequested);
+		json.AddField("acceptedPlayerID", GameController.instance.playerController.PlayerID);
+		json.AddField("acceptedSocketID", GameController.instance.playerController.SocketID);
+
+		json.AddField("requestedPlayerID", RequestedPlayerID);
+		json.AddField("requestedSocketID", RequestedSocketID);
 		Socket.Emit("acceptedRequest", json);
 	}
 
@@ -62,7 +66,8 @@ public class BattleRequestController : MonoBehaviour {
 
 	private void OnReceiveBattleRequest(SocketIOEvent obj) {
 		GameController.instance.InterfaceController.ShowReceivedRequestPanel(obj.data["sender"].str);
-		_playerRequested = obj.data["playerRequested"].str;
+		RequestedPlayerID = obj.data["requestedPlayerID"].str;
+		RequestedSocketID = obj.data["requestedSocketID"].str;
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {

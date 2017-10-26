@@ -32,6 +32,9 @@ public class BattleController : MonoBehaviour {
 	private GameObject _myChampion;
 	private GameObject _oppChampion;
 
+	private string _oppSocketID;
+	private string _oppPlayerID;
+
 	private ChampionAbilityController _myAbController;
 	private ChampionAbilityController _oppAbController;
 
@@ -54,6 +57,9 @@ public class BattleController : MonoBehaviour {
 		_myHealth = GameController.instance.BRController.MyHealth;
 		_oppHealth = GameController.instance.BRController.OppHealth;
 
+		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
+		_oppSocketID = GameController.instance.BRController.RequestedSocketID;
+
 		SpawnChampions(myName, oppName);
 	}
 
@@ -75,7 +81,7 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	/// <param name="percentage"></param>
 	public void SendAbility(float percentage) {
-		var json = new JSONObject();
+		var json = CreateJSON();
 		json.AddField("ability", _usedAbilityID);
 		json.AddField("percentage", percentage);
 		json.AddField("abilityNumber", _myUsedAbility);
@@ -198,5 +204,16 @@ public class BattleController : MonoBehaviour {
 	private void OnDisable() {
 		mainCam.gameObject.SetActive(true);
 		GameController.instance.battleController = null;
+	}
+
+	private JSONObject CreateJSON() {
+		var json = new JSONObject();
+		json.AddField("sendingPlayerID", GameController.instance.playerController.PlayerID);
+		json.AddField("sendingSocketID", GameController.instance.playerController.SocketID);
+
+		json.AddField("receivingPlayerID", _oppPlayerID);
+		json.AddField("receivingSocketID", _oppSocketID);
+
+		return json;
 	}
 }
