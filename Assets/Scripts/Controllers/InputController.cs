@@ -27,21 +27,25 @@ public class InputController : MonoBehaviour {
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<AIController>().AId);
 				} else if(hit.transform.tag == "Player" && hit.transform.GetComponent<PlayerController>() != GameController.instance.playerController) {
-					if(hit.transform.GetComponent<AIController>()) {
+					PlayerController hitPlayerController = hit.transform.GetComponent<PlayerController>();
+					GameController.instance.PlayerBusy = true;
+					GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID);
+					
+					/*if(hit.transform.GetComponent<AIController>()) {
 						GameController.instance.PlayerBusy = true;
 						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
 						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
 						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
 					} else {
 						GameController.instance.PlayerBusy = true;
-						//GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
-					}
-				} /*else if(hit.transform.parent.transform.tag == "Map") {
+						GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID);
+					}*/
+				} else if(hit.transform.parent.transform.tag == "Map") {
 					var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
 					var loc = hit.point.GetGeoPosition(abMap.CenterMercator, abMap.WorldRelativeScale);
-					//GameController.instance.playerController.targetPosition = hit.point;
+					GameController.instance.playerController.targetPosition = hit.point;
 					//GManager.CurrentPlayer.SetNewLocation((float)loc.x, (float)loc.y, GManager);
-				}*/
+				}
 			}
 		}
 	}

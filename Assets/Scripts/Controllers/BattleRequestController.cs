@@ -68,6 +68,7 @@ public class BattleRequestController : MonoBehaviour {
 		GameController.instance.InterfaceController.ShowReceivedRequestPanel(obj.data["sender"].str);
 		RequestedPlayerID = obj.data["requestedPlayerID"].str;
 		RequestedSocketID = obj.data["requestedSocketID"].str;
+		//obj.data["battleID"].str
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {

@@ -90,6 +90,7 @@ public class NetworkServer : MonoBehaviour {
 			socket.Emit("register", json);
 		} else {
 			Debug.LogError("Your version is not compatible with the server version. Try updating the game.");
+			socket.Close();
 		}
 	}
 
