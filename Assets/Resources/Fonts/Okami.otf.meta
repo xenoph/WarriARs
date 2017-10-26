@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 93c78befa39e94c4db88e7efe655d9dc
+timeCreated: 1509013330
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Okami
+  fontNames:
+  - Okami
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
