@@ -10,8 +10,6 @@ public class BattleController : MonoBehaviour {
 	public Camera battleCam, mainCam;
 	public string battleID;
 
-	public int BattleTimer;
-
 	public GameObject SpawnLocationLocalChampion;
 	public GameObject SpawnLocationOpponentChampion;
 	public GameObject[] ChampionPrefabs;
@@ -84,7 +82,6 @@ public class BattleController : MonoBehaviour {
 		Socket.Emit("usedAbility", json);
 
 		_usedAbilityID = null;
-		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", false);
 	}
 
 	/// <summary>

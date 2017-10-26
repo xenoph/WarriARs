@@ -37,6 +37,7 @@ public class CombatNeedleBar : MonoBehaviour {
 				}
 				_anim.SetBool("Show", false);
 				GameController.instance.battleController.SendAbility(CalculatePercentageHit());
+				Invoke("ShowAbilityBar", 1f);
 			}
 		}
 		if(_moveNeedle) {
@@ -74,6 +75,10 @@ public class CombatNeedleBar : MonoBehaviour {
 		var remainingLength = fullLength - Vector3.Distance(_needleRectTransform.anchoredPosition, _midPos);
 		var hitPercentage = remainingLength / fullLength;
 		return Mathf.RoundToInt(hitPercentage * 100);
+	}
+
+	private void ShowAbilityBar() {
+		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", false);
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {

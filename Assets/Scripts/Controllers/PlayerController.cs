@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
 
     [HideInInspector]
     public string PlayerID;
+    [HideInInspector]
+    public string SocketID;
 
     public string username;
 

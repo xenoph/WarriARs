@@ -440,7 +440,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 467022357}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.5, y: 0.56, z: 1}
+  m_LocalPosition: {x: 6, y: 0.56, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 142026976}
@@ -477,12 +477,12 @@ MonoBehaviour:
   battleCam: {fileID: 1617621025}
   mainCam: {fileID: 0}
   battleID: 
-  BattleTimer: 20
   SpawnLocationLocalChampion: {fileID: 1236415194}
   SpawnLocationOpponentChampion: {fileID: 467022357}
   ChampionPrefabs:
   - {fileID: 1011201336133360, guid: 610b6d6629ef32e418dd9020f85839a7, type: 2}
   - {fileID: 1025846809208160, guid: 0ebfe9fb9226c0f4c89e7ee2e5faf1f5, type: 2}
+  AbilityTimer: 5
 --- !u!4 &914885324
 Transform:
   m_ObjectHideFlags: 0
@@ -518,7 +518,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1236415194}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.5, y: 0.56, z: 1}
+  m_LocalPosition: {x: -6, y: 0.56, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 331267894}

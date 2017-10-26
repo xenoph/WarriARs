@@ -18,28 +18,40 @@ public class BattleRequestController : MonoBehaviour {
 	public int OppHealth;
 
 	private List<string> _abIds;
+	private string _playerRequested;
 
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
 		SetupSocketReceivers();
 	}
 
-	public void SendBattleRequest(string id) {
+	public void SendBattleRequest(string socketID, string playerID) {
 		var json = new JSONObject();
-		json.AddField("playerRequested", GameController.instance.playerController.PlayerID);
-		json.AddField("playerReceivingRequest", id);
+		json.AddField("requestedPlayerID", GameController.instance.playerController.PlayerID);
+		json.AddField("requestedSocketID", GameController.instance.playerController.SocketID);
+
+		json.AddField("playerReceivingRequest", socketID);
 		Socket.Emit("BattleRequest", json);
 	}
 
-	public void InitialiseAIBattle(string id) {
+	public void InitialiseAIBattle(string socketID, string playerID) {
 		var json = new JSONObject();
-		json.AddField("playerRequested", GameController.instance.playerController.PlayerID);
-		json.AddField("aiID", id);
+		json.AddField("requestedPlayerID", GameController.instance.playerController.PlayerID);
+		json.AddField("requestedSocketID", GameController.instance.playerController.SocketID);
+
+		json.AddField("aiID", socketID);
 		Socket.Emit("AIBattle", json);
 	}
 
-	public void SetUserInterface() {
+	public void AcceptRequest() {
+		var json = new JSONObject();
+		json.AddField("playerAccepted", GameController.instance.playerController.PlayerID);
+		json.AddField("playerRequested", _playerRequested);
+		Socket.Emit("acceptedRequest", json);
+	}
 
+	public void SetUserInterface() {
+	
 	}
 
 	private void SetupSocketReceivers() {
@@ -50,6 +62,7 @@ public class BattleRequestController : MonoBehaviour {
 
 	private void OnReceiveBattleRequest(SocketIOEvent obj) {
 		GameController.instance.InterfaceController.ShowReceivedRequestPanel(obj.data["sender"].str);
+		_playerRequested = obj.data["playerRequested"].str;
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {

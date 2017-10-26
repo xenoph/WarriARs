@@ -25,13 +25,13 @@ public class InputController : MonoBehaviour {
 				if(hit.transform.tag == "AICompanion") {
 					if(!GameController.instance.playerController.ChampionAlive) { return; }
 					GameController.instance.PlayerBusy = true;
-					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
+					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<AIController>().AId);
 				} else if(hit.transform.tag == "Player" && hit.transform.GetComponent<PlayerController>() != GameController.instance.playerController) {
 					if(hit.transform.GetComponent<AIController>()) {
 						GameController.instance.PlayerBusy = true;
 						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
 						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
-						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().PlayerID);
+						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
 					} else {
 						GameController.instance.PlayerBusy = true;
 						//GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
@@ -56,15 +56,15 @@ public class InputController : MonoBehaviour {
 						GameController.instance.PlayerBusy = true;
 						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
 						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
-						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().PlayerID);
+						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
 					} else {
 						//if(!GameController.instance.playerController.ChampionAlive) { return; }
 						GameController.instance.PlayerBusy = true;
-						GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().PlayerID);
+						GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
 					}
 				} else if(hit.transform.tag == "AICompanion") {
 					GameController.instance.PlayerBusy = true;
-					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<AIController>().AId);
+					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<AIController>().AId);
 				}
 			}
 		}

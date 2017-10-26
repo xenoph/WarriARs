@@ -46,12 +46,12 @@ public class UserInterfaceController : MonoBehaviour {
 		GameController.instance.InterfaceController = this;
 	}
 
-	public void ShowBattleRequestPanel(string id) {
-		SendRequestInfoText.text = "Request battle with " + id + "?";
+	public void ShowBattleRequestPanel(string socketID, string playerID) {
+		SendRequestInfoText.text = "Request battle with " + playerID + "?";
 		SendRequestAnimator.SetTrigger("Show");
 
 		SendRequestButton.onClick.RemoveAllListeners();
-		SendRequestButton.onClick.AddListener(delegate { SendBattleRequest(id); });
+		SendRequestButton.onClick.AddListener(delegate { SendBattleRequest(socketID, playerID); });
 
 		CancelRequestButton.onClick.RemoveAllListeners();
 		CancelRequestButton.onClick.AddListener(delegate { CancelBattleRequest(); });
@@ -119,11 +119,11 @@ public class UserInterfaceController : MonoBehaviour {
 		}
 	}
 
-	private void SendBattleRequest(string id) {
+	private void SendBattleRequest(string socketID, string playerID) {
 		SendRequestInfoText.text = "Requesting battle....";
 		GameController.instance.BRController.AwaitRequestFeedback = true;
 		StartCoroutine(GameController.instance.BRController.BattleRequestTimer());
-		GameController.instance.BRController.SendBattleRequest(id);
+		GameController.instance.BRController.SendBattleRequest(socketID, playerID);
 	}
 
 	private void CancelBattleRequest() {
