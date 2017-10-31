@@ -41,6 +41,13 @@ public class UserInterfaceController : MonoBehaviour {
 	[Header("Ability Buttons")]
 	public Button[] AbilityButtons;
 
+	[Header("Main Interface")]
+	[Header("Buttons")]
+	public Button ShopButton;
+	public Button ChampionButton;
+
+	public GameObject ShopPanel;
+	public GameObject ChampionStatsPanel;
 
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
@@ -64,14 +71,17 @@ public class UserInterfaceController : MonoBehaviour {
 	public void ShowReceivedRequestPanel(string name) {
 		ReceiveReqestInfoText.text = name + " has requested a battle!";
 		ReceiveRequestAnimator.SetTrigger("Show");
+		GameController.instance.PlayerBusy = true;
 
 		AcceptRequestButton.onClick.RemoveAllListeners();
+		AcceptRequestButton.onClick.AddListener(delegate { AcceptBattleRequest(); });
 
 		DeclineRequestButton.onClick.RemoveAllListeners();
+		DeclineRequestButton.onClick.AddListener(delegate { RefuseBattleRequest(); });
 	}
 
 	public void HideReceivedRequestPanel() {
-
+		ReceiveRequestAnimator.SetTrigger("Hide");
 	}
 
 	public void ToggleLoadingScreen(string loadText) {
@@ -119,6 +129,15 @@ public class UserInterfaceController : MonoBehaviour {
 		}
 	}
 
+	private void AcceptBattleRequest() {
+		GameController.instance.BRController.AcceptRequest();
+	}
+
+	private void RefuseBattleRequest() {
+		HideReceivedRequestPanel();
+		GameController.instance.PlayerBusy = false;
+	}
+
 	private void SendBattleRequest(string socketID, string playerID) {
 		SendRequestInfoText.text = "Requesting battle....";
 		GameController.instance.BRController.AwaitRequestFeedback = true;
@@ -132,30 +151,6 @@ public class UserInterfaceController : MonoBehaviour {
 		GameController.instance.PlayerBusy = false;
 	}
 
-	/*private void UpdateHealth(int health) {
-		healthBar.maxValue = maxHealth;
-		currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-		float percent = ((float) currentHealth / (float) maxHealth) * 100f;
-
-		if(percent <= lowPercent) {
-			if(colorLerpTime < 1f) {
-				healthFill.color = Color.Lerp(healthBarColor, new Color(healthBarColor.r, healthBarColor.g, healthBarColor.b, 0f), colorLerpTime);
-				colorLerpTime += Time.deltaTime / healthBlinkDuration;
-			} else if(colorLerpTime > 1f && colorLerpTime < 2f) {
-				healthFill.color = Color.Lerp(healthBarColor, new Color(healthBarColor.r, healthBarColor.g, healthBarColor.b, 0f), 2f - colorLerpTime);
-				colorLerpTime += Time.deltaTime / healthBlinkDuration;
-				if(colorLerpTime >= 2f)
-					colorLerpTime -= 2f;
-			}
-		} else {
-			healthFill.color = healthBarColor;
-		}
-
-		tempHealth = Mathf.RoundToInt(Mathf.Lerp((float) tempHealth, (float) currentHealth, .1f));
-		healthBar.value = tempHealth;
-		if(healthBar.value <= 4) //for some reason is the health bar 4 when you have 0 hp...
-			healthBar.fillRect.GetComponent<Image>().enabled = false;
-		if(healthText.text != health)
-			healthText.text = health;
-	}*/
+	private void ToggleShopWindow() {
+	}
 }

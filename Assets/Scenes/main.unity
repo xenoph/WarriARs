@@ -145,6 +145,8 @@ MonoBehaviour:
   AwaitRequestFeedback: 0
   MyHealth: 0
   OppHealth: 0
+  RequestedPlayerID: 
+  RequestedSocketID: 
 --- !u!4 &181394711
 Transform:
   m_ObjectHideFlags: 0
@@ -332,6 +334,10 @@ Prefab:
     - target: {fileID: 400000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
+      propertyPath: url
+      value: ws://oisann.asuscomm.com:3000/socket.io/?EIO=4&transport=websocket
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 2}
