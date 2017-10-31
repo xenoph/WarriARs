@@ -1341,7 +1341,7 @@ Animator:
   m_GameObject: {fileID: 394780796}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 48f08190151a0ba48a34398d76090758, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4461,7 +4461,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Refuse Request
 --- !u!222 &1064958872
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6598,7 +6598,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Accept Request
 --- !u!222 &1614908146
 CanvasRenderer:
   m_ObjectHideFlags: 0

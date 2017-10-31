@@ -130,6 +130,7 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	private void AcceptBattleRequest() {
+		HideReceivedRequestPanel();
 		GameController.instance.BRController.AcceptRequest();
 	}
 
