@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChampionAbilityController : MonoBehaviour {
 
+	public Animator AbilityEffectAnimator;
+
 	public ParticleSystem Ability1Effect;
 	public ParticleSystem Ability2Effect;
 	public ParticleSystem Ability3Effect;
@@ -25,5 +27,9 @@ public class ChampionAbilityController : MonoBehaviour {
 			default:
 				break;
 		}
+	}
+
+	private void PlayAnimation(int abNumber) {
+		if(AbilityEffectAnimator == null) { return; }
 	}
 }
