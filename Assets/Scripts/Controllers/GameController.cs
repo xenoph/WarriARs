@@ -47,10 +47,10 @@ public class GameController : MonoBehaviour {
 		#endif
 	}
 
-	public void LoadGame(string username) {
+	public PlayerController LoadGame(string username) {
 		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
-        SpawnPlayer(true, username);
+        return SpawnPlayer(true, username);
 	}
 
     public PlayerController SpawnPlayer(bool local, string username) {

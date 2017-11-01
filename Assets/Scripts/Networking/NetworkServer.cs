@@ -96,7 +96,9 @@ public class NetworkServer : MonoBehaviour {
 
 	private void OnLoggedIn(SocketIOEvent obj) {
 		//interfaceManager.LoadPlayer(obj);
-		GameController.instance.LoadGame(obj.data["username"].str);
+		PlayerController pc = GameController.instance.LoadGame(obj.data["username"].str);
+		pc.PlayerID = obj.data["id"].str;
+		pc.SocketID = obj.data["socket"].str;
 	}
 
 	public void Move(float lat, float lng, int dist) {

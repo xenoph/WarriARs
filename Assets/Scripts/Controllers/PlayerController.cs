@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -13,9 +14,9 @@ public class PlayerController : MonoBehaviour {
     public int diff = 1;
     public string opponentUsername;
 
-    [HideInInspector]
+    //[HideInInspector]
     public string PlayerID;
-    [HideInInspector]
+    //[HideInInspector]
     public string SocketID;
 
     public string username;
@@ -28,11 +29,24 @@ public class PlayerController : MonoBehaviour {
             GameController.instance.playerController = this;
             GameController.instance.cameraController.target = this.transform;
             server = GameController.instance.networkServer;
+            StartCoroutine(UpdatePositionPeriodically());
         }
         //lastLocation = GameController.instance.currentLocation;
         lastLocation = new Location();
         //SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("map"));
 	}
+
+    private IEnumerator UpdatePositionPeriodically() {
+        while(local && server != null) {
+            yield return new WaitForSeconds(0.5f);
+            UpdateServerPosition();
+        }
+    }
+
+    private void UpdateServerPosition() {
+        server.Move((float) GameController.instance.currentLocation.Latitude, (float) GameController.instance.currentLocation.Longitude, 0);
+        lastLocation.SetLocation(GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude);
+    }
 	
 	void FixedUpdate() {
         if(local) {
@@ -43,8 +57,7 @@ public class PlayerController : MonoBehaviour {
 
                 float dist = Vector3.Distance(targetPosition, lastWorldpos);
                 if(dist > 1f) {
-                    server.Move((float) GameController.instance.currentLocation.Latitude, (float) GameController.instance.currentLocation.Longitude, 0);
-                    lastLocation.SetLocation(GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude);
+                    UpdateServerPosition();
                 }
             }
         }
