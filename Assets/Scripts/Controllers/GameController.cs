@@ -48,9 +48,23 @@ public class GameController : MonoBehaviour {
 	}
 
 	public PlayerController LoadGame(string username) {
-		SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
+		for(int i = 0; i < SceneManager.sceneCount; i++) {
+			if(SceneManager.GetSceneAt(i).name == "map") {
+				SceneManager.UnloadSceneAsync("map");
+			}
+		}
+		//SceneManager.UnloadSceneAsync("map");
+		AsyncOperation ao = SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
-        return SpawnPlayer(true, username);
+		PlayerController pc = SpawnPlayer(true, username);
+		StartCoroutine(movePlayerToNewMap(ao, pc));
+        return pc;
+	}
+
+	private IEnumerator movePlayerToNewMap(AsyncOperation asyncOperation, PlayerController _playerController) {
+		while(!asyncOperation.isDone)
+			yield return null;
+		SceneManager.MoveGameObjectToScene(_playerController.gameObject, SceneManager.GetSceneByName("map"));
 	}
 
     public PlayerController SpawnPlayer(bool local, string username) {
