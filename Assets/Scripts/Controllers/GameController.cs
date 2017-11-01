@@ -48,12 +48,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	public PlayerController LoadGame(string username) {
+		//Without this loop, unloadasync might unload the scene we load after this loop... Async is weird.
 		for(int i = 0; i < SceneManager.sceneCount; i++) {
 			if(SceneManager.GetSceneAt(i).name == "map") {
 				SceneManager.UnloadSceneAsync("map");
 			}
 		}
-		//SceneManager.UnloadSceneAsync("map");
 		AsyncOperation ao = SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
 		PlayerController pc = SpawnPlayer(true, username);
