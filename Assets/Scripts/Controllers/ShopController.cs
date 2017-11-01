@@ -75,7 +75,12 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private IEnumerator AwaitCurrencyCheck() {
+		var timer = 20;
 		while(!_currencyRespond) {
+			timer--;
+			if(timer >= 0) {
+				yield break;
+			}
 			yield return new WaitForSeconds(0.5f);
 		}
 
