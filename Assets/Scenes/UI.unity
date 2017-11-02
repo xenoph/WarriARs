@@ -2753,7 +2753,7 @@ RectTransform:
   m_GameObject: {fileID: 615514610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 346843594}
   m_Father: {fileID: 0}
@@ -4737,8 +4737,10 @@ MonoBehaviour:
   MyHealthBar: {fileID: 1924616428}
   OpponentHealthText: {fileID: 2065692048}
   OpponentHealthBar: {fileID: 1965151498}
-  MyName: {fileID: 628292907}
-  OpponentName: {fileID: 1009862635}
+  MyChampionType: 0
+  OpponentChampionType: 0
+  MyName: {fileID: 1470700773}
+  OpponentName: {fileID: 126847996}
   AbilityBarAnimator: {fileID: 152276951}
   NeedleBar: {fileID: 1865695047}
   AbilityButtons:
@@ -6332,7 +6334,7 @@ GameObject:
   - component: {fileID: 1470700774}
   - component: {fileID: 1470700773}
   m_Layer: 5
-  m_Name: OpponentUserName2 (1)
+  m_Name: YourUsername
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

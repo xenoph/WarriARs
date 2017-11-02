@@ -147,6 +147,7 @@ MonoBehaviour:
   OppHealth: 0
   RequestedPlayerID: 
   RequestedSocketID: 
+  BattleID: 
 --- !u!4 &181394711
 Transform:
   m_ObjectHideFlags: 0

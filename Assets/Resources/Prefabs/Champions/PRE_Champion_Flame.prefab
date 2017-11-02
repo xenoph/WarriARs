@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 95136186176088462}
   - component: {fileID: 114950568725497332}
   m_Layer: 0
-  m_Name: Adrian
+  m_Name: PRE_Champion_Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1584,6 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5fd83510a0dc9408a400deaf6f83da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityEffectAnimator: {fileID: 0}
   Ability1Effect: {fileID: 198199942905009402}
   Ability2Effect: {fileID: 198546568643977028}
   Ability3Effect: {fileID: 198199942905009402}

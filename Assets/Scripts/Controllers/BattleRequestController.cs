@@ -21,6 +21,9 @@ public class BattleRequestController : MonoBehaviour {
 	public string RequestedPlayerID;
 	public string RequestedSocketID;
 
+	[HideInInspector]
+	public string BattleID;
+
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
 		SetupSocketReceivers();
@@ -51,6 +54,8 @@ public class BattleRequestController : MonoBehaviour {
 
 		json.AddField("requestedPlayerID", RequestedPlayerID);
 		json.AddField("requestedSocketID", RequestedSocketID);
+
+		json.AddField("battleID", BattleID);
 		Socket.Emit("acceptedRequest", json);
 	}
 
@@ -68,15 +73,16 @@ public class BattleRequestController : MonoBehaviour {
 		GameController.instance.InterfaceController.ShowReceivedRequestPanel(obj.data["sender"].str);
 		RequestedPlayerID = obj.data["requestedPlayerID"].str;
 		RequestedSocketID = obj.data["requestedSocketID"].str;
-		//obj.data["battleID"].str
+		BattleID = obj.data["battleID"].str;
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
+		BattleID = obj.data["battleID"].str;
 		MyHealth = int.Parse(obj.data["myChampionHealth"].str);
 		OppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
 		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, obj.data["myUsername"].str, obj.data["oppUsername"].str);
 		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["myChampionType"].str);
-		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["oppChampionType"].str);
+		GameController.instance.InterfaceController.OpponentChampionType = int.Parse(obj.data["oppChampionType"].str);
 
 		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
 

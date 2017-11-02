@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UserInterfaceController : MonoBehaviour {
 
@@ -33,8 +34,8 @@ public class UserInterfaceController : MonoBehaviour {
 	public int OpponentChampionType;
 
 	[Header("Nameplates")]
-	public Text MyName;
-	public Text OpponentName;
+	public TextMeshProUGUI MyName;
+	public TextMeshProUGUI OpponentName;
 
 	[Header("Animations")]
 	public Animator AbilityBarAnimator;
@@ -127,7 +128,7 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public void SetAbilityButtonNames(List<string> abNames) {
 		for(int i = 0; i < AbilityButtons.Length; i++) {
-			AbilityButtons[i].GetComponentInChildren<Text>().text = abNames[i];
+			AbilityButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = abNames[i];
 		}
 	}
 
