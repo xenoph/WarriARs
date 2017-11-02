@@ -218,9 +218,9 @@ public class BattleController : MonoBehaviour {
 		var json = new JSONObject();
 		json.AddField("sendingPlayerID", GameController.instance.playerController.PlayerID);
 		json.AddField("sendingSocketID", GameController.instance.playerController.SocketID);
-
-		json.AddField("receivingPlayerID", _oppPlayerID);
-		json.AddField("receivingSocketID", _oppSocketID);
+		json.AddField("battleID", battleID);
+		//json.AddField("receivingPlayerID", _oppPlayerID);
+		//json.AddField("receivingSocketID", _oppSocketID);
 
 		return json;
 	}

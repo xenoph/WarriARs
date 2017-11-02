@@ -116,8 +116,6 @@ public class NetworkServer : MonoBehaviour {
 			other.PlayerID = obj.data["id"].str;
 			other.SocketID = obj.data["socket"].str;
 
-			Debug.Log(obj.data["ai"].str);
-
 			if(obj.data["ai"].str == "true") {
 				other.gameObject.AddComponent<AIController>();
 			}
