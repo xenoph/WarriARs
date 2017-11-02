@@ -62,6 +62,8 @@ public class BattleController : MonoBehaviour {
 		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
 		_oppSocketID = GameController.instance.BRController.RequestedSocketID;
 
+		battleID = GameController.instance.BRController.BattleID;
+
 		GameController.instance.InterfaceController.SetTypeSprites();
 		SpawnChampions(myChampPrefab, oppChampPrefab);
 	}
