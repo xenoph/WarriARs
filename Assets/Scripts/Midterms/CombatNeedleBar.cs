@@ -6,7 +6,6 @@ public class CombatNeedleBar : MonoBehaviour {
 	public float NeedleSpeed;
 	public MidtermFightSceneController MFSceneController;
 
-	private GameObject _needle;
 	private Animator _anim;
 
 	private bool _runningCombat = false;
@@ -22,7 +21,6 @@ public class CombatNeedleBar : MonoBehaviour {
 	private bool _insideShake;
 
 	private void Awake() {
-		_needle = transform.GetChild(1).gameObject;
 		_anim = GetComponent<Animator>();
 		_needleRectTransform = transform.GetChild(1).GetComponent<RectTransform>();
 	}

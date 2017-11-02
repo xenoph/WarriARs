@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class UserInterfaceController : MonoBehaviour {
 
 	public GameObject MapCanvas;
 	public GameObject BattleCanvas;
 	public LoadingScreen LoadingScreen;
+	public Sprite[] TypeSprites;
 
 	[Header("Send Request Panel")]
 	public Animator SendRequestAnimator;
@@ -28,6 +30,8 @@ public class UserInterfaceController : MonoBehaviour {
 	public Slider MyHealthBar;
 	public Text OpponentHealthText;
 	public Slider OpponentHealthBar;
+	public Image MyTypeImage;
+	public Image OpponentTypeImage;
 	[HideInInspector]
 	public int MyChampionType;
 	[HideInInspector]
@@ -36,6 +40,8 @@ public class UserInterfaceController : MonoBehaviour {
 	[Header("Nameplates")]
 	public TextMeshProUGUI MyName;
 	public TextMeshProUGUI OpponentName;
+	public Text MyDragonTypeText;
+	public Text OpponentDragonTypeText;
 
 	[Header("Animations")]
 	public Animator AbilityBarAnimator;
@@ -129,6 +135,11 @@ public class UserInterfaceController : MonoBehaviour {
 		BattleCanvas.SetActive(true);
 	}
 
+	public void SetTypeSprites() {
+		SetTypeImageAndName(MyChampionType, MyTypeImage, MyDragonTypeText);
+		SetTypeImageAndName(OpponentChampionType, OpponentTypeImage, OpponentDragonTypeText);
+	}
+
 	public void SetAbilityButtonNames(List<string> abNames) {
 		for(int i = 0; i < AbilityButtons.Length; i++) {
 			AbilityButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = abNames[i];
@@ -196,5 +207,34 @@ public class UserInterfaceController : MonoBehaviour {
 		ShopPanel.transform.GetChild(0).GetComponent<Animator>().SetBool("Show", false);
 		ShopButton.onClick.RemoveAllListeners();
 		ShopButton.onClick.AddListener(delegate { ShowShop(); });
+	}
+
+	private void SetTypeImageAndName(int typeNumber, Image typeImage, Text typeName) {
+		switch (typeNumber)
+		{
+			case 0:
+				typeImage.sprite = TypeSprites.Where(n => n.name == "UI_Element_Fire").FirstOrDefault();
+				typeName.text = "FIRE DRAGON";
+				break;
+			case 1:
+				typeImage.sprite = TypeSprites.Where(n => n.name == "UI_Element_Water").FirstOrDefault();
+				typeName.text = "WATER DRAGON";
+				break;
+			case 2:
+				typeImage.sprite = TypeSprites.Where(n => n.name == "UI_Element_Wood").FirstOrDefault();
+				typeName.text = "WOOD DRAGON";
+				break;
+			case 3:
+				typeImage.sprite = TypeSprites.Where(n => n.name == "UI_Element_Earth").FirstOrDefault();
+				typeName.text = "EARTH DRAGON";
+				break;
+			case 4:
+				typeImage.sprite = TypeSprites.Where(n => n.name == "UI_Element_Metal").FirstOrDefault();
+				typeName.text = "METAL DRAGON";
+				break;
+
+			default:
+				break;
+		}
 	}
 }

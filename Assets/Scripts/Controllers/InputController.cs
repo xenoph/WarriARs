@@ -41,8 +41,8 @@ public class InputController : MonoBehaviour {
 						GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID);
 					}*/
 				} else if(hit.transform.parent.transform.tag == "Map") {
-					var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
-					var loc = hit.point.GetGeoPosition(abMap.CenterMercator, abMap.WorldRelativeScale);
+					//var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
+					//var loc = hit.point.GetGeoPosition(abMap.CenterMercator, abMap.WorldRelativeScale);
 					GameController.instance.playerController.targetPosition = hit.point;
 					//GManager.CurrentPlayer.SetNewLocation((float)loc.x, (float)loc.y, GManager);
 				}

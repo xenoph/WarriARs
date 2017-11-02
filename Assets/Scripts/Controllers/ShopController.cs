@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using SocketIO;
 
+#pragma warning disable 0414
+
 public class ShopController : MonoBehaviour {
 
 	public Animator ShopPanelAnimator;
@@ -13,7 +15,7 @@ public class ShopController : MonoBehaviour {
 	public Button BuyHealthButton;
 	public Button BuyReviveButton;
 
-	private bool _shopActive;
+	private bool _shopActive = false;
 	private bool _currencyRespond;
 	private bool _currencyValidated;
 
@@ -31,8 +33,10 @@ public class ShopController : MonoBehaviour {
 	public void TogglePanel() {
 		if(_shopActive) {
 			ShopPanelAnimator.SetBool("Show", false);
+			_shopActive = false;
 		} else {
 			ShopPanelAnimator.SetBool("Show", true);
+			_shopActive = true;
 		}
 	}
 

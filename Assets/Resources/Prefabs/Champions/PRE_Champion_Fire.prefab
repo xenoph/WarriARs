@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 95136186176088462}
   - component: {fileID: 114950568725497332}
   m_Layer: 0
-  m_Name: PRE_Champion_Flame
+  m_Name: PRE_Champion_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

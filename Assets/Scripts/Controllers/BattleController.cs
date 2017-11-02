@@ -20,7 +20,7 @@ public class BattleController : MonoBehaviour {
 	private SocketIOComponent Socket;
 
 	private int _myHealth;
-	private int _oppHealth;
+	//private int _oppHealth;
 	private bool _dead;
 
 	private string _usedAbilityID;
@@ -57,38 +57,25 @@ public class BattleController : MonoBehaviour {
 		var oppChampPrefab = GetChampionPrefab(oppChampTypeNumber);
 
 		_myHealth = GameController.instance.BRController.MyHealth;
-		_oppHealth = GameController.instance.BRController.OppHealth;
+		//_oppHealth = GameController.instance.BRController.OppHealth;
 
 		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
 		_oppSocketID = GameController.instance.BRController.RequestedSocketID;
 
+		GameController.instance.InterfaceController.SetTypeSprites();
 		SpawnChampions(myChampPrefab, oppChampPrefab);
 	}
 
-	/// <summary>
-	/// Connected to each of the buttons in the UI. 
-	/// </summary>
-	/// <param name="id">Ability ID</param>
-	/// <param name="abNumber">Ability Number</param>
 	public void UseAbility1() {
-		GameController.instance.InterfaceController.ToggleAbilityButtons();
-		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[0];
-		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
-		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+		UsedAbility(0);
 	}
 
 	public void UseAbility2() {
-		GameController.instance.InterfaceController.ToggleAbilityButtons();
-		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[1];
-		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
-		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+		UsedAbility(1);
 	}
 
 	public void UseAbility3() {
-		GameController.instance.InterfaceController.ToggleAbilityButtons();
-		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[2];
-		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
-		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+		UsedAbility(2);
 	}
 
 	/// <summary>
@@ -186,6 +173,13 @@ public class BattleController : MonoBehaviour {
 		ClearUsedAbilities();
 	}
 
+	private void UsedAbility(int ab) {
+		GameController.instance.InterfaceController.ToggleAbilityButtons();
+		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[ab];
+		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
+		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+	}
+
 	private void ClearUsedAbilities() {
 		_usedAbilityID = null;
 		//Since 0 is an ability number (0-2), we set 9 when resetting as that would never be used
@@ -198,7 +192,7 @@ public class BattleController : MonoBehaviour {
 		_myAbController = null;
 		_oppAbController = null;
 		_myHealth = 0;
-		_oppHealth = 0;
+		//_oppHealth = 0;
 
 		Destroy(_myChampion);
 		Destroy(_oppChampion);
@@ -234,7 +228,7 @@ public class BattleController : MonoBehaviour {
 	private string GetChampionPrefab(int num) {
 		switch (num) {
 			case 0:
-				return "PRE_Champion_Flame";
+				return "PRE_Champion_Fire";
 
 			case 1:
 				return "PRE_Champion_Water";
