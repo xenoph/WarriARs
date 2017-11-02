@@ -70,10 +70,23 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	/// <param name="id">Ability ID</param>
 	/// <param name="abNumber">Ability Number</param>
-	public void UseAbility(string id, int abNumber) {
+	public void UseAbility1() {
 		GameController.instance.InterfaceController.ToggleAbilityButtons();
-		_myUsedAbility = abNumber;
-		_usedAbilityID = id;
+		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[0];
+		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
+		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+	}
+
+	public void UseAbility2() {
+		GameController.instance.InterfaceController.ToggleAbilityButtons();
+		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[1];
+		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
+		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
+	}
+
+	public void UseAbility3() {
+		GameController.instance.InterfaceController.ToggleAbilityButtons();
+		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[2];
 		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
 		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
 	}
@@ -86,7 +99,6 @@ public class BattleController : MonoBehaviour {
 		var json = CreateJSON();
 		json.AddField("ability", _usedAbilityID);
 		json.AddField("percentage", percentage);
-		json.AddField("abilityNumber", _myUsedAbility);
 		Socket.Emit("usedAbility", json);
 
 		_usedAbilityID = null;

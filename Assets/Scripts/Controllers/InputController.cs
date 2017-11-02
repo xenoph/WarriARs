@@ -29,7 +29,7 @@ public class InputController : MonoBehaviour {
 				} else if(hit.transform.tag == "Player" && hit.transform.GetComponent<PlayerController>() != GameController.instance.playerController) {
 					PlayerController hitPlayerController = hit.transform.GetComponent<PlayerController>();
 					GameController.instance.PlayerBusy = true;
-					GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID);
+					GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID, hitPlayerController.username);
 					
 					/*if(hit.transform.GetComponent<AIController>()) {
 						GameController.instance.PlayerBusy = true;
@@ -64,7 +64,7 @@ public class InputController : MonoBehaviour {
 					} else {
 						//if(!GameController.instance.playerController.ChampionAlive) { return; }
 						GameController.instance.PlayerBusy = true;
-						GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
+						GameController.instance.InterfaceController.ShowBattleRequestPanel(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID, hit.transform.GetComponent<PlayerController>().username);
 					}
 				} else if(hit.transform.tag == "AICompanion") {
 					GameController.instance.PlayerBusy = true;

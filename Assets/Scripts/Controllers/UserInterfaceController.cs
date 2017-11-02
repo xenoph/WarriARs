@@ -61,14 +61,17 @@ public class UserInterfaceController : MonoBehaviour {
 	public Button BuyReviveButton;
 	public Button CloseShopButton;
 
+	[HideInInspector]
+	public List<string> AbilityIDs;
+
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
 		MainInterface.SetActive(false);
 		SetButtonDelegates();
 	}
 
-	public void ShowBattleRequestPanel(string socketID, string playerID) {
-		SendRequestInfoText.text = "Request battle with " + playerID + "?";
+	public void ShowBattleRequestPanel(string socketID, string playerID, string username) {
+		SendRequestInfoText.text = "Request battle with " + username + "?";
 		SendRequestAnimator.SetTrigger("Show");
 
 		SendRequestButton.onClick.RemoveAllListeners();
@@ -134,9 +137,13 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public void SetAbilityButtonDelegates(List<string> abIds) {
 		for(int i = 0; i < abIds.Count; i++) {
+			AbilityIDs.Add(abIds[i]);
 			AbilityButtons[i].onClick.RemoveAllListeners();
-			AbilityButtons[i].onClick.AddListener(delegate { GameController.instance.battleController.UseAbility(abIds[i - 1], i); });
 		}
+
+		AbilityButtons[0].onClick.AddListener(delegate { GameController.instance.battleController.UseAbility1(); });
+		AbilityButtons[1].onClick.AddListener(delegate { GameController.instance.battleController.UseAbility2(); });
+		AbilityButtons[2].onClick.AddListener(delegate { GameController.instance.battleController.UseAbility3(); });
 	}
 
 	public void ToggleAbilityButtons() {
