@@ -65,6 +65,7 @@ public class GameController : MonoBehaviour {
 		while(!asyncOperation.isDone)
 			yield return null;
 		SceneManager.MoveGameObjectToScene(_playerController.gameObject, SceneManager.GetSceneByName("map"));
+		InterfaceController.ToggleMainInterface();
 	}
 
     public PlayerController SpawnPlayer(bool local, string username) {

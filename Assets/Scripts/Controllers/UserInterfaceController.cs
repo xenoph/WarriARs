@@ -27,6 +27,10 @@ public class UserInterfaceController : MonoBehaviour {
 	public Slider MyHealthBar;
 	public Text OpponentHealthText;
 	public Slider OpponentHealthBar;
+	[HideInInspector]
+	public int MyChampionType;
+	[HideInInspector]
+	public int OpponentChampionType;
 
 	[Header("Nameplates")]
 	public Text MyName;
@@ -46,11 +50,20 @@ public class UserInterfaceController : MonoBehaviour {
 	public Button ShopButton;
 	public Button ChampionButton;
 
-	public GameObject ShopPanel;
 	public GameObject ChampionStatsPanel;
+	public GameObject MainInterface;
+
+	[Header("Shop")]
+	public GameObject ShopPanel;
+
+	public Button BuyHealthPotionButton;
+	public Button BuyReviveButton;
+	public Button CloseShopButton;
 
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
+		MainInterface.SetActive(false);
+		SetButtonDelegates();
 	}
 
 	public void ShowBattleRequestPanel(string socketID, string playerID) {
@@ -90,6 +103,14 @@ public class UserInterfaceController : MonoBehaviour {
 			LoadingScreen.gameObject.SetActive(true);
 		} else {
 			LoadingScreen.gameObject.SetActive(false);
+		}
+	}
+
+	public void ToggleMainInterface() {
+		if(MainInterface.activeSelf) {
+			MainInterface.SetActive(false);
+		} else {
+			MainInterface.SetActive(true);
 		}
 	}
 
@@ -152,6 +173,20 @@ public class UserInterfaceController : MonoBehaviour {
 		GameController.instance.PlayerBusy = false;
 	}
 
-	private void ToggleShopWindow() {
+	private void SetButtonDelegates() {
+		ShopButton.onClick.AddListener(delegate { ShowShop(); });
+		CloseShopButton.onClick.AddListener(delegate { HideShop(); });
+	}
+
+	private void ShowShop() {
+		ShopPanel.transform.GetChild(0).GetComponent<Animator>().SetBool("Show", true);
+		ShopButton.onClick.RemoveAllListeners();
+		ShopButton.onClick.AddListener(delegate { HideShop(); });
+	}
+
+	private void HideShop() {
+		ShopPanel.transform.GetChild(0).GetComponent<Animator>().SetBool("Show", false);
+		ShopButton.onClick.RemoveAllListeners();
+		ShopButton.onClick.AddListener(delegate { ShowShop(); });
 	}
 }

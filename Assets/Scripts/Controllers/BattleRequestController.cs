@@ -74,7 +74,9 @@ public class BattleRequestController : MonoBehaviour {
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
 		MyHealth = int.Parse(obj.data["myChampionHealth"].str);
 		OppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
-		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, obj.data["myChampionName"].str, obj.data["opponentChampionName"].str);
+		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, obj.data["myUsername"].str, obj.data["oppUsername"].str);
+		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["myChampionType"].str);
+		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["oppChampionType"].str);
 
 		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
 

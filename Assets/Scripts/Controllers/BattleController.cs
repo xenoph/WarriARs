@@ -51,8 +51,10 @@ public class BattleController : MonoBehaviour {
 	}
 
 	public void SetUpBattle() {
-		var myName = GameController.instance.InterfaceController.MyName.text;
-		var oppName = GameController.instance.InterfaceController.OpponentName.text;
+		var myChampTypeNumber = GameController.instance.InterfaceController.MyChampionType;
+		var oppChampTypeNumber = GameController.instance.InterfaceController.OpponentChampionType;
+		var myChampPrefab = GetChampionPrefab(myChampTypeNumber);
+		var oppChampPrefab = GetChampionPrefab(oppChampTypeNumber);
 
 		_myHealth = GameController.instance.BRController.MyHealth;
 		_oppHealth = GameController.instance.BRController.OppHealth;
@@ -60,7 +62,7 @@ public class BattleController : MonoBehaviour {
 		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
 		_oppSocketID = GameController.instance.BRController.RequestedSocketID;
 
-		SpawnChampions(myName, oppName);
+		SpawnChampions(myChampPrefab, oppChampPrefab);
 	}
 
 	/// <summary>
@@ -215,5 +217,27 @@ public class BattleController : MonoBehaviour {
 		json.AddField("receivingSocketID", _oppSocketID);
 
 		return json;
+	}
+
+	private string GetChampionPrefab(int num) {
+		switch (num) {
+			case 0:
+				return "PRE_Champion_Flame";
+
+			case 1:
+				return "PRE_Champion_Water";
+
+			case 2:
+				return "PRE_Champion_Wood";
+
+			case 3:
+				return "PRE_Champion_Earth";
+
+			case 4:
+				return "PRE_Champion_Metal";
+
+			default:
+				return null;
+		}
 	}
 }
