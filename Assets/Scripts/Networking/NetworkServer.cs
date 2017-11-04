@@ -45,6 +45,10 @@ public class NetworkServer : MonoBehaviour {
 	}
 	*/
 
+	public void Disconnect() {
+		socket.Close();
+	}
+
 	public void SetUID(string uid) {
 		GameController.instance.currentPlayerID = uid;
 	}

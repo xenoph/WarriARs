@@ -16,6 +16,9 @@ public class LoginServer : MonoBehaviour {
 		thisButton.interactable = true;
 		if(PlayerPrefs.HasKey("Prefill-email") && emailField != null) {
 			emailField.text = PlayerPrefs.GetString("Prefill-email");
+			if(PlayerPrefs.HasKey("remember-me")) {
+				StartCoroutine(Relog(PlayerPrefs.GetString("Prefill-email"), PlayerPrefs.GetString("remember-me")));
+			}
 		}
 	}
 
@@ -55,6 +58,42 @@ public class LoginServer : MonoBehaviour {
 			} else {
 				GameController.instance.loadingScreen.gameObject.SetActive(true);
 				GameController.instance.loadingScreen.LoadingText.text = "Connecting to server...";
+				if(dontRemember) {
+					PlayerPrefs.DeleteKey("remember-me");
+				} else {
+					PlayerPrefs.SetString("remember-me", res.currentID);
+				}
+				GameController.instance.networkServer.SetUID(res.currentID);
+				GameController.instance.networkServer.Connect();
+			}
+        }
+    }
+
+	IEnumerator Relog(string email, string _currentID, bool dontRemember = false) {
+		failed.text = "";
+		passwordField.text = "";
+		thisButton.interactable = false;
+        WWWForm details = new WWWForm();
+		details.AddField("email", email);
+		details.AddField("currentID", _currentID);
+        UnityWebRequest www = UnityWebRequest.Post("https://warriars.fun/relog", details);
+        yield return www.Send();
+		
+		thisButton.interactable = true;
+        if(www.isNetworkError) {
+            Debug.Log("Error: " + www.error);
+        } else {
+            responds res = JsonUtility.FromJson<responds>(www.downloadHandler.text);
+			if(!string.IsNullOrEmpty(res.error)) {
+				failed.text = res.error;
+			} else {
+				GameController.instance.loadingScreen.gameObject.SetActive(true);
+				GameController.instance.loadingScreen.LoadingText.text = "Connecting to server...";
+				if(dontRemember) {
+					PlayerPrefs.DeleteKey("remember-me");
+				} else {
+					PlayerPrefs.SetString("remember-me", res.currentID);
+				}
 				GameController.instance.networkServer.SetUID(res.currentID);
 				GameController.instance.networkServer.Connect();
 			}
