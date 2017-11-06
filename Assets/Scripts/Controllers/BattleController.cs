@@ -177,7 +177,7 @@ public class BattleController : MonoBehaviour {
 		ClearUsedAbilities();
 		yield return new WaitForSeconds(2f);
 		ClearChampions();
-		GameController.instance.InterfaceController.ToggleMainInterface();
+		//GameController.instance.InterfaceController.ToggleMainInterface();
 		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
 
