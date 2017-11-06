@@ -82,12 +82,12 @@ public class BattleRequestController : MonoBehaviour {
 		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, obj.data["myUsername"].str, obj.data["oppUsername"].str);
 		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["myChampionType"].str);
 		GameController.instance.InterfaceController.OpponentChampionType = int.Parse(obj.data["oppChampionType"].str);
-
+		Debug.Log("values");
 		HealthValues = new List<int>() { int.Parse(obj.data["myChampionHealth"].str), 
-										int.Parse(obj.data["oppChampionHealth"].str),
+										int.Parse(obj.data["opponentChampionHealth"].str),
 										int.Parse(obj.data["myChampMaxHealth"].str),
 										int.Parse(obj.data["oppChampMaxHealth"].str) };
-
+		Debug.Log("Load Scene");
 		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
 
 		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
