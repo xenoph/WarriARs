@@ -77,8 +77,8 @@ public class BattleRequestController : MonoBehaviour {
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
 		BattleID = obj.data["battleID"].str;
-		MyHealth = int.Parse(obj.data["myChampionHealth"].str);
-		OppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
+		MyHealth = int.Parse(obj.data["myyChampHealth"].str);
+		OppHealth = int.Parse(obj.data["oppoChampoHealth"].str);
 		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, obj.data["myUsername"].str, obj.data["oppUsername"].str);
 		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["myChampionType"].str);
 		GameController.instance.InterfaceController.OpponentChampionType = int.Parse(obj.data["oppChampionType"].str);
@@ -87,10 +87,9 @@ public class BattleRequestController : MonoBehaviour {
 										int.Parse(obj.data["oppChampHealth"].str),
 										int.Parse(obj.data["myChampMaxHealth"].str),
 										int.Parse(obj.data["oppChampMaxHealth"].str) };
+		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
 
 		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
-
-		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
 
 		GetAbilityNames();
 	}
