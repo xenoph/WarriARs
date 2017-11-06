@@ -19,10 +19,6 @@ public class BattleController : MonoBehaviour {
 	private Dictionary<string, string> _battleData;
 	private SocketIOComponent Socket;
 
-	private int _myHealth;
-	//private int _oppHealth;
-	private bool _dead;
-
 	private string _usedAbilityID;
 	private int _myUsedAbility;
 	private int _oppUsedAbility;
@@ -37,6 +33,12 @@ public class BattleController : MonoBehaviour {
 
 	private ChampionAbilityController _myAbController;
 	private ChampionAbilityController _oppAbController;
+
+	private int _myMaxHealth;
+	private int _oppMaxHealth;
+	private int _myHealth;
+	private int _oppHealth;
+	private bool _dead;
 
 	private void Start() {
 		GameController.instance.battleController = this;
@@ -56,7 +58,7 @@ public class BattleController : MonoBehaviour {
 		var myChampPrefab = GetChampionPrefab(myChampTypeNumber);
 		var oppChampPrefab = GetChampionPrefab(oppChampTypeNumber);
 
-		_myHealth = GameController.instance.BRController.MyHealth;
+		//_myHealth = GameController.instance.BRController.MyHealth;
 		//_oppHealth = GameController.instance.BRController.OppHealth;
 
 		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
@@ -106,6 +108,13 @@ public class BattleController : MonoBehaviour {
 		var oppPrefab = ChampionPrefabs.Where(n => n.name == oppname).FirstOrDefault();
 		_oppChampion = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.Euler(0f, -90f, 0f));
 		_oppAbController = _oppChampion.GetComponent<ChampionAbilityController>();
+		SetUpChampionHealth();
+	}
+
+	private void RequestChampionHealth() {
+		var json = CreateJSON();
+
+		Socket.Emit("getChampionHealth", json);
 	}
 
 	/// <summary>
@@ -194,7 +203,7 @@ public class BattleController : MonoBehaviour {
 		_myAbController = null;
 		_oppAbController = null;
 		_myHealth = 0;
-		//_oppHealth = 0;
+		_oppHealth = 0;
 
 		Destroy(_myChampion);
 		Destroy(_oppChampion);
@@ -209,6 +218,14 @@ public class BattleController : MonoBehaviour {
 	private void SetUpSocketConnections() {
 		Socket.On("usedAbility", OnOpponentAbilityUsed);
 		Socket.On("timedOut", TimedOut);
+	}
+
+	public void SetUpChampionHealth() {
+		_myHealth = GameController.instance.BRController.HealthValues[0];
+		_oppHealth = GameController.instance.BRController.HealthValues[1];
+
+		_myMaxHealth = GameController.instance.BRController.HealthValues[2];
+		_oppMaxHealth = GameController.instance.BRController.HealthValues[3];
 	}
 
 	private void OnDisable() {

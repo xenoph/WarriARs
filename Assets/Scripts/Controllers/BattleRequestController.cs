@@ -24,6 +24,9 @@ public class BattleRequestController : MonoBehaviour {
 	[HideInInspector]
 	public string BattleID;
 
+	[HideInInspector]
+	public List<int> HealthValues;
+
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
 		SetupSocketReceivers();
@@ -59,10 +62,6 @@ public class BattleRequestController : MonoBehaviour {
 		Socket.Emit("acceptedRequest", json);
 	}
 
-	public void SetUserInterface() {
-	
-	}
-
 	private void SetupSocketReceivers() {
 		Socket.On("getBattleRequest", OnReceiveBattleRequest);
 		Socket.On("getBattleInfo", OnReceiveBattleInformation);
@@ -87,6 +86,11 @@ public class BattleRequestController : MonoBehaviour {
 		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
 
 		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
+		HealthValues = new List<int>() { int.Parse(obj.data["myChampHealth"].str), 
+										int.Parse(obj.data["oppChampHealth"].str),
+										int.Parse(obj.data["myChampMaxHealth"].str),
+										int.Parse(obj.data["oppChampMaxHealth"].str) };
+
 		GetAbilityNames();
 	}
 

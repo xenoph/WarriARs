@@ -157,6 +157,13 @@ public class UserInterfaceController : MonoBehaviour {
 		AbilityButtons[2].onClick.AddListener(delegate { GameController.instance.battleController.UseAbility3(); });
 	}
 
+	public void SetHealthBarsText(int myHealth, int oppHealth, int myMaxHealth, int oppMaxHealth) {
+		MyHealthText.text = myHealth.ToString();
+		OpponentHealthText.text = oppHealth.ToString();
+
+		//MyHealthBar.value = 
+	}
+
 	public void ToggleAbilityButtons() {
 		if(AbilityButtons[0].interactable) {
 			foreach(var butt in AbilityButtons) {

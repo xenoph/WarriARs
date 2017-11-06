@@ -29,6 +29,8 @@ public class SceneController : MonoBehaviour {
 			while(GameObject.Find("World").transform.childCount < 1) {
 				yield return null;
 			}
+			GameController.instance.InterfaceController.BattleCanvas.SetActive(false);
+			GameController.instance.InterfaceController.ToggleMainInterface();
 			GameController.instance.playerController.gameObject.SetActive(true);
 		}
 
