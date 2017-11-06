@@ -24,6 +24,7 @@ public class BattleController : MonoBehaviour {
 	private int _oppUsedAbility;
 	private int _goingFirst;
 	private bool _oppDead;
+	private int _myDamage;
 
 	private GameObject _myChampion;
 	private GameObject _oppChampion;
@@ -57,9 +58,6 @@ public class BattleController : MonoBehaviour {
 		var oppChampTypeNumber = GameController.instance.InterfaceController.OpponentChampionType;
 		var myChampPrefab = GetChampionPrefab(myChampTypeNumber);
 		var oppChampPrefab = GetChampionPrefab(oppChampTypeNumber);
-
-		//_myHealth = GameController.instance.BRController.MyHealth;
-		//_oppHealth = GameController.instance.BRController.OppHealth;
 
 		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
 		_oppSocketID = GameController.instance.BRController.RequestedSocketID;
@@ -123,6 +121,7 @@ public class BattleController : MonoBehaviour {
 	/// <param name="obj"></param>
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
 		var dmgTaken = int.Parse(obj.data["damage"].str);
+		_myDamage = int.Parse(obj.data["myDamage"].str);
 		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
 		_goingFirst = int.Parse(obj.data["goingFirst"].str);
 		if(int.Parse(obj.data["opponentDead"].str) == 0) {
@@ -132,6 +131,7 @@ public class BattleController : MonoBehaviour {
 			_oppDead = true;
 		}
 		if(_myHealth <= 0) { _dead = true; }
+		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
 
