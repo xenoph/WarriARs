@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour {
 
     public PlayerController SpawnPlayer(bool local, string username) {
         GameObject player = (GameObject) Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+		SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName("map"));
         PlayerController controller = player.GetComponent<PlayerController>();
 		controller.username = username;
         controller.local = local;
