@@ -121,7 +121,8 @@ public class BattleController : MonoBehaviour {
 	/// <param name="obj"></param>
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
 		var dmgTaken = int.Parse(obj.data["damage"].str);
-		_myDamage = int.Parse(obj.data["myDamage"].str);
+		//_myDamage = int.Parse(obj.data["myDamage"].str);
+		//Debug.Log(_myDamage);
 		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
 		_goingFirst = int.Parse(obj.data["goingFirst"].str);
 		if(int.Parse(obj.data["opponentDead"].str) == 0) {
@@ -131,7 +132,7 @@ public class BattleController : MonoBehaviour {
 			_oppDead = true;
 		}
 		if(_myHealth <= 0) { _dead = true; }
-		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
+		//GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
 
