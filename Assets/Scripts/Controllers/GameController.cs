@@ -57,8 +57,9 @@ public class GameController : MonoBehaviour {
 		AsyncOperation ao = SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);
 		loginScreen.gameObject.SetActive(false);
 		PlayerController pc = SpawnPlayer(true, username);
-		StartCoroutine(movePlayerToNewMap(ao, pc));
-        return pc;
+		//StartCoroutine(movePlayerToNewMap(ao, pc));
+        InterfaceController.ToggleMainInterface();
+		return pc;
 	}
 
 	private IEnumerator movePlayerToNewMap(AsyncOperation asyncOperation, PlayerController _playerController) {
@@ -70,7 +71,9 @@ public class GameController : MonoBehaviour {
 
     public PlayerController SpawnPlayer(bool local, string username) {
         GameObject player = (GameObject) Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-		SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName("map"));
+		player.name = username;
+		if(!local)
+			SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName("map"));
         PlayerController controller = player.GetComponent<PlayerController>();
 		controller.username = username;
         controller.local = local;
