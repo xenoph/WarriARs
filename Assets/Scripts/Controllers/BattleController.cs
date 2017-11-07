@@ -120,9 +120,9 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	/// <param name="obj"></param>
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
+		Debug.Log(obj.data);
 		var dmgTaken = int.Parse(obj.data["damage"].str);
-		//_myDamage = int.Parse(obj.data["myDamage"].str);
-		//Debug.Log(_myDamage);
+		_myDamage = int.Parse(obj.data["myDamage"].str);
 		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
 		_goingFirst = int.Parse(obj.data["goingFirst"].str);
 		if(int.Parse(obj.data["opponentDead"].str) == 0) {
@@ -132,7 +132,7 @@ public class BattleController : MonoBehaviour {
 			_oppDead = true;
 		}
 		if(_myHealth <= 0) { _dead = true; }
-		//GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
+		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
 
@@ -141,6 +141,7 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	private void PlayAbilityEffects() {
 		if(_goingFirst == 1) {
+			Debug.Log("Me going first");
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
 			if(_oppDead) {
 				StartCoroutine(EndBattle());
@@ -148,6 +149,7 @@ public class BattleController : MonoBehaviour {
 				StartCoroutine(PlayOtherAbility(false));
 			}
 		} else {
+			Debug.Log("Opponent going first");
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
 			if(_dead) {
 				StartCoroutine(EndBattle());
@@ -178,7 +180,6 @@ public class BattleController : MonoBehaviour {
 		ClearUsedAbilities();
 		yield return new WaitForSeconds(2f);
 		ClearChampions();
-		//GameController.instance.InterfaceController.ToggleMainInterface();
 		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
 
@@ -187,6 +188,7 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void UsedAbility(int ab) {
+		_myUsedAbility = ab;
 		GameController.instance.InterfaceController.ToggleAbilityButtons();
 		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[ab];
 		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
@@ -240,8 +242,6 @@ public class BattleController : MonoBehaviour {
 		json.AddField("sendingPlayerID", GameController.instance.playerController.PlayerID);
 		json.AddField("sendingSocketID", GameController.instance.playerController.SocketID);
 		json.AddField("battleID", battleID);
-		//json.AddField("receivingPlayerID", _oppPlayerID);
-		//json.AddField("receivingSocketID", _oppSocketID);
 
 		return json;
 	}

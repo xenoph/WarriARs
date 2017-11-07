@@ -27,9 +27,9 @@ public class UserInterfaceController : MonoBehaviour {
 	[Header("Battle Interface Elements")]
 	[Header("Health Bars")]
 	public Text MyHealthText;
-	public Slider MyHealthBar;
+	public Image MyHealthBar;
 	public Text OpponentHealthText;
-	public Slider OpponentHealthBar;
+	public Image OpponentHealthBar;
 	public Image MyTypeImage;
 	public Image OpponentTypeImage;
 	[HideInInspector]
@@ -158,10 +158,11 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void SetHealthBarsText(int myHealth, int oppHealth, int myMaxHealth, int oppMaxHealth) {
-		MyHealthText.text = myHealth.ToString();
-		OpponentHealthText.text = oppHealth.ToString();
+		MyHealthText.text = myHealth.ToString() + " / " + myMaxHealth.ToString();
+		OpponentHealthText.text = oppHealth.ToString() + " / " + oppMaxHealth.ToString();
 
-		//MyHealthBar.value = 
+		MyHealthBar.fillAmount = (float)myHealth / (float)myMaxHealth;
+		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
 	}
 
 	public void ToggleAbilityButtons() {
