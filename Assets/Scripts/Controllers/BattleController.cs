@@ -121,8 +121,7 @@ public class BattleController : MonoBehaviour {
 	/// <param name="obj"></param>
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
 		var dmgTaken = int.Parse(obj.data["damage"].str);
-		//_myDamage = int.Parse(obj.data["myDamage"].str);
-		//Debug.Log(_myDamage);
+		_myDamage = int.Parse(obj.data["myDamage"].str);
 		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
 		_goingFirst = int.Parse(obj.data["goingFirst"].str);
 		if(int.Parse(obj.data["opponentDead"].str) == 0) {
@@ -132,7 +131,7 @@ public class BattleController : MonoBehaviour {
 			_oppDead = true;
 		}
 		if(_myHealth <= 0) { _dead = true; }
-		//GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
+		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
 
@@ -178,7 +177,6 @@ public class BattleController : MonoBehaviour {
 		ClearUsedAbilities();
 		yield return new WaitForSeconds(2f);
 		ClearChampions();
-		//GameController.instance.InterfaceController.ToggleMainInterface();
 		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
 
@@ -240,8 +238,6 @@ public class BattleController : MonoBehaviour {
 		json.AddField("sendingPlayerID", GameController.instance.playerController.PlayerID);
 		json.AddField("sendingSocketID", GameController.instance.playerController.SocketID);
 		json.AddField("battleID", battleID);
-		//json.AddField("receivingPlayerID", _oppPlayerID);
-		//json.AddField("receivingSocketID", _oppSocketID);
 
 		return json;
 	}
