@@ -120,6 +120,7 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	/// <param name="obj"></param>
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
+		Debug.Log(obj.data);
 		var dmgTaken = int.Parse(obj.data["damage"].str);
 		_myDamage = int.Parse(obj.data["myDamage"].str);
 		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
@@ -140,6 +141,7 @@ public class BattleController : MonoBehaviour {
 	/// </summary>
 	private void PlayAbilityEffects() {
 		if(_goingFirst == 1) {
+			Debug.Log("Me going first");
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
 			if(_oppDead) {
 				StartCoroutine(EndBattle());
@@ -147,6 +149,7 @@ public class BattleController : MonoBehaviour {
 				StartCoroutine(PlayOtherAbility(false));
 			}
 		} else {
+			Debug.Log("Opponent going first");
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
 			if(_dead) {
 				StartCoroutine(EndBattle());
