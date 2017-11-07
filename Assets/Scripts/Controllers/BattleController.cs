@@ -185,6 +185,7 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void UsedAbility(int ab) {
+		_myUsedAbility = ab;
 		GameController.instance.InterfaceController.ToggleAbilityButtons();
 		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[ab];
 		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
