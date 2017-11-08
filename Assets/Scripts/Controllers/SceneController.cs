@@ -35,6 +35,7 @@ public class SceneController : MonoBehaviour {
 		}
 
 		GameController.instance.InterfaceController.ToggleLoadingScreen(null);
+		GameController.instance.networkServer.UnloadOthers();
 		yield break;
 	}
 }

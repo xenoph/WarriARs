@@ -64,6 +64,7 @@ public class BattleRequestController : MonoBehaviour {
 
 	private void SetupSocketReceivers() {
 		Socket.On("getBattleRequest", OnReceiveBattleRequest);
+		Socket.On("getDeniedBattleRequest", OnReceiveDeniedBattleRequest);
 		Socket.On("getBattleInfo", OnReceiveBattleInformation);
 		Socket.On("getAbilityNames", OnReceiveAbilityNames);
 	}
@@ -73,6 +74,10 @@ public class BattleRequestController : MonoBehaviour {
 		RequestedPlayerID = obj.data["requestedPlayerID"].str;
 		RequestedSocketID = obj.data["requestedSocketID"].str;
 		BattleID = obj.data["battleID"].str;
+	}
+
+	private void OnReceiveDeniedBattleRequest(SocketIOEvent obj) {
+		GameController.instance.InterfaceController.HideBattleRequestPanel();
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {

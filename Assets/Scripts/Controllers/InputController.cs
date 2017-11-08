@@ -48,7 +48,14 @@ public class InputController : MonoBehaviour {
 				}
 			}
 		}
+
+		if(Input.GetAxis("Horizontal") != 0f) {
+			if(GameController.instance.playerController != null)
+				GameController.instance.playerController.transform.Rotate(Vector3.up, Input.GetAxis("Horizontal") * -1f);
+		}
 	}
+
+	private Vector3 startPos = Vector3.zero;
 
 	private void DetectTouchInput() {
 		if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) {
@@ -72,5 +79,13 @@ public class InputController : MonoBehaviour {
 				}
 			}
 		}
+
+		//Needs testing
+		if (Input.touchCount == 1 && GameController.instance.playerController != null) {
+             Touch touch = Input.GetTouch(0);
+             Vector3 axis = touch.deltaPosition;
+			 float dir = axis.x < 0 ? 1f : -1f;
+             GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
+         }
 	}
 }

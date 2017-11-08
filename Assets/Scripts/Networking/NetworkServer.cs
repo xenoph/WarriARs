@@ -45,6 +45,10 @@ public class NetworkServer : MonoBehaviour {
 	}
 	*/
 
+	public void UnloadOthers() {
+		otherPlayers.Clear();
+	}
+
 	public void Disconnect() {
 		socket.Close();
 	}
