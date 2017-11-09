@@ -67,6 +67,16 @@ public class UserInterfaceController : MonoBehaviour {
 	public Button BuyReviveButton;
 	public Button CloseShopButton;
 
+	[Header("Dragon Picker")]
+	public Animator DragonPickerAnimator;
+	public GameObject DragonPickerPanel;
+
+	public Button DragonPickerFireButton;
+	public Button DragonPickerWaterButton;
+	public Button DragonPickerWoodButton;
+	public Button DragonPickerMetalButton;
+	public Button DragonPickerEarthButton;
+
 	[HideInInspector]
 	public List<string> AbilityIDs;
 
@@ -142,6 +152,8 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public void SetAbilityButtonNames(List<string> abNames) {
 		for(int i = 0; i < AbilityButtons.Length; i++) {
+			if(abNames[i] == "N/A")
+				AbilityButtons[i].interactable = false;
 			AbilityButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = abNames[i];
 		}
 	}
@@ -163,6 +175,11 @@ public class UserInterfaceController : MonoBehaviour {
 
 		MyHealthBar.fillAmount = (float)myHealth / (float)myMaxHealth;
 		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
+	}
+
+	public void ShowDragonPickerPanel() {
+		SetDragonPickerButtonDelegates();
+		DragonPickerAnimator.SetBool("Show", true);
 	}
 
 	public void ToggleAbilityButtons() {
@@ -244,5 +261,20 @@ public class UserInterfaceController : MonoBehaviour {
 			default:
 				break;
 		}
+	}
+
+	private void SetDragonPickerButtonDelegates() {
+		DragonPickerFireButton.onClick.AddListener(delegate { PickDragon("fire"); });
+		DragonPickerWaterButton.onClick.AddListener(delegate { PickDragon("water"); });
+		DragonPickerWoodButton.onClick.AddListener(delegate { PickDragon("wood"); });
+		DragonPickerMetalButton.onClick.AddListener(delegate { PickDragon("metal"); });
+		DragonPickerEarthButton.onClick.AddListener(delegate { PickDragon("earth"); });
+	}
+
+	private void PickDragon(string dType) {
+		var json = new JSONObject();
+		json.AddField("dragonType", dType);
+		GameController.instance.Socket.Emit("pickedDragon", json);
+		DragonPickerAnimator.SetBool("Show", false);
 	}
 }

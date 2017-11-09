@@ -6,7 +6,7 @@ using SocketIO;
 public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
-	private ServerVersion VERSION = new ServerVersion(0, 2, 0);
+	public static ServerVersion VERSION = new ServerVersion(0, 3, 0);
 
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
@@ -84,7 +84,7 @@ public class NetworkServer : MonoBehaviour {
 		int.TryParse(v[0], out major);
 		int.TryParse(v[1], out minor);
 		int.TryParse(v[2], out hotfix);
-
+		CurrentVersion.serverVersion = new ServerVersion(major, minor, hotfix);
 		if(major == VERSION.major && minor == VERSION.minor) {
 			if(hotfix > VERSION.hotfix)
 				Debug.LogWarning("The server is running a newer hotfix. This should be fine.");
@@ -168,7 +168,7 @@ public class NetworkServer : MonoBehaviour {
 		}
 	}
 
-	private struct ServerVersion {
+	public struct ServerVersion {
 		public int major;
 		public int minor;
 		public int hotfix;
@@ -176,6 +176,9 @@ public class NetworkServer : MonoBehaviour {
 			this.major = major;
 			this.minor = minor;
 			this.hotfix = hotfix;
+		}
+		public override string ToString() {
+			return major + "." + minor + "." + hotfix;
 		}
 	}
 }

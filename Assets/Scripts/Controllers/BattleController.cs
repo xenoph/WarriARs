@@ -86,7 +86,7 @@ public class BattleController : MonoBehaviour {
 	/// <param name="percentage"></param>
 	public void SendAbility(float percentage) {
 		var json = CreateJSON();
-		json.AddField("ability", _usedAbilityID);
+		json.AddField("ability", _myUsedAbility); //_usedAbilityID);
 		json.AddField("percentage", percentage);
 		Socket.Emit("usedAbility", json);
 
@@ -135,6 +135,8 @@ public class BattleController : MonoBehaviour {
 		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
+
+	
 
 	/// <summary>
 	/// Plays Ability effect from the Champion that goes first and checks if the other champion died from the ability
