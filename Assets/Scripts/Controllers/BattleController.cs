@@ -136,6 +136,8 @@ public class BattleController : MonoBehaviour {
 		PlayAbilityEffects();
 	}
 
+	
+
 	/// <summary>
 	/// Plays Ability effect from the Champion that goes first and checks if the other champion died from the ability
 	/// </summary>

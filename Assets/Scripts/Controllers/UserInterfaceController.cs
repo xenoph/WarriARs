@@ -67,6 +67,16 @@ public class UserInterfaceController : MonoBehaviour {
 	public Button BuyReviveButton;
 	public Button CloseShopButton;
 
+	[Header("Dragon Picker")]
+	public Animator DragonPickerAnimator;
+	public GameObject DragonPickerPanel;
+
+	public Button DragonPickerFireButton;
+	public Button DragonPickerWaterButton;
+	public Button DragonPickerWoodButton;
+	public Button DragonPickerMetalButton;
+	public Button DragonPickerEarthButton;
+
 	[HideInInspector]
 	public List<string> AbilityIDs;
 
@@ -244,5 +254,9 @@ public class UserInterfaceController : MonoBehaviour {
 			default:
 				break;
 		}
+	}
+
+	private void SetDragonPickerButtonDelegates() {
+		//DragonPickerFireButton.onClick.AddListener(delegate)
 	}
 }
