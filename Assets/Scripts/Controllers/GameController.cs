@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SocketIO;
 
 public class GameController : MonoBehaviour {
 	public static GameController instance;
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour {
 	public NetworkServer networkServer;
 	public string currentPlayerID;
     public PlayerController playerController;
+	public SocketIOComponent Socket;
 
     [Header("Prefabs")]
     public GameObject playerPrefab;

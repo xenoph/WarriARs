@@ -175,6 +175,11 @@ public class UserInterfaceController : MonoBehaviour {
 		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
 	}
 
+	public void ShowDragonPickerPanel() {
+		SetDragonPickerButtonDelegates();
+		DragonPickerAnimator.SetBool("Show", true);
+	}
+
 	public void ToggleAbilityButtons() {
 		if(AbilityButtons[0].interactable) {
 			foreach(var butt in AbilityButtons) {
@@ -257,6 +262,17 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	private void SetDragonPickerButtonDelegates() {
-		//DragonPickerFireButton.onClick.AddListener(delegate)
+		DragonPickerFireButton.onClick.AddListener(delegate { PickDragon("fire"); });
+		DragonPickerWaterButton.onClick.AddListener(delegate { PickDragon("water"); });
+		DragonPickerWoodButton.onClick.AddListener(delegate { PickDragon("wood"); });
+		DragonPickerMetalButton.onClick.AddListener(delegate { PickDragon("metal"); });
+		DragonPickerEarthButton.onClick.AddListener(delegate { PickDragon("earth"); });
+	}
+
+	private void PickDragon(string dType) {
+		var json = new JSONObject();
+		json.AddField("dragonType", dType);
+		GameController.instance.Socket.Emit("pickedDragon", json);
+		DragonPickerAnimator.SetBool("Show", false);
 	}
 }
