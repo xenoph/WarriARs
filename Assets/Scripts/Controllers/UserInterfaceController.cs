@@ -152,6 +152,8 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public void SetAbilityButtonNames(List<string> abNames) {
 		for(int i = 0; i < AbilityButtons.Length; i++) {
+			if(abNames[i] == "N/A")
+				AbilityButtons[i].interactable = false;
 			AbilityButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = abNames[i];
 		}
 	}

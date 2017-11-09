@@ -6,7 +6,7 @@ using SocketIO;
 public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
-	public static ServerVersion VERSION = new ServerVersion(0, 2, 0);
+	public static ServerVersion VERSION = new ServerVersion(0, 3, 0);
 
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
