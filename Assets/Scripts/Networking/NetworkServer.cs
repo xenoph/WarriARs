@@ -23,6 +23,7 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("login", OnLogin);
 		socket.On("move", OnMove);
 		socket.On("quit", OnQuit);
+		socket.On("pong", OnPong);
 	}
 
 	/*
@@ -96,6 +97,7 @@ public class NetworkServer : MonoBehaviour {
 			json.AddField("lat", (float) GameController.instance.currentLocation.Latitude);
 			json.AddField("lng", (float) GameController.instance.currentLocation.Longitude);
 			socket.Emit("register", json);
+			//Ping();
 		} else {
 			Debug.LogError("Your version is not compatible with the server version. Try updating the game.");
 			socket.Close();
@@ -151,6 +153,24 @@ public class NetworkServer : MonoBehaviour {
 		}
 	}
 
+	private System.Diagnostics.Stopwatch lastSW;
+	private void OnPong(SocketIOEvent obj) {
+		if(lastSW != null) {
+			lastSW.Stop();
+			Debug.Log(lastSW.ElapsedMilliseconds);
+			lastSW = null;
+		}
+		Invoke("Ping", 1f);
+	}
+
+	private void Ping() {
+		JSONObject json = new JSONObject();
+		json.AddField("testData", Sha1Sum2(Time.time.ToString()));
+		lastSW = new System.Diagnostics.Stopwatch();
+		lastSW.Start();
+		socket.Emit("ping", json);
+	}
+
 	private void OnMove(SocketIOEvent obj) {
 		if(otherPlayers.ContainsKey(obj.data["id"].str)) {
 			PlayerController other;
@@ -167,6 +187,13 @@ public class NetworkServer : MonoBehaviour {
 			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Adding them.");
 		}
 	}
+
+	 public static string Sha1Sum2(string str) {
+        System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+        byte[] bytes = encoding.GetBytes(str);
+        var sha = new System.Security.Cryptography.SHA1CryptoServiceProvider();
+        return System.BitConverter.ToString(sha.ComputeHash(bytes));
+    }
 
 	public struct ServerVersion {
 		public int major;
