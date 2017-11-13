@@ -72,6 +72,8 @@ public class GameController : MonoBehaviour {
 	}
 
     public PlayerController SpawnPlayer(bool local, string username) {
+		if(!local && SceneManager.GetSceneByName("map") == null)
+			return null;
         GameObject player = (GameObject) Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
 		player.name = username;
 		if(!local)
