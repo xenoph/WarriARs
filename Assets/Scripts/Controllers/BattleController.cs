@@ -131,6 +131,7 @@ public class BattleController : MonoBehaviour {
 		} else {
 			_oppDead = true;
 		}
+		_oppHealth -= _myDamage;
 		if(_myHealth <= 0) { _dead = true; }
 		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
