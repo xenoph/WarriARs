@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198304752904079040}
   - component: {fileID: 199920555338003578}
   m_Layer: 0
-  m_Name: PS_Water_Vortex
+  m_Name: ParticleVortexBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

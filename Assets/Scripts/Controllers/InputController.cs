@@ -9,6 +9,8 @@ public class InputController : MonoBehaviour {
 
 	private void Update() {
 		if(GameController.instance.battleController != null || GameController.instance.PlayerBusy) { return; }
+		
+		Input.simulateMouseWithTouches = true;
 #if UNITY_EDITOR || UNITY_WEBGL
 		GetMouseClick();
 #elif UNITY_IOS || UNITY_ANDROID
@@ -57,6 +59,16 @@ public class InputController : MonoBehaviour {
 
 	private Vector3 startPos = Vector3.zero;
 
+	void LateUpdate() {
+		//Needs testing
+		if (Input.touchCount == 1 && GameController.instance.playerController != null) {
+             Touch touch = Input.GetTouch(0);
+             Vector3 axis = touch.deltaPosition;
+			 float dir = axis.x < 0 ? 1f : -1f;
+             GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
+        }
+	}
+
 	private void DetectTouchInput() {
 		if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) {
 			Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
@@ -86,6 +98,6 @@ public class InputController : MonoBehaviour {
              Vector3 axis = touch.deltaPosition;
 			 float dir = axis.x < 0 ? 1f : -1f;
              GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
-         }
+        }
 	}
 }

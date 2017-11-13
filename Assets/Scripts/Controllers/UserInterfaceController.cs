@@ -183,13 +183,20 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void ToggleAbilityButtons() {
-		if(AbilityButtons[0].interactable) {
+		/*if(AbilityButtons[0].interactable) {
 			foreach(var butt in AbilityButtons) {
 				butt.interactable = false;
 			}
 		} else {
 			foreach(var butt in AbilityButtons) {
 				butt.interactable = true;
+			}
+		}*/
+		foreach(var butt in AbilityButtons) {
+			if(butt.GetComponentInChildren<TextMeshProUGUI>().text.ToLower() == "n/a") {
+				butt.interactable = false;
+			} else {
+				butt.interactable = !butt.interactable;
 			}
 		}
 	}
