@@ -63,6 +63,10 @@ public class PlayerController : MonoBehaviour {
                     UpdateServerPosition();
                 }
             }
+            if(overheadUsername != null) {
+                overheadUsername.gameObject.SetActive(false);
+                overheadUsername = null;
+            }
         } else {
             if(overheadUsername != null) {
                 overheadUsername.text = username;
