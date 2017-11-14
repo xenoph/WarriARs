@@ -45,7 +45,8 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private void SetShopButtons() {
-
+		BuyHealthButton.onClick.AddListener (delegate { BuyHealth (); });
+		BuyReviveButton.onClick.AddListener (delegate { BuyRevive (); });
 	}
 
 	private void BuyHealth() {
@@ -58,10 +59,8 @@ public class ShopController : MonoBehaviour {
 
 	private void CheckForCurrency(string obj) {
 		_purchase = obj;
-		var json = new JSONObject();
+		var json = CreateJSON ();
 		json.AddField("type", obj);
-		json.AddField("playerID", GameController.instance.playerController.PlayerID);
-		json.AddField("socketID", GameController.instance.playerController.SocketID);
 		_socket.Emit("checkForCurrency", json);
 		StartCoroutine(AwaitCurrencyCheck());
 	}
@@ -94,6 +93,28 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private void ActivatePurchase() {
+		if (_purchase == "health") {
+			AddHealthToChampion ();
+		} else {
+			ReviveChampion ();
+		}
+	}
 
+	private void ReviveChampion() {
+		var json = CreateJSON ();
+		_socket.Emit ("reviveChampion", json);
+	}
+
+	private void AddHealthToChampion() {
+		var json = CreateJSON ();
+		json.AddField ("healthAmount", 500);
+		_socket.Emit ("addHealth", json);
+	}
+
+	private JSONObject CreateJSON() {
+		var json = new JSONObject ();
+		json.AddField ("playerID", GameController.instance.playerController.PlayerID);
+		json.AddField ("socketID", GameController.instance.playerController.SocketID);
+		return json;
 	}
 }
