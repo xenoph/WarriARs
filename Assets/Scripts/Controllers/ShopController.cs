@@ -50,11 +50,15 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private void BuyHealth() {
-		CheckForCurrency("health");
+		//CheckForCurrency("health");
+		_purchase = "health";
+		ActivatePurchase ();
 	}
 
 	private void BuyRevive() {
-		CheckForCurrency("revive");
+		//CheckForCurrency("revive");
+		_purchase = "revive";
+		ActivatePurchase ();
 	}
 
 	private void CheckForCurrency(string obj) {
