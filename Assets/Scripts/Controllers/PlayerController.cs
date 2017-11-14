@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour {
 
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour {
     public string SocketID;
 
     public string username;
+
+    public TextMeshProUGUI overheadUsername;
 
     private NetworkServer server;
     private Location lastLocation;
@@ -58,6 +61,13 @@ public class PlayerController : MonoBehaviour {
                 float dist = Vector3.Distance(targetPosition, lastWorldpos);
                 if(dist > 1f) {
                     UpdateServerPosition();
+                }
+            }
+        } else {
+            if(overheadUsername != null) {
+                overheadUsername.text = username;
+                if(username.StartsWith("Mod ")) {
+                    overheadUsername.color = new Color(213f / 255f, 25f / 255f, 203f / 255f, 1f);
                 }
             }
         }
