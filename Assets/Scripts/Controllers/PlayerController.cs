@@ -72,8 +72,10 @@ public class PlayerController : MonoBehaviour {
                 overheadUsername.text = username;
                 if(username.StartsWith("Mod ")) {
                     overheadUsername.color = new Color(213f / 255f, 25f / 255f, 203f / 255f, 1f);
+                } else {
+                    overheadUsername.color = new Color(1f, 1f, 1f, 1f);
                 }
-            }
+            }   
         }
         targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
         float distance = Vector3.Distance(transform.position, targetPosition);
