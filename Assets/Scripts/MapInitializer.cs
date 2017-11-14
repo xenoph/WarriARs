@@ -5,7 +5,7 @@ using Mapbox.Utils;
 
 public class MapInitializer : MonoBehaviour {
 	[Range(1, 100)]
-	public int mapBounds = 50;
+	public int mapBounds = 10;
 	public AbstractMap map;
 	public CameraBoundsTileProvider tileProvider;
 

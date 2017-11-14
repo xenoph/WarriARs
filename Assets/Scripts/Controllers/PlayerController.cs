@@ -81,7 +81,11 @@ public class PlayerController : MonoBehaviour {
         float distance = Vector3.Distance(transform.position, targetPosition);
         float speed = distance > 20f ? distance : 20f;
         float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        if(distance > 30f) {
+            transform.position = targetPosition;
+        } else {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        }
         transform.LookAt(targetPosition);
     }
 }

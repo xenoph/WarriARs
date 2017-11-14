@@ -184,11 +184,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d8ae2a0ea450b45af17cafc2e9058e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapBounds: 50
+  mapBounds: 10
   map: {fileID: 681959889}
   tileProvider: {fileID: 681959888}
   startLat: 0
   startLng: 0
+  inPosition: 0
 --- !u!1 &892156464
 GameObject:
   m_ObjectHideFlags: 0
