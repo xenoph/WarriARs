@@ -107,6 +107,7 @@ public class BattleController : MonoBehaviour {
 		_oppChampion = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.Euler(0f, -90f, 0f));
 		_oppAbController = _oppChampion.GetComponent<ChampionAbilityController>();
 		SetUpChampionHealth();
+		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 	}
 
 	private void RequestChampionHealth() {
@@ -133,11 +134,9 @@ public class BattleController : MonoBehaviour {
 		}
 		_oppHealth -= _myDamage;
 		if(_myHealth <= 0) { _dead = true; }
-		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
 
-	
 
 	/// <summary>
 	/// Plays Ability effect from the Champion that goes first and checks if the other champion died from the ability
@@ -146,6 +145,7 @@ public class BattleController : MonoBehaviour {
 		if(_goingFirst == 1) {
 			Debug.Log("Me going first");
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
+			GameController.instance.InterfaceController.SetOppHealthBars (_oppHealth, _oppMaxHealth);
 			if(_oppDead) {
 				StartCoroutine(EndBattle());
 			} else {
@@ -154,6 +154,7 @@ public class BattleController : MonoBehaviour {
 		} else {
 			Debug.Log("Opponent going first");
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
+			GameController.instance.InterfaceController.SetMyHealthBars (_myHealth, _myMaxHealth);
 			if(_dead) {
 				StartCoroutine(EndBattle());
 			} else {
@@ -171,8 +172,10 @@ public class BattleController : MonoBehaviour {
 		yield return new WaitForSeconds(AbilityTimer);
 		if(player) {
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
+			GameController.instance.InterfaceController.SetMyHealthBars (_myHealth, _myMaxHealth);
 		} else {
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
+			GameController.instance.InterfaceController.SetOppHealthBars (_oppHealth, _oppMaxHealth);
 		}
 
 		if(_dead || _oppDead) { StartCoroutine(EndBattle()); }

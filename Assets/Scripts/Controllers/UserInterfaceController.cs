@@ -171,9 +171,19 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public void SetHealthBarsText(int myHealth, int oppHealth, int myMaxHealth, int oppMaxHealth) {
 		MyHealthText.text = myHealth.ToString() + " / " + myMaxHealth.ToString();
-		OpponentHealthText.text = oppHealth.ToString() + " / " + oppMaxHealth.ToString();
-
 		MyHealthBar.fillAmount = (float)myHealth / (float)myMaxHealth;
+
+		OpponentHealthText.text = oppHealth.ToString() + " / " + oppMaxHealth.ToString();
+		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
+	}
+
+	public void SetMyHealthBars(int myHealth, int myMaxHealth) {
+		MyHealthText.text = myHealth.ToString() + " / " + myMaxHealth.ToString();
+		MyHealthBar.fillAmount = (float)myHealth / (float)myMaxHealth;
+	}
+
+	public void SetOppHealthBars(int oppHealth, int oppMaxHealth) {
+		OpponentHealthText.text = oppHealth.ToString() + " / " + oppMaxHealth.ToString();
 		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
 	}
 
