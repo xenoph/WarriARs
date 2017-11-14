@@ -46,6 +46,12 @@ public class UserInterfaceController : MonoBehaviour {
 	[Header("Animations")]
 	public Animator AbilityBarAnimator;
 
+	[Header("Floating Battle Text")]
+	public Animator MyBattleTextAnimator;
+	public TextMeshProUGUI MyBattleText;
+	public Animator OpponentBattleTextAnimator;
+	public TextMeshProUGUI OpponentBattleText;
+
 	[Header("GameObjects")]
 	public CombatNeedleBar NeedleBar;
 
@@ -177,12 +183,16 @@ public class UserInterfaceController : MonoBehaviour {
 		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
 	}
 
-	public void SetMyHealthBars(int myHealth, int myMaxHealth) {
+	public void SetMyHealthBars(int myHealth, int myMaxHealth, int dmgToMe) {
+		MyBattleText.text = dmgToMe.ToString ();
+		MyBattleTextAnimator.SetTrigger ("Show");
 		MyHealthText.text = myHealth.ToString() + " / " + myMaxHealth.ToString();
 		MyHealthBar.fillAmount = (float)myHealth / (float)myMaxHealth;
 	}
 
-	public void SetOppHealthBars(int oppHealth, int oppMaxHealth) {
+	public void SetOppHealthBars(int oppHealth, int oppMaxHealth, int dmgToOpp) {
+		OpponentBattleText.text = dmgToOpp.ToString ();
+		OpponentBattleTextAnimator.SetTrigger ("Show");
 		OpponentHealthText.text = oppHealth.ToString() + " / " + oppMaxHealth.ToString();
 		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
 	}
