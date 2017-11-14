@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SocketIO;
@@ -7,6 +8,7 @@ public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
 	public static ServerVersion VERSION = new ServerVersion(0, 3, 0);
+	public static long PING = 0;
 
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
@@ -23,7 +25,7 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("login", OnLogin);
 		socket.On("move", OnMove);
 		socket.On("quit", OnQuit);
-		socket.On("pong", OnPong);
+		socket.On("game_pong", OnPong);
 	}
 
 	/*
@@ -97,7 +99,7 @@ public class NetworkServer : MonoBehaviour {
 			json.AddField("lat", (float) GameController.instance.currentLocation.Latitude);
 			json.AddField("lng", (float) GameController.instance.currentLocation.Longitude);
 			socket.Emit("register", json);
-			//Ping();
+			Ping();
 		} else {
 			Debug.LogError("Your version is not compatible with the server version. Try updating the game.");
 			socket.Close();
@@ -153,22 +155,17 @@ public class NetworkServer : MonoBehaviour {
 		}
 	}
 
-	private System.Diagnostics.Stopwatch lastSW;
 	private void OnPong(SocketIOEvent obj) {
-		if(lastSW != null) {
-			lastSW.Stop();
-			Debug.Log(lastSW.ElapsedMilliseconds);
-			lastSW = null;
-		}
-		Invoke("Ping", 1f);
+		long currentTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
+		long sentTime = long.Parse(obj.data["time"].str);
+		PING = (currentTime - sentTime);
+		Invoke("Ping", .25f);
 	}
 
 	private void Ping() {
 		JSONObject json = new JSONObject();
-		json.AddField("testData", Sha1Sum2(Time.time.ToString()));
-		lastSW = new System.Diagnostics.Stopwatch();
-		lastSW.Start();
-		socket.Emit("ping", json);
+		json.AddField("time", (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond).ToString());
+		socket.Emit("game_ping", json);
 	}
 
 	private void OnMove(SocketIOEvent obj) {
