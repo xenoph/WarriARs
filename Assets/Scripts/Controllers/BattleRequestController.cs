@@ -81,6 +81,7 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
+		GameController.instance.AController.SwitchAudioSource ();
 		BattleID = obj.data["battleID"].str;
 		MyHealth = int.Parse(obj.data["myChampionHealth"].str);
 		OppHealth = int.Parse(obj.data["opponentChampionHealth"].str);

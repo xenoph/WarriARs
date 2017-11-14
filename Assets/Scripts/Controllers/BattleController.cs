@@ -181,6 +181,7 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private IEnumerator EndBattle() {
+		GameController.instance.AController.SwitchAudioSource ();
 		ClearUsedAbilities();
 		yield return new WaitForSeconds(2f);
 		ClearChampions();

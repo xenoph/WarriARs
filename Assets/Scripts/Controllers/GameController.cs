@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour {
     public CameraController cameraController;
 
     public Location currentLocation;
+	public AudioController AController;
 
 	public bool PlayerBusy;
 
