@@ -11,7 +11,8 @@ public class MapInitializer : MonoBehaviour {
 
 	public double startLat, startLng;
 
-	private bool inPosition = false;
+	[HideInInspector]
+	public bool inPosition = false;
 
 	void Start() {
 		GameController.instance.mapInitializer = this;

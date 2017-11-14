@@ -124,6 +124,18 @@ public class NetworkServer : MonoBehaviour {
 		PlayerController pc = GameController.instance.LoadGame(obj.data["username"].str);
 		pc.PlayerID = obj.data["id"].str;
 		pc.SocketID = obj.data["socket"].str;
+		if(obj.data["champions"].str != "1")
+			StartCoroutine(dragonPicker());
+	}
+
+	private IEnumerator dragonPicker() {
+		while(GameController.instance.mapInitializer == null) {
+			yield return null;
+		}
+		while(!GameController.instance.mapInitializer.inPosition) {
+			yield return null;
+		}
+		GameController.instance.InterfaceController.ShowDragonPickerPanel();
 	}
 
 	public void Move(float lat, float lng, int dist) {
