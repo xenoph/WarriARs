@@ -8,7 +8,7 @@ public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
 	public static ServerVersion VERSION = new ServerVersion(0, 3, 0);
-	public static long PING = 0;
+	public static long PING = -1;
 
 	public static string SERVER_SEED { get; private set; }
 	public static string USERNAME { get; private set; }
@@ -26,6 +26,19 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("move", OnMove);
 		socket.On("quit", OnQuit);
 		socket.On("game_pong", OnPong);
+	}
+
+	void OnGUI() {
+		int w = Screen.width, h = Screen.height;
+ 
+		GUIStyle style = new GUIStyle();
+ 
+		Rect rect = new Rect(0, 0, w, h * 2 / 100);
+		style.alignment = TextAnchor.UpperLeft;
+		style.fontSize = h * 2 / 100;
+		style.normal.textColor = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+		string text = string.Format("Ping: {0:0} ms", PING);
+		GUI.Label(rect, text, style);
 	}
 
 	/*
@@ -159,7 +172,7 @@ public class NetworkServer : MonoBehaviour {
 		long currentTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
 		long sentTime = long.Parse(obj.data["time"].str);
 		PING = (currentTime - sentTime);
-		Invoke("Ping", .25f);
+		Invoke("Ping", 1f);
 	}
 
 	private void Ping() {
