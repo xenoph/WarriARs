@@ -26,9 +26,9 @@ public class UserInterfaceController : MonoBehaviour {
 
 	[Header("Battle Interface Elements")]
 	[Header("Health Bars")]
-	public Text MyHealthText;
+	public TextMeshProUGUI MyHealthText;
 	public Image MyHealthBar;
-	public Text OpponentHealthText;
+	public TextMeshProUGUI OpponentHealthText;
 	public Image OpponentHealthBar;
 	public Image MyTypeImage;
 	public Image OpponentTypeImage;
