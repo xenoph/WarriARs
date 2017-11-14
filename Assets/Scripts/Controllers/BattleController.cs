@@ -25,6 +25,7 @@ public class BattleController : MonoBehaviour {
 	private int _goingFirst;
 	private bool _oppDead;
 	private int _myDamage;
+	private int _dmgTaken;
 
 	private GameObject _myChampion;
 	private GameObject _oppChampion;
@@ -107,6 +108,7 @@ public class BattleController : MonoBehaviour {
 		_oppChampion = Instantiate(oppPrefab, new Vector3(5.5f, 0.5f, 1f), Quaternion.Euler(0f, -90f, 0f));
 		_oppAbController = _oppChampion.GetComponent<ChampionAbilityController>();
 		SetUpChampionHealth();
+		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 	}
 
 	private void RequestChampionHealth() {
@@ -121,23 +123,21 @@ public class BattleController : MonoBehaviour {
 	/// <param name="obj"></param>
 	private void OnOpponentAbilityUsed(SocketIOEvent obj) {
 		Debug.Log(obj.data);
-		var dmgTaken = int.Parse(obj.data["damage"].str);
+		_dmgTaken = int.Parse(obj.data["damage"].str);
 		_myDamage = int.Parse(obj.data["myDamage"].str);
 		_oppUsedAbility = int.Parse(obj.data["abilityNumber"].str);
 		_goingFirst = int.Parse(obj.data["goingFirst"].str);
 		if(int.Parse(obj.data["opponentDead"].str) == 0) {
 			_oppDead = false;
-			_myHealth -= dmgTaken;
+			_myHealth -= _dmgTaken;
 		} else {
 			_oppDead = true;
 		}
 		_oppHealth -= _myDamage;
 		if(_myHealth <= 0) { _dead = true; }
-		GameController.instance.InterfaceController.SetHealthBarsText(_myHealth, _oppHealth, _myMaxHealth, _oppMaxHealth);
 		PlayAbilityEffects();
 	}
 
-	
 
 	/// <summary>
 	/// Plays Ability effect from the Champion that goes first and checks if the other champion died from the ability
@@ -146,6 +146,7 @@ public class BattleController : MonoBehaviour {
 		if(_goingFirst == 1) {
 			Debug.Log("Me going first");
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
+			GameController.instance.InterfaceController.SetOppHealthBars (_oppHealth, _oppMaxHealth, _myDamage);
 			if(_oppDead) {
 				StartCoroutine(EndBattle());
 			} else {
@@ -154,6 +155,7 @@ public class BattleController : MonoBehaviour {
 		} else {
 			Debug.Log("Opponent going first");
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
+			GameController.instance.InterfaceController.SetMyHealthBars (_myHealth, _myMaxHealth, _dmgTaken);
 			if(_dead) {
 				StartCoroutine(EndBattle());
 			} else {
@@ -171,8 +173,10 @@ public class BattleController : MonoBehaviour {
 		yield return new WaitForSeconds(AbilityTimer);
 		if(player) {
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
+			GameController.instance.InterfaceController.SetOppHealthBars (_oppHealth, _oppMaxHealth, _myDamage);
 		} else {
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
+			GameController.instance.InterfaceController.SetMyHealthBars (_myHealth, _myMaxHealth, _dmgTaken);
 		}
 
 		if(_dead || _oppDead) { StartCoroutine(EndBattle()); }
