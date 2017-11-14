@@ -16,6 +16,10 @@ public class AudioController : MonoBehaviour {
 
 	private AudioSource _currentAudio;
 
+	private void Start() {
+		_currentAudio = MainAudioSource;
+	}
+
 	public void SwitchAudioSource() {
 		StartCoroutine (SwapAudio ());
 	}
