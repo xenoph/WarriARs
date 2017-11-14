@@ -300,6 +300,7 @@ public class UserInterfaceController : MonoBehaviour {
 
 	private void PickDragon(string dType) {
 		var json = new JSONObject();
+		json.AddField ("playerID", GameController.instance.currentPlayerID);
 		json.AddField("dragonType", dType);
 		GameController.instance.Socket.Emit("pickedDragon", json);
 		DragonPickerAnimator.SetBool("Show", false);
