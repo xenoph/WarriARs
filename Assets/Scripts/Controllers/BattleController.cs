@@ -224,9 +224,14 @@ public class BattleController : MonoBehaviour {
 		GameController.instance.InterfaceController.ToggleAbilityButtons();
 	}
 
+	private void BattleQuit(SocketIOEvent obj) {
+		StartCoroutine(EndBattle());
+	}
+
 	private void SetUpSocketConnections() {
 		Socket.On("usedAbility", OnOpponentAbilityUsed);
 		Socket.On("timedOut", TimedOut);
+		Socket.On("battleQuit", BattleQuit);
 	}
 
 	public void SetUpChampionHealth() {

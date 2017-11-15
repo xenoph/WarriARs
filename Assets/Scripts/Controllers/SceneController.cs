@@ -16,6 +16,7 @@ public class SceneController : MonoBehaviour {
 	}
 
 	private IEnumerator AwaitLoadedScene(AsyncOperation load, string loadScene) {
+		GameController.instance.networkServer.UnloadOthers();
 		while(!load.isDone) {
 			yield return null;
 		}
@@ -35,7 +36,6 @@ public class SceneController : MonoBehaviour {
 		}
 
 		GameController.instance.InterfaceController.ToggleLoadingScreen(null);
-		GameController.instance.networkServer.UnloadOthers();
 		yield break;
 	}
 }

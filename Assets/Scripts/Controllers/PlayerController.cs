@@ -77,6 +77,11 @@ public class PlayerController : MonoBehaviour {
                 }
             }   
         }
+
+        string sceneShouldBeIn = local ? "main" : "map";
+        if(gameObject.scene.name != sceneShouldBeIn)
+                SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(sceneShouldBeIn));
+
         targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
         float distance = Vector3.Distance(transform.position, targetPosition);
         float speed = distance > 20f ? distance : 20f;
