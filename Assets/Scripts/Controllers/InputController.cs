@@ -62,10 +62,17 @@ public class InputController : MonoBehaviour {
 	void LateUpdate() {
 		//Needs testing
 		if (Input.touchCount == 1 && GameController.instance.playerController != null) {
-             Touch touch = Input.GetTouch(0);
-             Vector3 axis = touch.deltaPosition;
-			 float dir = axis.x < 0 ? 1f : -1f;
-             GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
+            Touch touch = Input.GetTouch(0);
+			/*
+            Ray r = Camera.main.ScreenPointToRay(touch.position);
+			RaycastHit hit;
+			if(Physics.Raycast(r, out hit, 200f)) {
+				Debug.Log(hit.point);
+			}
+			*/
+			Vector3 axis = touch.deltaPosition;
+			float dir = axis.x < 0 ? 1f : -1f;
+            GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
         }
 	}
 
@@ -91,13 +98,5 @@ public class InputController : MonoBehaviour {
 				}
 			}
 		}
-
-		//Needs testing
-		if (Input.touchCount == 1 && GameController.instance.playerController != null) {
-             Touch touch = Input.GetTouch(0);
-             Vector3 axis = touch.deltaPosition;
-			 float dir = axis.x < 0 ? 1f : -1f;
-             GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
-        }
 	}
 }
