@@ -31,6 +31,7 @@ public class SceneController : MonoBehaviour {
 				yield return null;
 			}
 			GameController.instance.InterfaceController.BattleCanvas.SetActive(false);
+			GameController.instance.InterfaceController.MapCanvas.SetActive(true);
 			GameController.instance.InterfaceController.ToggleMainInterface();
 			GameController.instance.playerController.gameObject.SetActive(true);
 		}

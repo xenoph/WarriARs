@@ -79,8 +79,16 @@ public class PlayerController : MonoBehaviour {
         }
 
         string sceneShouldBeIn = local ? "main" : "map";
-        if(gameObject.scene.name != sceneShouldBeIn)
+        if(gameObject.scene.name != sceneShouldBeIn) {
+            if(SceneManager.GetSceneByName(sceneShouldBeIn) != null) {
                 SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(sceneShouldBeIn));
+            } else {
+                Destroy(gameObject);
+            }
+        }
+
+        if(string.IsNullOrEmpty(PlayerID) && string.IsNullOrEmpty(SocketID) && string.IsNullOrEmpty(username))
+            Destroy(gameObject);
 
         targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
         float distance = Vector3.Distance(transform.position, targetPosition);

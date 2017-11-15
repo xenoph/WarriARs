@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using SocketIO;
 
 public class NetworkServer : MonoBehaviour {
@@ -148,7 +149,7 @@ public class NetworkServer : MonoBehaviour {
 	}
 
 	private void OnLogin(SocketIOEvent obj) {
-		if(!otherPlayers.ContainsKey(obj.data["id"].str)) {
+		if(!otherPlayers.ContainsKey(obj.data["id"].str) && SceneManager.GetSceneByName("map") != null) {
 			PlayerController other = GameController.instance.SpawnPlayer(false, obj.data["username"].str);
 			other.PlayerID = obj.data["id"].str;
 			other.SocketID = obj.data["socket"].str;
@@ -205,8 +206,10 @@ public class NetworkServer : MonoBehaviour {
 			other.targetPosition = ConvertPositions.ConvertLocationToVector3(newLoc, GameController.instance.mapInitializer.map);
 			newLoc = null;
 		} else {
-			OnLogin(obj);
-			Debug.LogWarning("Player " + obj.data["username"].str + " not found. Adding them.");
+			if(SceneManager.GetSceneByName("map") != null) {
+				OnLogin(obj);
+				Debug.LogWarning("Player " + obj.data["username"].str + " not found. Adding them.");
+			}
 		}
 	}
 
