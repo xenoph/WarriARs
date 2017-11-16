@@ -9,6 +9,7 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public GameObject MapCanvas;
 	public GameObject BattleCanvas;
+	public GameObject LevelUpCanvas;
 	public LoadingScreen LoadingScreen;
 	public Sprite[] TypeSprites;
 
@@ -83,6 +84,12 @@ public class UserInterfaceController : MonoBehaviour {
 	public Button DragonPickerMetalButton;
 	public Button DragonPickerEarthButton;
 
+	[Header("LevelUP")]
+	public TextMeshProUGUI LevelUpHeaderText;
+	public Text LevelUpHealthText;
+	public Text LevelUpStrengthText;
+	public Text LevelUpSpeedText;
+
 	[HideInInspector]
 	public List<string> AbilityIDs;
 
@@ -124,7 +131,10 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void ToggleLoadingScreen(string loadText) {
-		if(LoadingScreen.gameObject.activeSelf) {
+		if(!LoadingScreen.gameObject.activeSelf) {
+			if(loadText == null) {
+				return;
+			}
 			LoadingScreen.LoadingText.text = loadText;
 			LoadingScreen.gameObject.SetActive(true);
 		} else {
@@ -138,6 +148,16 @@ public class UserInterfaceController : MonoBehaviour {
 		} else {
 			MainInterface.SetActive(true);
 		}
+	}
+
+	public void ShowLevelUpInterface() {
+		MapCanvas.SetActive(false);
+		LevelUpCanvas.SetActive(true);
+	}
+
+	public void HideLevelUpInterface() {
+		LevelUpCanvas.SetActive(false);
+		MapCanvas.SetActive(true);
 	}
 
 	public void SetUpBattleCanvas(int myHealth, int oppHealth, string myName, string oppName) {

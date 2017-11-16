@@ -10,6 +10,9 @@ public class InputController : MonoBehaviour {
 	private void Update() {
 		if(GameController.instance.battleController != null || GameController.instance.PlayerBusy) { return; }
 		
+		if(Input.GetKeyUp(KeyCode.A)) {
+			GameController.instance.LevelUp();
+		}
 		Input.simulateMouseWithTouches = true;
 #if UNITY_EDITOR || UNITY_WEBGL
 		GetMouseClick();

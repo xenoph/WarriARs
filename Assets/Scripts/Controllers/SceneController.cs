@@ -8,7 +8,9 @@ public class SceneController : MonoBehaviour {
 	public UserInterfaceController UserInterfaceController;
 
 	public void ToggleBattleScene(string currentScene, string loadScene, string loadText) {
-		GameController.instance.InterfaceController.ToggleLoadingScreen(loadText);
+		if(loadText != null) {
+			GameController.instance.InterfaceController.ToggleLoadingScreen(loadText);
+		}
 		SceneManager.UnloadSceneAsync(currentScene);
 		GameController.instance.playerController.gameObject.SetActive(false);
 		AsyncOperation load = SceneManager.LoadSceneAsync(loadScene, LoadSceneMode.Additive);
@@ -26,10 +28,13 @@ public class SceneController : MonoBehaviour {
 				yield return null;
 			}
 			GameController.instance.battleController.SetUpBattle();
+		} else if(loadScene == "levelup") {
+			GameController.instance.InterfaceController.ShowLevelUpInterface();
 		} else {
 			while(GameObject.Find("World").transform.childCount < 1) {
 				yield return null;
 			}
+			GameController.instance.InterfaceController.HideLevelUpInterface();
 			GameController.instance.InterfaceController.BattleCanvas.SetActive(false);
 			GameController.instance.InterfaceController.MapCanvas.SetActive(true);
 			GameController.instance.InterfaceController.ToggleMainInterface();

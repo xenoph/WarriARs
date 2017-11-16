@@ -37,6 +37,8 @@ public class GameController : MonoBehaviour {
 
 	public bool PlayerBusy;
 
+	private bool _levelUp;
+
 	void Awake() {
 		instance = this;
 		SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
@@ -91,6 +93,16 @@ public class GameController : MonoBehaviour {
 			mapInitializer.startLng = currentLocation.Longitude;
 		} else {
 			Debug.LogError("No start location found.");
+		}
+	}
+
+	public void LevelUp() {
+		if(_levelUp) {
+			SceneController.ToggleBattleScene("levelup", "map", null);
+			_levelUp = false;
+		} else {
+			SceneController.ToggleBattleScene("map", "levelup", null);
+			_levelUp = true;
 		}
 	}
 
