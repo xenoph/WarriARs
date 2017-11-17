@@ -51,7 +51,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -101,7 +101,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1969596264
+  randomSeed: 1422186606
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -253,7 +253,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 500
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -376,7 +376,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -458,7 +458,7 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.0434315
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -880,19 +880,43 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
         - serializedVersion: 2
+          time: 0.19525947
+          value: 0.21437693
+          inSlope: -1.0704994
+          outSlope: -1.0704994
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.31126732
+          value: -1
+          inSlope: -1.2418628
+          outSlope: -1.2418628
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.56426895
+          value: -1
+          inSlope: 2.1579862
+          outSlope: 2.1579862
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.9298722
+          value: -0.062749475
+          inSlope: 0.5930662
+          outSlope: 0.5930662
+          tangentMode: 0
+        - serializedVersion: 2
           time: 1
-          value: 0
+          value: -1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_RotationOrder: 0
       minCurve:
         serializedVersion: 2
         m_Curve:
@@ -961,32 +985,14 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 2
-          time: 0
-          value: -0.16216278
+          time: 0.014461517
+          value: 0
           inSlope: 0
           outSlope: 0
-          tangentMode: 0
-        - serializedVersion: 2
-          time: 0.24392384
-          value: -0.16216278
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-        - serializedVersion: 2
-          time: 0.647218
-          value: 0.115929455
-          inSlope: 5.113169
-          outSlope: 5.113169
-          tangentMode: 0
-        - serializedVersion: 2
-          time: 0.88745964
-          value: 0.24324256
-          inSlope: -1.2007793
-          outSlope: -1.2007793
           tangentMode: 0
         - serializedVersion: 2
           time: 1
-          value: -0.16216278
+          value: -0.10810852
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1692,7 +1698,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   NoiseModule:
-    enabled: 0
+    enabled: 1
     strength:
       serializedVersion: 2
       minMaxState: 0
@@ -3397,7 +3403,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6070677bbdf7bfc4a8c574c58a7d7f6e, type: 2}
+  - {fileID: 2100000, guid: 47978d0f65305c142a68ba0096a0ebf6, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -3427,11 +3433,11 @@ ParticleSystemRenderer:
   m_LengthScale: 2
   m_SortingFudge: 0
   m_NormalDirection: 1
-  m_RenderAlignment: 0
-  m_Pivot: {x: 0, y: 0, z: 2.47}
+  m_RenderAlignment: 2
+  m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 4300000, guid: e9d3091611b83ad4c8926d7f18adbc99, type: 3}
+  m_Mesh: {fileID: 4300000, guid: ef3ab508546e5f64dae3d62f0b0c7f88, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

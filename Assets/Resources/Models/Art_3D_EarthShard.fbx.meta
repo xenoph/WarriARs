@@ -1,23 +1,22 @@
 fileFormatVersion: 2
-guid: e9d3091611b83ad4c8926d7f18adbc99
-timeCreated: 1507465597
+guid: ef3ab508546e5f64dae3d62f0b0c7f88
+timeCreated: 1510925310
 licenseType: Pro
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: pCylinder1
     400000: //RootNode
-    400002: pCylinder1
-    2300000: pCylinder1
-    3300000: pCylinder1
-    4300000: pCylinder1
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: EarthShard
+    9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pCylinder1Mat
-    second: {fileID: 2100000, guid: 2b46a0166f6e079438aa9c0ed4f8ba7a, type: 2}
+      name: EarthShard_Blinn
+    second: {fileID: 2100000, guid: 47978d0f65305c142a68ba0096a0ebf6, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -47,7 +46,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.2
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
@@ -89,7 +88,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
