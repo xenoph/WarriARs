@@ -55,12 +55,13 @@ public class PlayerController : MonoBehaviour {
         if(local) {
             if(GameController.instance.mapInitializer != null) {
                 targetPosition = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
-                lastWorldpos = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
-                lastWorldpos = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
+                var lastWorldposLoc = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
+                lastWorldposLoc = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
 
-                float dist = Vector3.Distance(targetPosition, lastWorldpos);
+                float dist = Vector3.Distance(targetPosition, lastWorldposLoc);
                 if(dist > 1f) {
                     UpdateServerPosition();
+                    lastWorldpos = lastWorldposLoc;
                 }
             }
             if(overheadUsername != null) {
