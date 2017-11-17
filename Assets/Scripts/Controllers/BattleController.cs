@@ -44,7 +44,7 @@ public class BattleController : MonoBehaviour {
 
 	private void Start() {
 		GameController.instance.battleController = this;
-		Screen.orientation = ScreenOrientation.LandscapeLeft;
+		//Screen.orientation = ScreenOrientation.LandscapeLeft;
 		GameController.instance.loadingScreen.gameObject.SetActive(false);
 		mainCam = Camera.main;
 		mainCam.gameObject.SetActive(false);
@@ -234,7 +234,7 @@ public class BattleController : MonoBehaviour {
 		Socket.On("battleQuit", BattleQuit);
 	}
 
-	public void SetUpChampionHealth() {
+	private void SetUpChampionHealth() {
 		_myHealth = GameController.instance.BRController.HealthValues[0];
 		_oppHealth = GameController.instance.BRController.HealthValues[1];
 
