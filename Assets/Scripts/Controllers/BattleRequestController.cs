@@ -88,7 +88,6 @@ public class BattleRequestController : MonoBehaviour {
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
 		GameController.instance.InterfaceController.HideBattleRequestPanel();
-		Debug.Log("got battle info");
 		GameController.instance.AController.SwitchAudioSource ();
 		BattleID = obj.data["battleID"].str;
 		MyHealth = int.Parse(obj.data["myChampionHealth"].str);
@@ -103,13 +102,10 @@ public class BattleRequestController : MonoBehaviour {
 		_myChampNumber = int.Parse(obj.data["myChampionType"].str);
 		_oppChampNumber = int.Parse(obj.data["oppChampionType"].str);
 
-		Debug.Log("finished saving data");
-
 		StartCoroutine(GetAbilityNames(obj.data["battleID"].str));
 	}
 
 	private IEnumerator GetAbilityNames(string battleid) {
-		Debug.Log("coroutine started");
 		yield return new WaitForSeconds(1.5f);
 		var json = new JSONObject();
 		for(int i = 0; i < _abIds.Count; i++) {

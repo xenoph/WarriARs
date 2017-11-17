@@ -57,8 +57,8 @@ public class BattleController : MonoBehaviour {
 	public void SetUpBattle() {
 		var myChampTypeNumber = GameController.instance.InterfaceController.MyChampionType;
 		var oppChampTypeNumber = GameController.instance.InterfaceController.OpponentChampionType;
-		var myChampPrefab = GetChampionPrefab(myChampTypeNumber);
-		var oppChampPrefab = GetChampionPrefab(oppChampTypeNumber);
+		var myChampPrefab = ConvertChampionNumberToString.GetChampionPrefab(myChampTypeNumber);
+		var oppChampPrefab = ConvertChampionNumberToString.GetChampionPrefab(oppChampTypeNumber);
 
 		_oppPlayerID = GameController.instance.BRController.RequestedPlayerID;
 		_oppSocketID = GameController.instance.BRController.RequestedSocketID;
@@ -254,27 +254,5 @@ public class BattleController : MonoBehaviour {
 		json.AddField("battleID", battleID);
 
 		return json;
-	}
-
-	private string GetChampionPrefab(int num) {
-		switch (num) {
-			case 0:
-				return "PRE_Champion_Fire";
-
-			case 1:
-				return "PRE_Champion_Water";
-
-			case 2:
-				return "PRE_Champion_Wood";
-
-			case 3:
-				return "PRE_Champion_Earth";
-
-			case 4:
-				return "PRE_Champion_Metal";
-
-			default:
-				return null;
-		}
 	}
 }
