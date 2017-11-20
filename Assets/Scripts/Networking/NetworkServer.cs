@@ -26,7 +26,7 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("login", OnLogin);
 		socket.On("move", OnMove);
 		socket.On("quit", OnQuit);
-		socket.On("game_pong", OnPong);
+		//socket.On("game_pong", OnPong);
 	}
 
 	void OnGUI() {
@@ -113,7 +113,7 @@ public class NetworkServer : MonoBehaviour {
 			json.AddField("lat", (float) GameController.instance.currentLocation.Latitude);
 			json.AddField("lng", (float) GameController.instance.currentLocation.Longitude);
 			socket.Emit("register", json);
-			Ping();
+			//Ping();
 		} else {
 			Debug.LogError("Your version is not compatible with the server version. Try updating the game.");
 			socket.Close();
@@ -181,7 +181,7 @@ public class NetworkServer : MonoBehaviour {
 		}
 	}
 
-	private void OnPong(SocketIOEvent obj) {
+	/*private void OnPong(SocketIOEvent obj) {
 		long currentTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
 		long sentTime = long.Parse(obj.data["time"].str);
 		PING = (currentTime - sentTime);
@@ -192,7 +192,7 @@ public class NetworkServer : MonoBehaviour {
 		JSONObject json = new JSONObject();
 		json.AddField("time", (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond).ToString());
 		socket.Emit("game_ping", json);
-	}
+	}*/
 
 	private void OnMove(SocketIOEvent obj) {
 		if(otherPlayers.ContainsKey(obj.data["id"].str)) {
