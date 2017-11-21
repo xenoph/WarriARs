@@ -168,8 +168,11 @@ public class NetworkServer : MonoBehaviour {
 			newLoc.SetLocation(lat, lng);
 			other.targetPosition = ConvertPositions.ConvertLocationToVector3(newLoc, GameController.instance.mapInitializer.map);
 			newLoc = null;
-
 			otherPlayers.Add(obj.data["id"].str, other);
+			
+			//Temporary fix to people not showing up on login. If the new player is within a radius of 1km, update your position so that he gets the update
+			if(CalculateDistance.CalculatedDistance(newLoc.Latitude, newLoc.Longitude, GameController.instance.currentLocation.Latitude, GameController.instance.currentLocation.Longitude) <= 1000d)
+				Move((float) GameController.instance.currentLocation.Latitude, (float) GameController.instance.currentLocation.Longitude, 0);
 		}
 	}
 
