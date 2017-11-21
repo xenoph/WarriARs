@@ -6,6 +6,10 @@
 		{
 			"name": "Jonas' Surface Pro",
 			"url": "ws://oisann.asuscomm.com:3000/socket.io/?EIO=4&transport=websocket"
+		},
+		{
+			"name": "Localhost",
+			"url": "ws://localhost:3000/socket.io/?EIO=4&transport=websocket"
 		}
 	]
 }

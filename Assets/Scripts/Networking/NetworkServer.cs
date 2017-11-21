@@ -26,7 +26,7 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("login", OnLogin);
 		socket.On("move", OnMove);
 		socket.On("quit", OnQuit);
-		//socket.On("game_pong", OnPong);
+		socket.On("game_pong", OnPong);
 	}
 
 	void OnGUI() {
@@ -113,7 +113,7 @@ public class NetworkServer : MonoBehaviour {
 			json.AddField("lat", (float) GameController.instance.currentLocation.Latitude);
 			json.AddField("lng", (float) GameController.instance.currentLocation.Longitude);
 			socket.Emit("register", json);
-			//Ping();
+			Ping();
 		} else {
 			Debug.LogError("Your version is not compatible with the server version. Try updating the game.");
 			socket.Close();
@@ -149,6 +149,9 @@ public class NetworkServer : MonoBehaviour {
 	}
 
 	private void OnLogin(SocketIOEvent obj) {
+		if(!SceneManager.GetSceneByName("map").isLoaded) {
+			return;
+		}
 		if(!otherPlayers.ContainsKey(obj.data["id"].str) && SceneManager.GetSceneByName("map") != null) {
 			PlayerController other = GameController.instance.SpawnPlayer(false, obj.data["username"].str);
 			other.PlayerID = obj.data["id"].str;
@@ -181,7 +184,7 @@ public class NetworkServer : MonoBehaviour {
 		}
 	}
 
-	/*private void OnPong(SocketIOEvent obj) {
+	private void OnPong(SocketIOEvent obj) {
 		long currentTime = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
 		long sentTime = long.Parse(obj.data["time"].str);
 		PING = (currentTime - sentTime);
@@ -192,7 +195,7 @@ public class NetworkServer : MonoBehaviour {
 		JSONObject json = new JSONObject();
 		json.AddField("time", (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond).ToString());
 		socket.Emit("game_ping", json);
-	}*/
+	}
 
 	private void OnMove(SocketIOEvent obj) {
 		if(otherPlayers.ContainsKey(obj.data["id"].str)) {
@@ -206,7 +209,7 @@ public class NetworkServer : MonoBehaviour {
 			other.targetPosition = ConvertPositions.ConvertLocationToVector3(newLoc, GameController.instance.mapInitializer.map);
 			newLoc = null;
 		} else {
-			if(SceneManager.GetSceneByName("map") != null) {
+			if(SceneManager.GetSceneByName("map").isLoaded) {
 				OnLogin(obj);
 				Debug.LogWarning("Player " + obj.data["username"].str + " not found. Adding them.");
 			}

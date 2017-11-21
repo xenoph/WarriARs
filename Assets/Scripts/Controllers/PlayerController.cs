@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
     private IEnumerator UpdatePositionPeriodically() {
         while(local && server != null) {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(5f);
             UpdateServerPosition();
         }
     }
