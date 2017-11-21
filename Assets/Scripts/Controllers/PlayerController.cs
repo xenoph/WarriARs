@@ -51,13 +51,15 @@ public class PlayerController : MonoBehaviour {
         while(local && server != null) {
             yield return new WaitForSeconds(.5f);
             if(GameController.instance.mapInitializer != null) {
-                targetPosition = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
-                lastWorldpos = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
-                lastWorldpos = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
-
-                float dist = Vector3.Distance(targetPosition, lastWorldpos);
-                if(dist > .5f) {
-                    UpdateServerPosition();
+                if(lastLocation.Latitude != GameController.instance.currentLocation.Latitude || lastLocation.Longitude != GameController.instance.currentLocation.Longitude) {
+                    targetPosition = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
+                    targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
+                    lastWorldpos = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
+                    lastWorldpos = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
+                    float dist = Vector3.Distance(targetPosition, lastWorldpos);
+                    if(dist > .5f) {
+                        UpdateServerPosition();
+                    }
                 }
             }
         }
@@ -76,18 +78,20 @@ public class PlayerController : MonoBehaviour {
             }
         } else {
             if(overheadUsername != null) {
-                overheadUsername.text = username;
-                if(username.StartsWith("Mod ")) {
-                    overheadUsername.color = new Color(213f / 255f, 25f / 255f, 203f / 255f, 1f);
-                } else {
-                    overheadUsername.color = new Color(1f, 1f, 1f, 1f);
+                if(overheadUsername.text != username) {
+                    overheadUsername.text = username;
+                    if(username.StartsWith("Mod ")) {
+                        overheadUsername.color = new Color(213f / 255f, 25f / 255f, 203f / 255f, 1f);
+                    } else {
+                        overheadUsername.color = new Color(1f, 1f, 1f, 1f);
+                    }
                 }
             }   
         }
 
         string sceneShouldBeIn = local ? "main" : "map";
         if(gameObject.scene.name != sceneShouldBeIn) {
-            if(SceneManager.GetSceneByName(sceneShouldBeIn) != null) {
+            if(SceneManager.GetSceneByName(sceneShouldBeIn).isLoaded) {
                 SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(sceneShouldBeIn));
             } else {
                 Destroy(gameObject);

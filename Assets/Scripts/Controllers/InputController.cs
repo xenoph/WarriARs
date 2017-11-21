@@ -47,9 +47,9 @@ public class InputController : MonoBehaviour {
 					}*/
 				} else if(hit.transform.parent.transform.tag == "Map") {
 					//var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
-					//var loc = hit.point.GetGeoPosition(abMap.CenterMercator, abMap.WorldRelativeScale);
-					GameController.instance.playerController.targetPosition = hit.point;
-					//GManager.CurrentPlayer.SetNewLocation((float)loc.x, (float)loc.y, GManager);
+					var loc = hit.point.GetGeoPosition(GameController.instance.mapInitializer.map.CenterMercator, GameController.instance.mapInitializer.map.WorldRelativeScale);
+					GameController.instance.playerController.targetPosition = new Vector3(hit.point.x, 0f, hit.point.z);
+					GameController.instance.currentLocation.SetLocation((float)loc.x, (float)loc.y);
 				}
 			}
 		}
