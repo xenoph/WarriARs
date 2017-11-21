@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
             GameController.instance.cameraController.target = this.transform;
             server = GameController.instance.networkServer;
             StartCoroutine(UpdatePositionPeriodically());
+            StartCoroutine(UpdatePositionWhenMoved());
         }
         //lastLocation = GameController.instance.currentLocation;
         lastLocation = new Location();
@@ -41,8 +42,24 @@ public class PlayerController : MonoBehaviour {
 
     private IEnumerator UpdatePositionPeriodically() {
         while(local && server != null) {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(20f);
             UpdateServerPosition();
+        }
+    }
+
+    private IEnumerator UpdatePositionWhenMoved() {
+        while(local && server != null) {
+            yield return new WaitForSeconds(.5f);
+            if(GameController.instance.mapInitializer != null) {
+                targetPosition = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
+                lastWorldpos = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
+                lastWorldpos = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
+
+                float dist = Vector3.Distance(targetPosition, lastWorldpos);
+                if(dist > .5f) {
+                    UpdateServerPosition();
+                }
+            }
         }
     }
 
@@ -53,17 +70,6 @@ public class PlayerController : MonoBehaviour {
 	
 	void FixedUpdate() {
         if(local) {
-            if(GameController.instance.mapInitializer != null) {
-                targetPosition = ConvertPositions.ConvertLocationToVector3(GameController.instance.currentLocation, GameController.instance.mapInitializer.map);
-                var lastWorldposLoc = ConvertPositions.ConvertLocationToVector3(lastLocation, GameController.instance.mapInitializer.map);
-                lastWorldposLoc = new Vector3(lastWorldpos.x, 0f, lastWorldpos.z);
-
-                float dist = Vector3.Distance(targetPosition, lastWorldposLoc);
-                if(dist > 1f) {
-                    UpdateServerPosition();
-                    lastWorldpos = lastWorldposLoc;
-                }
-            }
             if(overheadUsername != null) {
                 overheadUsername.gameObject.SetActive(false);
                 overheadUsername = null;
