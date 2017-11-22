@@ -9,10 +9,6 @@ public class InputController : MonoBehaviour {
 
 	private void Update() {
 		if(GameController.instance.battleController != null || GameController.instance.PlayerBusy) { return; }
-		
-		if(Input.GetKeyUp(KeyCode.A)) {
-			GameController.instance.LevelUp();
-		}
 		Input.simulateMouseWithTouches = true;
 #if UNITY_EDITOR || UNITY_WEBGL
 		GetMouseClick();
@@ -35,18 +31,7 @@ public class InputController : MonoBehaviour {
 					PlayerController hitPlayerController = hit.transform.GetComponent<PlayerController>();
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID, hitPlayerController.username);
-					
-					/*if(hit.transform.GetComponent<AIController>()) {
-						GameController.instance.PlayerBusy = true;
-						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
-						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
-						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
-					} else {
-						GameController.instance.PlayerBusy = true;
-						GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID);
-					}*/
 				} else if(hit.transform.parent.transform.tag == "Map") {
-					//var abMap = hit.transform.parent.gameObject.GetComponent<AbstractMap>();
 					var loc = hit.point.GetGeoPosition(GameController.instance.mapInitializer.map.CenterMercator, GameController.instance.mapInitializer.map.WorldRelativeScale);
 					GameController.instance.playerController.targetPosition = new Vector3(hit.point.x, 0f, hit.point.z);
 					GameController.instance.currentLocation.SetLocation((float)loc.x, (float)loc.y);
@@ -64,6 +49,7 @@ public class InputController : MonoBehaviour {
 
 	void LateUpdate() {
 		//Needs testing
+		if(GameController.instance.PlayerBusy) { return; }
 		if (Input.touchCount == 1 && GameController.instance.playerController != null) {
             Touch touch = Input.GetTouch(0);
 			/*
@@ -88,7 +74,6 @@ public class InputController : MonoBehaviour {
 					if(hit.transform.GetComponent<AIController>()) {
 						GameController.instance.PlayerBusy = true;
 						GameController.instance.playerController.opponentUsername = hit.transform.GetComponent<PlayerController>().username;
-						//SceneManager.LoadSceneAsync("fight1", LoadSceneMode.Additive);
 						GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<PlayerController>().PlayerID);
 					} else {
 						//if(!GameController.instance.playerController.ChampionAlive) { return; }

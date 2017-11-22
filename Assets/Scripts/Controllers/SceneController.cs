@@ -37,7 +37,6 @@ public class SceneController : MonoBehaviour {
 			GameController.instance.InterfaceController.HideLevelUpInterface();
 			GameController.instance.InterfaceController.BattleCanvas.SetActive(false);
 			GameController.instance.InterfaceController.MapCanvas.SetActive(true);
-			GameController.instance.InterfaceController.ToggleMainInterface();
 			GameController.instance.playerController.gameObject.SetActive(true);
 		}
 

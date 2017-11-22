@@ -176,14 +176,16 @@ public class BattleController : MonoBehaviour {
 			GameController.instance.InterfaceController.SetMyHealthBars (_myHealth, _myMaxHealth, _dmgTaken);
 		}
 
+		yield return new WaitForSeconds(AbilityTimer);
 		if(_dead || _oppDead) { StartCoroutine(EndBattle()); }
 		else { SetNewRound(); }
 	}
 
 	private IEnumerator EndBattle() {
 		GameController.instance.AController.SwitchAudioSource ();
-		ClearUsedAbilities();
+		//TODO: Call ability that shows who won the battle. Add more time to the yield below to fit.
 		yield return new WaitForSeconds(2f);
+		ClearUsedAbilities();
 		ClearChampions();
 		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
