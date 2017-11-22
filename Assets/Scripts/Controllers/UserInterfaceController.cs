@@ -93,6 +93,9 @@ public class UserInterfaceController : MonoBehaviour {
 	[HideInInspector]
 	public List<string> AbilityIDs;
 
+	private bool _showingRequest;
+	private bool _showingReceived;
+
 	private void Awake() {
 		GameController.instance.InterfaceController = this;
 		MainInterface.SetActive(false);
@@ -100,6 +103,8 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void ShowBattleRequestPanel(string socketID, string playerID, string username) {
+		if(_showingRequest) { return; }
+		_showingRequest = true;
 		SendRequestInfoText.text = "Request battle with " + username + "?";
 		SendRequestAnimator.SetTrigger("Show");
 
@@ -111,10 +116,14 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	public void HideBattleRequestPanel() {
+		GameController.instance.BRController.AwaitRequestFeedback = false;
 		SendRequestAnimator.SetTrigger("Hide");
+		_showingRequest = false;
 	}
 
 	public void ShowReceivedRequestPanel(string name) {
+		if(_showingReceived) { return; }
+		_showingReceived = true;
 		ReceiveReqestInfoText.text = name + " has requested a battle!";
 		ReceiveRequestAnimator.SetTrigger("Show");
 		GameController.instance.PlayerBusy = true;
@@ -128,6 +137,7 @@ public class UserInterfaceController : MonoBehaviour {
 
 	public void HideReceivedRequestPanel() {
 		ReceiveRequestAnimator.SetTrigger("Hide");
+		_showingReceived = false;
 	}
 
 	public void ToggleLoadingScreen(string loadText) {
@@ -252,6 +262,7 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	private void SendBattleRequest(string socketID, string playerID) {
+		if(GameController.instance.BRController.AwaitRequestFeedback) { return; }
 		SendRequestInfoText.text = "Requesting battle....";
 		GameController.instance.BRController.AwaitRequestFeedback = true;
 		StartCoroutine(GameController.instance.BRController.BattleRequestTimer());

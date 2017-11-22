@@ -27,12 +27,6 @@ public class BattleRequestController : MonoBehaviour {
 	[HideInInspector]
 	public List<int> HealthValues;
 
-	private string _myName;
-	private string _oppName;
-
-	private int _myChampNumber;
-	private int _oppChampNumber;
-
 	private void Start() {
 		InterfaceController = GameController.instance.InterfaceController;
 		SetupSocketReceivers();
@@ -87,37 +81,31 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void OnReceiveBattleInformation(SocketIOEvent obj) {
-		GameController.instance.InterfaceController.HideBattleRequestPanel();
-		GameController.instance.AController.SwitchAudioSource ();
 		BattleID = obj.data["battleID"].str;
 		MyHealth = int.Parse(obj.data["myChampionHealth"].str);
 		OppHealth = int.Parse(obj.data["opponentChampionHealth"].str);
+		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, obj.data["myUsername"].str, obj.data["oppUsername"].str);
+		GameController.instance.InterfaceController.MyChampionType = int.Parse(obj.data["myChampionType"].str);
+		GameController.instance.InterfaceController.OpponentChampionType = int.Parse(obj.data["oppChampionType"].str);
+		Debug.Log("values");
 		HealthValues = new List<int>() { int.Parse(obj.data["myChampionHealth"].str), 
 										int.Parse(obj.data["opponentChampionHealth"].str),
 										int.Parse(obj.data["myChampMaxHealth"].str),
 										int.Parse(obj.data["oppChampMaxHealth"].str) };
-		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
-		_myName = obj.data["myUsername"].str;
-		_oppName = obj.data["oppUsername"].str;
-		_myChampNumber = int.Parse(obj.data["myChampionType"].str);
-		_oppChampNumber = int.Parse(obj.data["oppChampionType"].str);
+		Debug.Log("Load Scene");
+		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
 
-		StartCoroutine(GetAbilityNames(obj.data["battleID"].str));
+		_abIds = new List<string>() { obj.data["ability1"].str, obj.data["ability2"].str, obj.data["ability3"].str };
+
+		GetAbilityNames();
 	}
 
-	private IEnumerator GetAbilityNames(string battleid) {
-		yield return new WaitForSeconds(1.5f);
+	private void GetAbilityNames() {
 		var json = new JSONObject();
 		for(int i = 0; i < _abIds.Count; i++) {
 			json.AddField("Ability" + (i + 1), _abIds[i]);
 		}
 
-		GameController.instance.InterfaceController.SetUpBattleCanvas(MyHealth, OppHealth, _myName, _oppName);
-		GameController.instance.InterfaceController.MyChampionType = _myChampNumber;
-		GameController.instance.InterfaceController.OpponentChampionType = _oppChampNumber;
-		GameController.instance.SceneController.ToggleBattleScene("map", "battle", "Loading battle...");
-		
-		json.AddField("battleID", battleid);
 		Socket.Emit("GetAbilityNames", json);
 	}
 
