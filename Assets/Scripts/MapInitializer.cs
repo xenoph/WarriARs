@@ -25,6 +25,7 @@ public class MapInitializer : MonoBehaviour {
 	void LateUpdate() {
 		if(inPosition && isPlayerOutsideMapBounds()) {
 			Debug.Log("Reloading map");
+			GameController.instance.playerController.targetPosition = Vector3.zero;
 			SceneManager.UnloadSceneAsync("map");
 			GameController.instance.loadingScreen.LoadingText.text = "Loading, please wait...";
 			SceneManager.LoadSceneAsync("map", LoadSceneMode.Additive);

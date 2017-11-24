@@ -145,7 +145,7 @@ PlayerSettings:
     Standalone: com.Skatebrus.WarriARs
     iOS: com.Skatebrus.WarriARs
   buildNumber:
-    iOS: 3
+    iOS: 14
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
@@ -207,7 +207,8 @@ PlayerSettings:
   iOSLaunchScreeniPadSize: 100
   iOSLaunchScreeniPadCustomXibPath: 
   iOSDeviceRequirements: []
-  iOSURLSchemes: []
+  iOSURLSchemes:
+  - warriars
   iOSBackgroundModes: 146
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1

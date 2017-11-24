@@ -21,10 +21,10 @@ public class Location {
     }
 
     public IEnumerator StartLocationServices() {
-        if(!Input.location.isEnabledByUser) {
+        while(!Input.location.isEnabledByUser) {
 			IsActive = false;
 			Failed = true;
-            yield break;
+            yield return new WaitForSeconds(1);
         }
 
         Input.location.Start();
@@ -45,10 +45,11 @@ public class Location {
             yield break;
         }
 
-        UpdateLocations();
-        IsActive = true;
-		Failed = false;
-
-        yield break;
+        while(Input.location.status == LocationServiceStatus.Running) {
+            UpdateLocations();
+            IsActive = true;
+		    Failed = false;
+            yield return null;
+        }
     }
 }
