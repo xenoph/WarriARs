@@ -31,11 +31,11 @@ public class InputController : MonoBehaviour {
 					PlayerController hitPlayerController = hit.transform.GetComponent<PlayerController>();
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID, hitPlayerController.username);
-				} else if(hit.transform.parent.transform.tag == "Map") {
+				}/* else if(hit.transform.parent.transform.tag == "Map") {
 					var loc = hit.point.GetGeoPosition(GameController.instance.mapInitializer.map.CenterMercator, GameController.instance.mapInitializer.map.WorldRelativeScale);
 					GameController.instance.playerController.targetPosition = new Vector3(hit.point.x, 0f, hit.point.z);
 					GameController.instance.currentLocation.SetLocation((float)loc.x, (float)loc.y);
-				}
+				}*/
 			}
 		}
 
@@ -45,24 +45,37 @@ public class InputController : MonoBehaviour {
 		}
 	}
 
-	private Vector3 startPos = Vector3.zero;
+	private Vector3 lookDiff = Vector3.zero;
 
 	void LateUpdate() {
 		//Needs testing
 		if(GameController.instance.PlayerBusy) { return; }
 		if (Input.touchCount == 1 && GameController.instance.playerController != null) {
             Touch touch = Input.GetTouch(0);
-			/*
-            Ray r = Camera.main.ScreenPointToRay(touch.position);
-			RaycastHit hit;
-			if(Physics.Raycast(r, out hit, 200f)) {
-				Debug.Log(hit.point);
+			if(lookDiff == Vector3.zero) {
+				Ray r = Camera.main.ScreenPointToRay(touch.rawPosition);
+				RaycastHit hit;
+				if(Physics.Raycast(r, out hit, 200f)) {
+					float hit2Player = Vector3.Distance(hit.point, GameController.instance.playerController.transform.position);
+					Vector3 currentLook = GameController.instance.playerController.transform.position + (GameController.instance.playerController.transform.forward * hit2Player);
+					lookDiff = hit.point - currentLook;
+				}
+			} else {
+				Ray r2 = Camera.main.ScreenPointToRay(touch.position);
+				RaycastHit currentHit;
+				if(Physics.Raycast(r2, out currentHit, 200f)) {
+					Vector3 change = currentHit.point - lookDiff;
+					Vector3 relativePos = change - GameController.instance.playerController.transform.position; //target - current
+        			Quaternion rotation = Quaternion.LookRotation(relativePos);
+					Vector3 euler = rotation.eulerAngles;
+					euler.x = 0f;
+					euler.z = 0f;
+					GameController.instance.playerController.transform.eulerAngles = euler;
+				}
 			}
-			*/
-			Vector3 axis = touch.deltaPosition;
-			float dir = axis.x < 0 ? 1f : -1f;
-            GameController.instance.playerController.transform.Rotate(Vector3.up, axis.magnitude * dir);
-        }
+        } else { 
+			lookDiff = Vector3.zero;
+		}
 	}
 
 	private void DetectTouchInput() {
