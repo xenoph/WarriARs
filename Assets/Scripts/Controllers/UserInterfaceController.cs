@@ -95,6 +95,9 @@ public class UserInterfaceController : MonoBehaviour {
 	[HideInInspector]
 	public List<string> AbilityIDs;
 
+	[HideInInspector]
+	public bool LevelledUp;
+
 	private bool _showingRequest;
 	private bool _showingReceived;
 
@@ -162,14 +165,12 @@ public class UserInterfaceController : MonoBehaviour {
 		}
 	}
 
-	public void ShowLevelUpInterface() {
-		MapCanvas.SetActive(false);
-		LevelUpCanvas.SetActive(true);
-	}
-
-	public void HideLevelUpInterface() {
-		LevelUpCanvas.SetActive(false);
-		MapCanvas.SetActive(true);
+	public void ToggleLevelUp() {
+		if(LevelUpCanvas.activeSelf) {
+			LevelUpCanvas.SetActive(false);
+		} else {
+			LevelUpCanvas.SetActive(true);
+		}
 	}
 
 	public void SetUpBattleCanvas(int myHealth, int oppHealth, string myName, string oppName) {

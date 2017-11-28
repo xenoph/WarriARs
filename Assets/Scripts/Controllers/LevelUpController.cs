@@ -1,36 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SocketIO;
+using UnityEngine.UI;
+using TMPro;
 
 public class LevelUpController : MonoBehaviour {
 
-	public GameObject ChampionSpawnParent;
+	public GameObject LevelUpTopPanel;
+	public GameObject LevelUpMidPanel;
+	public GameObject LevelUpBottomPanel;
 
-	private GameObject _spawnedChampion;
-	
-	private void SpawnChampion(string champName) {
-		_spawnedChampion = Instantiate(Resources.Load(champName, typeof(GameObject)), ChampionSpawnParent.transform.position, Quaternion.identity, ChampionSpawnParent.transform) as GameObject;
+	public TextMeshProUGUI TopHeaderText;
+	public Image ExperienceBar;
+	public TextMeshProUGUI ExperienceText;
+
+	public TextMeshProUGUI MidLevelText;
+
+	public TextMeshProUGUI StatAttackText;
+	public TextMeshProUGUI StatDefenseText;
+	public TextMeshProUGUI StatHealthText;
+
+	public void SetTopPanel(int current, int total, string champion) {
+		ExperienceBar.fillAmount = (float)current / (float)total;
+		ExperienceText.text = "XP " + current.ToString() + "/" + total.ToString();
 	}
 
-	private void OnGetChampion(SocketIOEvent obj) {
-		var champType = ConvertChampionNumberToString.GetChampionPrefab(int.Parse(obj.data["champTypeNumber"].str));
-		SpawnChampion(champType);
+	public void SetMidPanel(string level) {
+		MidLevelText.text = level;
 	}
 
-	private void RequestChampion() {
-		var json = new JSONObject();
-		json.AddField("playerID", GameController.instance.playerController.PlayerID);
-		json.AddField("socketID", GameController.instance.playerController.SocketID);
-		GameController.instance.Socket.Emit("getChampionData", json);
-	}
-
-	private void OnEnable() {
-		RequestChampion();
-	}
-
-	private void OnDisable() {
-		Destroy(_spawnedChampion);
-		_spawnedChampion = null;
-	}
+	public void SetBottomPanel(int atk, int atkNew, int def, int defNew, int hp, int hpNew) {
+		StatAttackText.text = "Attack: " + atk + "(" + atkNew + ")";
+		StatDefenseText.text = "Defense: " + def + "(" + defNew + ")";
+		StatHealthText.text = "Health: " + hp + "(" + hpNew + ")";
+	}	
 }

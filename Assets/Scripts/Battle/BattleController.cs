@@ -232,6 +232,7 @@ public class BattleController : MonoBehaviour {
 		Socket.On("usedAbility", OnOpponentAbilityUsed);
 		Socket.On("timedOut", TimedOut);
 		Socket.On("battleQuit", BattleQuit);
+		Socket.On("levelUp", OnGetLevelupInfo);
 	}
 
 	private void SetUpChampionHealth() {
@@ -240,6 +241,16 @@ public class BattleController : MonoBehaviour {
 
 		_myMaxHealth = GameController.instance.BRController.HealthValues[2];
 		_oppMaxHealth = GameController.instance.BRController.HealthValues[3];
+	}
+
+	private void OnGetLevelupInfo(SocketIOEvent obj) {
+		GameController.instance.InterfaceController.LevelledUp = true;
+		var luController = GameController.instance.InterfaceController.LevelUpCanvas.GetComponent<LevelUpController>();
+		luController.SetTopPanel(int.Parse(obj.data["currentXP"].str), int.Parse(obj.data["nextLevelXP"].str), obj.data["dragonName"].str);
+		luController.SetMidPanel(obj.data["dragonLevel"].str);
+		luController.SetBottomPanel(int.Parse(obj.data["dragonAttack"].str), int.Parse(obj.data["dragonAttackGain"].str), 
+									int.Parse(obj.data["dragonDefense"].str), int.Parse(obj.data["dragonDefenseGain"].str),
+									int.Parse(obj.data["dragonHealth"].str), int.Parse(obj.data["dragonHealthGain"].str));
 	}
 
 	private void OnDisable() {

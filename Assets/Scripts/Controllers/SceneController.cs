@@ -28,16 +28,18 @@ public class SceneController : MonoBehaviour {
 				yield return null;
 			}
 			GameController.instance.battleController.SetUpBattle();
-		} else if(loadScene == "levelup") {
-			GameController.instance.InterfaceController.ShowLevelUpInterface();
 		} else {
 			while(GameObject.Find("World").transform.childCount < 1) {
 				yield return null;
 			}
-			GameController.instance.InterfaceController.HideLevelUpInterface();
 			GameController.instance.InterfaceController.BattleCanvas.SetActive(false);
 			GameController.instance.InterfaceController.MapCanvas.SetActive(true);
 			GameController.instance.playerController.gameObject.SetActive(true);
+
+			if(GameController.instance.InterfaceController.LevelledUp) {
+				GameController.instance.InterfaceController.LevelledUp = false;
+				GameController.instance.InterfaceController.ToggleLevelUp();
+			}
 		}
 
 		GameController.instance.InterfaceController.ToggleLoadingScreen(null);
