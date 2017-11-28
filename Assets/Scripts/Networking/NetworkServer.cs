@@ -8,7 +8,7 @@ using SocketIO;
 public class NetworkServer : MonoBehaviour {
 	static SocketIOComponent socket;
 
-	public static ServerVersion VERSION = new ServerVersion(0, 3, 1);
+	public static ServerVersion VERSION = new ServerVersion(0, 4, 0);
 	public static long PING = -1;
 
 	public static string SERVER_SEED { get; private set; }
