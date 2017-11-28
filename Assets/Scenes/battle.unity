@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39471966, g: 0.38019812, b: 0.37723577, a: 1}
+  m_IndirectSpecularColor: {r: 0.11235479, g: 0.028733438, b: 0.004140775, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1302,6 +1302,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &934249565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 934249567}
+  - component: {fileID: 934249566}
+  m_Layer: 0
+  m_Name: SkyboxController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &934249566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 934249565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 233c8826b7c814b4eb3206edadaee411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skobyx: {fileID: 2100000, guid: 86d89e3696950b242a8cb49c223053e0, type: 2}
+--- !u!4 &934249567
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 934249565}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1459.2676, y: 439.67462, z: 37.525146}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &935085486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,26 +1417,6 @@ Prefab:
     - target: {fileID: 4586688986098250, guid: 6bf7bfff18218fe489b74dc507a70716, type: 2}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 198757825041083828, guid: 6bf7bfff18218fe489b74dc507a70716,
-        type: 2}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.8235294
-      objectReference: {fileID: 0}
-    - target: {fileID: 198757825041083828, guid: 6bf7bfff18218fe489b74dc507a70716,
-        type: 2}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.43235293
-      objectReference: {fileID: 0}
-    - target: {fileID: 198757825041083828, guid: 6bf7bfff18218fe489b74dc507a70716,
-        type: 2}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.3633218
-      objectReference: {fileID: 0}
-    - target: {fileID: 198757825041083828, guid: 6bf7bfff18218fe489b74dc507a70716,
-        type: 2}
-      propertyPath: randomSeed
-      value: -1967932101
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bf7bfff18218fe489b74dc507a70716, type: 2}
