@@ -19,7 +19,6 @@ public class BattleController : MonoBehaviour {
 	private Dictionary<string, string> _battleData;
 	private SocketIOComponent Socket;
 
-	private string _usedAbilityID;
 	private int _myUsedAbility;
 	private int _oppUsedAbility;
 	private int _goingFirst;
@@ -44,7 +43,6 @@ public class BattleController : MonoBehaviour {
 
 	private void Start() {
 		GameController.instance.battleController = this;
-		//Screen.orientation = ScreenOrientation.LandscapeLeft;
 		GameController.instance.loadingScreen.gameObject.SetActive(false);
 		mainCam = Camera.main;
 		mainCam.gameObject.SetActive(false);
@@ -90,8 +88,6 @@ public class BattleController : MonoBehaviour {
 		json.AddField("ability", _myUsedAbility); //_usedAbilityID);
 		json.AddField("percentage", percentage);
 		Socket.Emit("usedAbility", json);
-
-		_usedAbilityID = null;
 	}
 
 	/// <summary>
@@ -146,7 +142,7 @@ public class BattleController : MonoBehaviour {
 			_myAbController.PlayAbilityEffect(_myUsedAbility);
 			GameController.instance.InterfaceController.SetOppHealthBars (_oppHealth, _oppMaxHealth, _myDamage);
 			if(_oppDead) {
-				StartCoroutine(EndBattle());
+				StartCoroutine(EndBattle(GameController.instance.InterfaceController.MyName.text));
 			} else {
 				StartCoroutine(PlayOtherAbility(false));
 			}
@@ -154,7 +150,7 @@ public class BattleController : MonoBehaviour {
 			_oppAbController.PlayAbilityEffect(_oppUsedAbility);
 			GameController.instance.InterfaceController.SetMyHealthBars (_myHealth, _myMaxHealth, _dmgTaken);
 			if(_dead) {
-				StartCoroutine(EndBattle());
+				StartCoroutine(EndBattle(GameController.instance.InterfaceController.OpponentName.text));
 			} else {
 				StartCoroutine(PlayOtherAbility(true));
 			}
@@ -177,16 +173,20 @@ public class BattleController : MonoBehaviour {
 		}
 
 		yield return new WaitForSeconds(AbilityTimer);
-		if(_dead || _oppDead) { StartCoroutine(EndBattle()); }
+		if(_dead) { StartCoroutine(EndBattle(GameController.instance.InterfaceController.MyName.text)); }
+		else if(_oppDead) { StartCoroutine(EndBattle(GameController.instance.InterfaceController.OpponentName.text)); }
 		else { SetNewRound(); }
 	}
 
-	private IEnumerator EndBattle() {
+	private IEnumerator EndBattle(string winner) {
 		GameController.instance.AController.SwitchAudioSource ();
-		//TODO: Call ability that shows who won the battle. Add more time to the yield below to fit.
-		yield return new WaitForSeconds(2f);
+		if(winner != null) {
+			GameController.instance.InterfaceController.WinningText.text = winner + " WON!";
+		}
+		yield return new WaitForSeconds(6f);
 		ClearUsedAbilities();
 		ClearChampions();
+		GameController.instance.InterfaceController.WinningText.text = "";
 		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
 
@@ -197,13 +197,11 @@ public class BattleController : MonoBehaviour {
 	private void UsedAbility(int ab) {
 		_myUsedAbility = ab;
 		GameController.instance.InterfaceController.ToggleAbilityButtons();
-		_usedAbilityID = GameController.instance.InterfaceController.AbilityIDs[ab];
 		GameController.instance.InterfaceController.AbilityBarAnimator.SetBool("Hide", true);
 		GameController.instance.InterfaceController.NeedleBar.StartNeedle();
 	}
 
 	private void ClearUsedAbilities() {
-		_usedAbilityID = null;
 		//Since 0 is an ability number (0-2), we set 9 when resetting as that would never be used
 		_myUsedAbility = 9;
 		_oppUsedAbility = 9;
@@ -227,7 +225,7 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void BattleQuit(SocketIOEvent obj) {
-		StartCoroutine(EndBattle());
+		StartCoroutine(EndBattle(null));
 	}
 
 	private void SetUpSocketConnections() {

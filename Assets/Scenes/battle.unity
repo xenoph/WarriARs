@@ -1274,7 +1274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 914885322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931fd3b640fd01d4f8e266527c45d5a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 81be15735d15cd046b3a1cd15470c457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   battleCam: {fileID: 1617621025}
@@ -1283,10 +1283,10 @@ MonoBehaviour:
   SpawnLocationLocalChampion: {fileID: 1236415194}
   SpawnLocationOpponentChampion: {fileID: 467022357}
   ChampionPrefabs:
-  - {fileID: 1011201336133360, guid: 610b6d6629ef32e418dd9020f85839a7, type: 2}
-  - {fileID: 1025846809208160, guid: 0ebfe9fb9226c0f4c89e7ee2e5faf1f5, type: 2}
   - {fileID: 1011201336133360, guid: 16541234457164857b1c244ae42b4a00, type: 2}
+  - {fileID: 1011201336133360, guid: 610b6d6629ef32e418dd9020f85839a7, type: 2}
   - {fileID: 1011201336133360, guid: 35e5dbfeb14b04e6f80a86a6186c2340, type: 2}
+  - {fileID: 1025846809208160, guid: 0ebfe9fb9226c0f4c89e7ee2e5faf1f5, type: 2}
   - {fileID: 1011201336133360, guid: 076698c67039b46cca41e480a4837158, type: 2}
   AbilityTimer: 1.5
 --- !u!4 &914885324

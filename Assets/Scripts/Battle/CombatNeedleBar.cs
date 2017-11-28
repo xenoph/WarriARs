@@ -12,8 +12,8 @@ public class CombatNeedleBar : MonoBehaviour {
 	private bool _moveNeedle = false;
 	private bool _moveLeft;
 
-	private Vector3 _leftEndPos = new Vector3(-440, 0, 0);
-	private Vector3 _rightEndPos = new Vector3(440, 0, 0);
+	private Vector3 _leftEndPos = new Vector3(-700, 0, 0);
+	private Vector3 _rightEndPos = new Vector3(700, 0, 0);
 	private Vector3 _midPos = new Vector3(0, 0, 0);
 
 	private RectTransform _needleRectTransform;
@@ -40,10 +40,12 @@ public class CombatNeedleBar : MonoBehaviour {
 		}
 		if(_moveNeedle) {
 			if(_moveLeft) {
-				_needleRectTransform.anchoredPosition = Vector3.Lerp(_needleRectTransform.anchoredPosition, _leftEndPos, Time.deltaTime * NeedleSpeed);
+				_needleRectTransform.anchoredPosition = Vector3.MoveTowards(_needleRectTransform.anchoredPosition, _leftEndPos, Time.deltaTime * NeedleSpeed);
+				//_needleRectTransform.anchoredPosition = Vector3.Lerp(_needleRectTransform.anchoredPosition, _leftEndPos, Time.deltaTime * NeedleSpeed);
 				if(Vector3.Distance(_needleRectTransform.anchoredPosition, _leftEndPos) < 1f) { _moveLeft = false; }
 			} else {
-				_needleRectTransform.anchoredPosition = Vector3.Lerp(_needleRectTransform.anchoredPosition, _rightEndPos, Time.deltaTime * NeedleSpeed);
+				_needleRectTransform.anchoredPosition = Vector3.MoveTowards(_needleRectTransform.anchoredPosition, _rightEndPos, Time.deltaTime * NeedleSpeed);
+				//_needleRectTransform.anchoredPosition = Vector3.Lerp(_needleRectTransform.anchoredPosition, _rightEndPos, Time.deltaTime * NeedleSpeed);
 				if(Vector3.Distance(_needleRectTransform.anchoredPosition, _rightEndPos) < 1f) { _moveLeft = true; }
 			}
 		}
