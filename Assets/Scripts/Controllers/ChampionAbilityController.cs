@@ -17,11 +17,11 @@ public class ChampionAbilityController : MonoBehaviour {
 	}
 
 	public void PlayAbilityEffect(int effect) {
-		var clip = GetRandomSound();
-		if(clip != null) {
-			_aSource.clip = clip;
-			_aSource.Play();
-		}
+	//	var clip = GetRandomSound();
+	//	if(clip != null) {
+	//		_aSource.clip = clip;
+	//		_aSource.Play();
+	//	}
 
 		switch (effect) {
 			case 0:
