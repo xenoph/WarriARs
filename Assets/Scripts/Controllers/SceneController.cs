@@ -12,7 +12,7 @@ public class SceneController : MonoBehaviour {
 			GameController.instance.InterfaceController.ToggleLoadingScreen(loadText);
 		}
 		SceneManager.UnloadSceneAsync(currentScene);
-		GameController.instance.playerController.gameObject.SetActive(false);
+		GameController.instance.playerController.ShowMesh(false);
 		AsyncOperation load = SceneManager.LoadSceneAsync(loadScene, LoadSceneMode.Additive);
 		StartCoroutine(AwaitLoadedScene(load, loadScene));
 	}
@@ -34,7 +34,8 @@ public class SceneController : MonoBehaviour {
 			}
 			GameController.instance.InterfaceController.BattleCanvas.SetActive(false);
 			GameController.instance.InterfaceController.MapCanvas.SetActive(true);
-			GameController.instance.playerController.gameObject.SetActive(true);
+			GameController.instance.playerController.ShowMesh(true);
+			GameController.instance.PlayerBusy = false;
 
 			if(GameController.instance.InterfaceController.LevelledUp) {
 				GameController.instance.InterfaceController.LevelledUp = false;

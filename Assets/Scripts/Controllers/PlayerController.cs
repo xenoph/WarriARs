@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -63,6 +64,10 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void ShowMesh(bool show) {
+        this.gameObject.GetComponentsInChildren<Renderer>().Select(c => c.enabled = show).ToList();
     }
 
     private void UpdateServerPosition() {
