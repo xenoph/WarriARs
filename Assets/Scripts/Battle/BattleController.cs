@@ -173,8 +173,8 @@ public class BattleController : MonoBehaviour {
 		}
 
 		yield return new WaitForSeconds(AbilityTimer);
-		if(_dead) { StartCoroutine(EndBattle(GameController.instance.InterfaceController.MyName.text)); }
-		else if(_oppDead) { StartCoroutine(EndBattle(GameController.instance.InterfaceController.OpponentName.text)); }
+		if(_dead) { StartCoroutine(EndBattle(GameController.instance.InterfaceController.OpponentName.text)); }
+		else if(_oppDead) { StartCoroutine(EndBattle(GameController.instance.InterfaceController.MyName.text)); }
 		else { SetNewRound(); }
 	}
 

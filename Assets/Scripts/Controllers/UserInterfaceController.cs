@@ -227,6 +227,7 @@ public class UserInterfaceController : MonoBehaviour {
 	public void SetOppHealthBars(int oppHealth, int oppMaxHealth, int dmgToOpp) {
 		OpponentBattleText.text = dmgToOpp.ToString ();
 		OpponentBattleTextAnimator.SetTrigger ("Show");
+		if(oppHealth < 0) { oppHealth = 0; }
 		OpponentHealthText.text = oppHealth.ToString() + " / " + oppMaxHealth.ToString();
 		OpponentHealthBar.fillAmount = (float)oppHealth / (float)oppMaxHealth;
 	}
