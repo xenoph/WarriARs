@@ -24,6 +24,10 @@ public class AudioController : MonoBehaviour {
 		StartCoroutine (SwapAudio ());
 	}
 
+	/// <summary>
+	/// Swaps the audio from what's currently playing to the other one. Not very expendable-friendly.
+	/// </summary>
+	/// <returns></returns>
 	private IEnumerator SwapAudio() {
 			_startVolume = _currentAudio.volume;
 			while (_currentAudio.volume > 0) {

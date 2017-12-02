@@ -130,6 +130,7 @@ public class UserInterfaceController : MonoBehaviour {
 		if(_showingReceived) { return; }
 		_showingReceived = true;
 		ReceiveReqestInfoText.text = name + " has requested a battle!";
+		ReceiveRequestAnimator.gameObject.GetComponent<AudioSource>().Play();
 		ReceiveRequestAnimator.SetTrigger("Show");
 		GameController.instance.PlayerBusy = true;
 

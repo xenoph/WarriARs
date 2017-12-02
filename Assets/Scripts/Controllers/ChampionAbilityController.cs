@@ -16,6 +16,10 @@ public class ChampionAbilityController : MonoBehaviour {
 		_aSource = GetComponent<AudioSource>();
 	}
 
+	/// <summary>
+	/// Play the particle effect that corresponds with the ability clicked
+	/// </summary>
+	/// <param name="effect"></param>
 	public void PlayAbilityEffect(int effect) {
 		var clip = GetRandomSound();
 		if(clip != null) {
@@ -41,10 +45,18 @@ public class ChampionAbilityController : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Plays the ability animation, if it exists
+	/// </summary>
+	/// <param name="abNumber"></param>
 	private void PlayAnimation(int abNumber) {
 		if(AbilityEffectAnimator == null) { return; }
 	}
 
+	/// <summary>
+	/// Find a random ability sound from the Resources folder if they exist
+	/// </summary>
+	/// <returns></returns>
 	private AudioClip GetRandomSound() {
 		var allSounds = Resources.LoadAll("Sounds/AbilityVFX", typeof(AudioClip));
 		if(allSounds.Length > 0) {
