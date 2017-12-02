@@ -20,6 +20,8 @@ public class LevelUpController : MonoBehaviour {
 	public TextMeshProUGUI StatDefenseText;
 	public TextMeshProUGUI StatHealthText;
 
+	public Button CloseButton;
+
 	public void SetTopPanel(int current, int total, string champion) {
 		ExperienceBar.fillAmount = (float)current / (float)total;
 		ExperienceText.text = "XP " + current.ToString() + "/" + total.ToString();
@@ -34,4 +36,8 @@ public class LevelUpController : MonoBehaviour {
 		StatDefenseText.text = "Defense: " + def + "(" + defNew + ")";
 		StatHealthText.text = "Health: " + hp + "(" + hpNew + ")";
 	}	
+
+	public void CloseLevelUp() {
+		GameController.instance.InterfaceController.ToggleLevelUp();
+	}
 }
