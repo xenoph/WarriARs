@@ -747,10 +747,10 @@ MonoBehaviour:
   SpawnLocationOpponentChampion: {fileID: 467022357}
   ChampionPrefabs:
   - {fileID: 1007073041025780, guid: 12c8f6a5a6e94e1459bf72da8f9c475b, type: 2}
-  - {fileID: 1011201336133360, guid: 610b6d6629ef32e418dd9020f85839a7, type: 2}
-  - {fileID: 1011201336133360, guid: 35e5dbfeb14b04e6f80a86a6186c2340, type: 2}
-  - {fileID: 1025846809208160, guid: 0ebfe9fb9226c0f4c89e7ee2e5faf1f5, type: 2}
-  - {fileID: 1011201336133360, guid: 076698c67039b46cca41e480a4837158, type: 2}
+  - {fileID: 1007073041025780, guid: e940917b381066f4ab6b258fe47547f9, type: 2}
+  - {fileID: 1007073041025780, guid: f16c8d3e720efda4291eca3ccdd3195e, type: 2}
+  - {fileID: 1007073041025780, guid: 0ead3c258f681f441893dbe434d2b8a8, type: 2}
+  - {fileID: 1007073041025780, guid: e3de80f75bdbe6744a1228379eacb0d9, type: 2}
   AbilityTimer: 1.5
 --- !u!4 &914885324
 Transform:
