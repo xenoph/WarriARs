@@ -171,6 +171,7 @@ public class UserInterfaceController : MonoBehaviour {
 			LevelUpCanvas.SetActive(false);
 		} else {
 			LevelUpCanvas.SetActive(true);
+			LevelUpCanvas.GetComponent<LevelUpController>().IsWaitingForClose = true;
 		}
 	}
 

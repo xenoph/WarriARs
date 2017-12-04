@@ -21,6 +21,22 @@ public class LevelUpController : MonoBehaviour {
 	public TextMeshProUGUI StatHealthText;
 
 	public Button CloseButton;
+	public TextMeshProUGUI CloseInformationText;
+	public bool IsWaitingForClose;
+
+	private float _levelUpTimer;
+	private int _levelUpMax = 10;
+
+	private void Update() {
+		if(gameObject.activeSelf && IsWaitingForClose) {
+			_levelUpTimer += Time.deltaTime;
+			if(_levelUpTimer >= _levelUpMax) {
+				IsWaitingForClose = false;
+				_levelUpTimer = 0;
+				ShowCloseScreenInformationText();
+			}
+		}
+	}
 
 	/// <summary>
 	/// Set the top part of the level up panel which consists of the experience text + bar
@@ -56,10 +72,15 @@ public class LevelUpController : MonoBehaviour {
 		StatHealthText.text = "Health: " + hp + "(" + hpNew + ")";
 	}	
 
+	private void ShowCloseScreenInformationText() {
+		CloseInformationText.text = "Press anywhere to close";
+	}
+
 	/// <summary>
 	/// Closes the level up panel when the Player clicks the button
 	/// </summary>
 	public void CloseLevelUp() {
+		CloseInformationText.text = "";
 		GameController.instance.InterfaceController.ToggleLevelUp();
 	}
 }
