@@ -14,7 +14,7 @@ public class LevelUpController : MonoBehaviour {
 	public Image ExperienceBar;
 	public TextMeshProUGUI ExperienceText;
 
-	public TextMeshProUGUI MidLevelText;
+	public Text MidLevelText;
 
 	public TextMeshProUGUI StatAttackText;
 	public TextMeshProUGUI StatDefenseText;
