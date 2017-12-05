@@ -31,6 +31,8 @@ public class InputController : MonoBehaviour {
 					PlayerController hitPlayerController = hit.transform.GetComponent<PlayerController>();
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.InterfaceController.ShowBattleRequestPanel(hitPlayerController.SocketID, hitPlayerController.PlayerID, hitPlayerController.username);
+				} else if(hit.transform.GetComponent<CoinController>()) {
+					hit.transform.GetComponent<CoinController>().Collect();
 				}/* else if(hit.transform.parent.transform.tag == "Map") {
 					var loc = hit.point.GetGeoPosition(GameController.instance.mapInitializer.map.CenterMercator, GameController.instance.mapInitializer.map.WorldRelativeScale);
 					GameController.instance.playerController.targetPosition = new Vector3(hit.point.x, 0f, hit.point.z);
