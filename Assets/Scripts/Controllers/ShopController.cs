@@ -50,18 +50,17 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private void BuyHealth() {
-		//CheckForCurrency("health");
+		CheckForCurrency("health");
 		_purchase = "health";
-		ActivatePurchase ();
 	}
 
 	private void BuyRevive() {
-		//CheckForCurrency("revive");
+		CheckForCurrency("revive");
 		_purchase = "revive";
-		ActivatePurchase ();
 	}
 
 	private void CheckForCurrency(string obj) {
+		DisableButtons();
 		_purchase = obj;
 		var json = CreateJSON ();
 		json.AddField("type", obj);
@@ -102,6 +101,8 @@ public class ShopController : MonoBehaviour {
 		} else {
 			ReviveChampion ();
 		}
+
+		EnableButtons();
 	}
 
 	private void ReviveChampion() {
@@ -113,6 +114,16 @@ public class ShopController : MonoBehaviour {
 		var json = CreateJSON ();
 		json.AddField ("healthAmount", 500);
 		_socket.Emit ("addHealth", json);
+	}
+
+	private void DisableButtons() {
+		BuyHealthButton.interactable = false;
+		BuyReviveButton.interactable = false;
+	}
+
+	private void EnableButtons() {
+		BuyHealthButton.interactable = true;
+		BuyReviveButton.interactable = true;
 	}
 
 	private JSONObject CreateJSON() {
