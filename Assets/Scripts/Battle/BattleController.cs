@@ -233,6 +233,12 @@ public class BattleController : MonoBehaviour {
 		Socket.On("timedOut", TimedOut);
 		Socket.On("battleQuit", BattleQuit);
 		Socket.On("levelUp", OnGetLevelupInfo);
+		Socket.On("xpGain", OnEndMatchGain);
+	}
+
+	private void OnEndMatchGain(SocketIOEvent obj) {
+		var coins = int.Parse(obj.data["coinGain"].str);
+		var xp = int.Parse(obj.data["xpGain"].str);
 	}
 
 	private void SetUpChampionHealth() {
