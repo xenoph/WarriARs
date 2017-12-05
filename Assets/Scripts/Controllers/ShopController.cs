@@ -23,6 +23,7 @@ public class ShopController : MonoBehaviour {
 	private int _purchaseCost;
 
 	private int _totalCurrency;
+	private int pid;
 
 	private SocketIOComponent _socket;
 
@@ -51,12 +52,10 @@ public class ShopController : MonoBehaviour {
 
 	private void BuyHealth() {
 		CheckForCurrency("health");
-		_purchase = "health";
 	}
 
 	private void BuyRevive() {
 		CheckForCurrency("revive");
-		_purchase = "revive";
 	}
 
 	private void CheckForCurrency(string obj) {
@@ -75,6 +74,7 @@ public class ShopController : MonoBehaviour {
 			_currencyValidated = true;
 			_purchaseCost = int.Parse(obj.data["cost"].str);
 			_totalCurrency = int.Parse(obj.data["currentCurrency"].str);
+			pid = int.Parse(obj.data["pid"].str);
 		}
 
 		_currencyRespond = true;
@@ -93,6 +93,8 @@ public class ShopController : MonoBehaviour {
 		if(_currencyValidated) {
 			ActivatePurchase();
 		}
+		
+		EnableButtons();
 	}
 
 	private void ActivatePurchase() {
@@ -101,17 +103,17 @@ public class ShopController : MonoBehaviour {
 		} else {
 			ReviveChampion ();
 		}
-
-		EnableButtons();
 	}
 
 	private void ReviveChampion() {
 		var json = CreateJSON ();
+		json.AddField("pid", pid);
 		_socket.Emit ("reviveChampion", json);
 	}
 
 	private void AddHealthToChampion() {
 		var json = CreateJSON ();
+		json.AddField("pid", pid);
 		json.AddField ("healthAmount", 500);
 		_socket.Emit ("addHealth", json);
 	}
