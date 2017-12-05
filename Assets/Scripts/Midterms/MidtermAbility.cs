@@ -12,10 +12,10 @@ public class MidtermAbility : MonoBehaviour {
 	}
 
 	public void OnHoverEnter() {
-		tooltip.SetActive(true);
+		//tooltip.SetActive(true);
 	}
 
 	public void OnHoverExit() {
-		tooltip.SetActive(false);
+		//tooltip.SetActive(false);
 	}
 }
