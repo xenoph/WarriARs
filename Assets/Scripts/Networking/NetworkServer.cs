@@ -27,6 +27,7 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("move", OnMove);
 		socket.On("quit", OnQuit);
 		socket.On("game_pong", OnPong);
+		socket.On("spawnCoin", OnSpawnCoin);
 	}
 
 	void OnGUI() {
@@ -92,6 +93,20 @@ public class NetworkServer : MonoBehaviour {
 
 	private void OnFailedLogin(SocketIOEvent obj) {
 		Debug.LogError(obj.data);
+	}
+
+	private void OnSpawnCoin(SocketIOEvent obj) {
+		string id = obj.data["id"].str;
+		float lat = float.Parse(obj.data["lat"].str);
+		float lng = float.Parse(obj.data["lng"].str);
+		Location loc = new Location();
+		loc.SetLocation((double) lat, (double) lng);
+		Vector3 pos = ConvertPositions.ConvertLocationToVector3(loc, GameController.instance.mapInitializer.map);
+		GameObject coin = Instantiate(GameController.instance.coinPrefab, pos, Quaternion.identity) as GameObject;
+		CoinController cc = coin.GetComponent<CoinController>();
+		cc.lat = lat;
+		cc.lng = lng;
+		cc.id = id;
 	}
 
 	private void OnInit(SocketIOEvent obj) {

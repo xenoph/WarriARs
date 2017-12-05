@@ -96,6 +96,8 @@ public class InputController : MonoBehaviour {
 				} else if(hit.transform.tag == "AICompanion") {
 					GameController.instance.PlayerBusy = true;
 					GameController.instance.BRController.InitialiseAIBattle(hit.transform.GetComponent<PlayerController>().SocketID, hit.transform.GetComponent<AIController>().AId);
+				} else if(hit.transform.GetComponent<CoinController>()) {
+					hit.transform.GetComponent<CoinController>().Collect();
 				}
 			}
 		}

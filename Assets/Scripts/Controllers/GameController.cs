@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour {
 
     [Header("Prefabs")]
     public GameObject playerPrefab;
+	public GameObject coinPrefab;
 
     [Header("Camera")]
     public CameraController cameraController;
