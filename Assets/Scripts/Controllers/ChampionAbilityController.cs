@@ -14,6 +14,7 @@ public class ChampionAbilityController : MonoBehaviour {
 
 	private void Awake() {
 		_aSource = GetComponent<AudioSource>();
+		AbilityEffectAnimator = GetComponent<Animator>();
 	}
 
 	/// <summary>
@@ -27,6 +28,7 @@ public class ChampionAbilityController : MonoBehaviour {
 			_aSource.Play();
 		}
 
+		PlayAnimation();
 		switch (effect) {
 			case 0:
 				Ability1Effect.Play();
@@ -49,8 +51,9 @@ public class ChampionAbilityController : MonoBehaviour {
 	/// Plays the ability animation, if it exists
 	/// </summary>
 	/// <param name="abNumber"></param>
-	private void PlayAnimation(int abNumber) {
+	private void PlayAnimation() {
 		if(AbilityEffectAnimator == null) { return; }
+		AbilityEffectAnimator.SetTrigger("Attack");
 	}
 
 	/// <summary>
