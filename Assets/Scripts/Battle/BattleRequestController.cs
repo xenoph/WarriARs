@@ -83,6 +83,7 @@ public class BattleRequestController : MonoBehaviour {
 	}
 
 	private void OnReceiveDeniedBattleRequest(SocketIOEvent obj) {
+		GameController.instance.PlayerBusy = false;
 		GameController.instance.InterfaceController.HideBattleRequestPanel();
 	}
 
