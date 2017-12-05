@@ -248,9 +248,9 @@ public class BattleController : MonoBehaviour {
 		var luController = GameController.instance.InterfaceController.LevelUpCanvas.GetComponent<LevelUpController>();
 		luController.SetTopPanel(int.Parse(obj.data["currentXP"].str), int.Parse(obj.data["nextLevelXP"].str), obj.data["dragonName"].str);
 		luController.SetMidPanel(obj.data["dragonLevel"].str);
-		luController.SetBottomPanel(int.Parse(obj.data["dragonAttack"].str), int.Parse(obj.data["dragonAttackGain"].str), 
-									int.Parse(obj.data["dragonDefense"].str), int.Parse(obj.data["dragonDefenseGain"].str),
-									int.Parse(obj.data["dragonHealth"].str), int.Parse(obj.data["dragonHealthGain"].str));
+		luController.SetBottomPanel(obj.data["dragonAttack"].f, obj.data["dragonAttackGain"].f, 
+									obj.data["dragonDefense"].f, obj.data["dragonDefenseGain"].f,
+									obj.data["dragonHealth"].f, obj.data["dragonHealthGain"].f);
 	}
 
 	private void OnDisable() {

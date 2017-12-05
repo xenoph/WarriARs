@@ -66,7 +66,7 @@ public class LevelUpController : MonoBehaviour {
 	/// <param name="defNew"></param>
 	/// <param name="hp"></param>
 	/// <param name="hpNew"></param>
-	public void SetBottomPanel(int atk, int atkNew, int def, int defNew, int hp, int hpNew) {
+	public void SetBottomPanel(float atk, float atkNew, float def, float defNew, float hp, float hpNew) {
 		StatAttackText.text = "Attack: " + atk + "(" + atkNew + ")";
 		StatDefenseText.text = "Defense: " + def + "(" + defNew + ")";
 		StatHealthText.text = "Health: " + hp + "(" + hpNew + ")";
