@@ -61,7 +61,7 @@ public class ChampionAbilityController : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	private AudioClip GetRandomSound() {
-		var allSounds = Resources.LoadAll("Sounds/AbilityVFX", typeof(AudioClip));
+		var allSounds = Resources.LoadAll("Sound/AbilitySFX", typeof(AudioClip));
 		if(allSounds.Length > 0) {
 			AudioClip sound = allSounds[Random.Range(0, allSounds.Length)] as AudioClip;
 			return sound;
