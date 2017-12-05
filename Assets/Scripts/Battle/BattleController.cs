@@ -250,7 +250,8 @@ public class BattleController : MonoBehaviour {
 		luController.SetMidPanel(obj.data["dragonLevel"].str);
 		luController.SetBottomPanel(obj.data["dragonAttack"].f, obj.data["dragonAttackGain"].f, 
 									obj.data["dragonDefense"].f, obj.data["dragonDefenseGain"].f,
-									obj.data["dragonHealth"].f, obj.data["dragonHealthGain"].f);
+									obj.data["dragonHealth"].f, obj.data["dragonHealthGain"].f,
+									obj.data["dragonSpeed"].f, obj.data["dragonSpeedGain"].f);
 	}
 
 	private void OnDisable() {

@@ -19,6 +19,7 @@ public class LevelUpController : MonoBehaviour {
 	public TextMeshProUGUI StatAttackText;
 	public TextMeshProUGUI StatDefenseText;
 	public TextMeshProUGUI StatHealthText;
+	public TextMeshProUGUI StatSpeedText;
 
 	public Button CloseButton;
 	public TextMeshProUGUI CloseInformationText;
@@ -66,10 +67,11 @@ public class LevelUpController : MonoBehaviour {
 	/// <param name="defNew"></param>
 	/// <param name="hp"></param>
 	/// <param name="hpNew"></param>
-	public void SetBottomPanel(float atk, float atkNew, float def, float defNew, float hp, float hpNew) {
+	public void SetBottomPanel(float atk, float atkNew, float def, float defNew, float hp, float hpNew, float speed, float speedNew) {
 		StatAttackText.text = "Attack: " + atk + "(" + atkNew + ")";
 		StatDefenseText.text = "Defense: " + def + "(" + defNew + ")";
 		StatHealthText.text = "Health: " + hp + "(" + hpNew + ")";
+		StatSpeedText.text = "Speed: " + speed + "(" + speedNew + ")";
 	}	
 
 	private void ShowCloseScreenInformationText() {
