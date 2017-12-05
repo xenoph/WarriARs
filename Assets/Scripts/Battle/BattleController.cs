@@ -41,6 +41,9 @@ public class BattleController : MonoBehaviour {
 	private int _oppHealth;
 	private bool _dead;
 
+	private int _coinGain;
+	private int _xpGain;
+
 	private void Start() {
 		GameController.instance.battleController = this;
 		GameController.instance.loadingScreen.gameObject.SetActive(false);
@@ -182,11 +185,14 @@ public class BattleController : MonoBehaviour {
 		GameController.instance.AController.SwitchAudioSource ();
 		if(winner != null) {
 			GameController.instance.InterfaceController.WinningText.text = winner + " WON!";
+			yield return new WaitForSeconds(3f);
+			GameController.instance.InterfaceController.GainText.text = "You gain: " + _xpGain + " experience & " + _coinGain + " coins!";
 		}
 		yield return new WaitForSeconds(6f);
 		ClearUsedAbilities();
 		ClearChampions();
 		GameController.instance.InterfaceController.WinningText.text = "";
+		GameController.instance.InterfaceController.GainText.text = "";
 		GameController.instance.SceneController.ToggleBattleScene("battle", "map", "Loading map....");
 	}
 
@@ -237,8 +243,8 @@ public class BattleController : MonoBehaviour {
 	}
 
 	private void OnEndMatchGain(SocketIOEvent obj) {
-		var coins = int.Parse(obj.data["coinGain"].str);
-		var xp = int.Parse(obj.data["xpGain"].str);
+		_coinGain = int.Parse(obj.data["coinGain"].str);
+		_xpGain = int.Parse(obj.data["xpGain"].str);
 	}
 
 	private void SetUpChampionHealth() {

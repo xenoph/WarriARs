@@ -54,6 +54,7 @@ public class UserInterfaceController : MonoBehaviour {
 	public TextMeshProUGUI OpponentBattleText;
 
 	public TextMeshProUGUI WinningText;
+	public TextMeshProUGUI GainText;
 
 	[Header("GameObjects")]
 	public CombatNeedleBar NeedleBar;
