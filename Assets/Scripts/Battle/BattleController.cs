@@ -244,6 +244,7 @@ public class BattleController : MonoBehaviour {
 
 	private void OnEndMatchGain(SocketIOEvent obj) {
 		_coinGain = int.Parse(obj.data["coinGain"].str);
+		GameController.instance.InterfaceController.RequestCoinCount();
 		_xpGain = int.Parse(obj.data["xpGain"].str);
 	}
 

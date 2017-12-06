@@ -13,6 +13,7 @@ public class CoinController : MonoBehaviour {
 		json.AddField("lat", this.lat);
 		json.AddField("lng", this.lng);
 		GameController.instance.Socket.Emit("collectCoin", json);
+		GameController.instance.InterfaceController.RequestCoinCount();
 		Destroy(gameObject);
 	}
 }

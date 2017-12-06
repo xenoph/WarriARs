@@ -28,6 +28,11 @@ public class NetworkServer : MonoBehaviour {
 		socket.On("quit", OnQuit);
 		socket.On("game_pong", OnPong);
 		socket.On("spawnCoin", OnSpawnCoin);
+		socket.On("currentCoinsAmount", OnGetCoins);
+	}
+
+	private void OnGetCoins(SocketIOEvent obj) {
+		GameController.instance.InterfaceController.SetCoinCountText(int.Parse(obj.data["total"].str));
 	}
 
 	void OnGUI() {
@@ -140,6 +145,7 @@ public class NetworkServer : MonoBehaviour {
 		PlayerController pc = GameController.instance.LoadGame(obj.data["username"].str);
 		pc.PlayerID = obj.data["id"].str;
 		pc.SocketID = obj.data["socket"].str;
+		GameController.instance.InterfaceController.SetCoinCountText(int.Parse(obj.data["coins"].str));
 		if(obj.data["champions"].str != "1")
 			StartCoroutine(dragonPicker());
 	}

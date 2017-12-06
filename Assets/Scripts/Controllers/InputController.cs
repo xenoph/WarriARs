@@ -78,6 +78,40 @@ public class InputController : MonoBehaviour {
         } else { 
 			lookDiff = Vector3.zero;
 		}
+
+		if(Input.touchCount == 2) {
+			Touch touchZero = Input.GetTouch(0);
+			Touch touchOne = Input.GetTouch(1);
+
+			// Find the position in the previous frame of each touch.
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            // Find the magnitude of the vector (the distance) between the touches in each frame.
+            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+            // Find the difference in the distances between each frame.
+            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+            // If the camera is orthographic...
+            if (Camera.main.orthographic)
+            {
+                // ... change the orthographic size based on the change in distance between the touches.
+                Camera.main.orthographicSize += deltaMagnitudeDiff * 0.5f;
+
+                // Make sure the orthographic size never drops below zero.
+                Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 0.1f);
+            }
+            else
+            {
+                // Otherwise change the field of view based on the change in distance between the touches.
+                Camera.main.fieldOfView += deltaMagnitudeDiff * 0.5f;
+
+                // Clamp the field of view to make sure it's between 0 and 180.
+                Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 0.1f, 179.9f);
+            }
+		}
 	}
 
 	private void DetectTouchInput() {

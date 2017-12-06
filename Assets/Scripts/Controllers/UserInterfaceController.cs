@@ -70,12 +70,10 @@ public class UserInterfaceController : MonoBehaviour {
 	public GameObject ChampionStatsPanel;
 	public GameObject MainInterface;
 
+	public TextMeshProUGUI CoinCountText;
+
 	[Header("Shop")]
 	public GameObject ShopPanel;
-
-	public Button BuyHealthPotionButton;
-	public Button BuyReviveButton;
-	public Button CloseShopButton;
 
 	[Header("Dragon Picker")]
 	public Animator DragonPickerAnimator;
@@ -145,6 +143,18 @@ public class UserInterfaceController : MonoBehaviour {
 	public void HideReceivedRequestPanel() {
 		ReceiveRequestAnimator.SetTrigger("Hide");
 		_showingReceived = false;
+	}
+
+	public void RequestCoinCount() {
+		Debug.Log("Requesting coin count");
+		var json = new JSONObject();
+		json.AddField("playerID", GameController.instance.playerController.PlayerID);
+		GameController.instance.Socket.Emit("getCoins", json);
+		Debug.Log("done requesting");
+	}
+
+	public void SetCoinCountText(int count) {
+		CoinCountText.text = count.ToString();
 	}
 
 	public void ToggleLoadingScreen(string loadText) {
@@ -278,20 +288,7 @@ public class UserInterfaceController : MonoBehaviour {
 	}
 
 	private void SetButtonDelegates() {
-		ShopButton.onClick.AddListener(delegate { ShowShop(); });
-		CloseShopButton.onClick.AddListener(delegate { HideShop(); });
-	}
-
-	private void ShowShop() {
-		ShopPanel.transform.GetChild(0).GetComponent<Animator>().SetBool("Show", true);
-		ShopButton.onClick.RemoveAllListeners();
-		ShopButton.onClick.AddListener(delegate { HideShop(); });
-	}
-
-	private void HideShop() {
-		ShopPanel.transform.GetChild(0).GetComponent<Animator>().SetBool("Show", false);
-		ShopButton.onClick.RemoveAllListeners();
-		ShopButton.onClick.AddListener(delegate { ShowShop(); });
+		ShopButton.onClick.AddListener(delegate { ShopPanel.GetComponent<ShopController>().TogglePanel(); });
 	}
 
 	private void SetTypeImageAndName(int typeNumber, Image typeImage, Text typeName) {

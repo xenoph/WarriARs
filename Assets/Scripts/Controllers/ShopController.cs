@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SocketIO;
+using TMPro;
 
 #pragma warning disable 0414
 
@@ -15,7 +16,9 @@ public class ShopController : MonoBehaviour {
 	public Button BuyHealthButton;
 	public Button BuyReviveButton;
 
-	public Text SuccessText;
+	public Button ReturnButton;
+
+	public TextMeshProUGUI SuccessText;
 
 	private bool _shopActive = false;
 	private bool _currencyRespond;
@@ -29,6 +32,10 @@ public class ShopController : MonoBehaviour {
 
 	private void Awake() {
 		SetShopButtons();
+	}
+
+	private void Start() {
+		SetSocketReceivers();
 	}
 
 	public void TogglePanel() {
@@ -48,6 +55,7 @@ public class ShopController : MonoBehaviour {
 	private void SetShopButtons() {
 		BuyHealthButton.onClick.AddListener (delegate { BuyHealth (); });
 		BuyReviveButton.onClick.AddListener (delegate { BuyRevive (); });
+		ReturnButton.onClick.AddListener(delegate { TogglePanel(); });
 	}
 
 	private void BuyHealth() {
@@ -70,6 +78,8 @@ public class ShopController : MonoBehaviour {
 	private void OnCurrencyValidation(SocketIOEvent obj) {
 		if(obj.data["validation"].str == 0.ToString()) {
 			_currencyValidated = false;
+			SuccessText.text = "Purchase Failed";
+			Invoke("RemoveSuccessText", 2f);
 		} else {
 			_currencyValidated = true;
 			_purchaseCost = int.Parse(obj.data["cost"].str);
@@ -84,10 +94,10 @@ public class ShopController : MonoBehaviour {
 		var timer = 20;
 		while(!_currencyRespond) {
 			timer--;
-			if(timer >= 0) {
+			if(timer <= 0) {
 				yield break;
 			}
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(1f);
 		}
 
 		if(_currencyValidated) {
@@ -105,6 +115,8 @@ public class ShopController : MonoBehaviour {
 		} else {
 			ReviveChampion ();
 		}
+
+		GameController.instance.InterfaceController.RequestCoinCount();
 	}
 
 	private void RemoveSuccessText() {
