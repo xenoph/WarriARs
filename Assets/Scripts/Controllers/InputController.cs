@@ -109,7 +109,7 @@ public class InputController : MonoBehaviour {
                 Camera.main.fieldOfView += deltaMagnitudeDiff * 0.5f;
 
                 // Clamp the field of view to make sure it's between 0 and 180.
-                Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 0.1f, 179.9f);
+                Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 10f, 80f);
             }
 		}
 	}
