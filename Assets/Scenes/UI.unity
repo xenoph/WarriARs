@@ -3767,11 +3767,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -8585,6 +8585,7 @@ GameObject:
   - component: {fileID: 1244055796}
   - component: {fileID: 1244055798}
   - component: {fileID: 1244055797}
+  - component: {fileID: 1244055799}
   m_Layer: 5
   m_Name: LevelUpMidPanel
   m_TagString: Untagged
@@ -8598,18 +8599,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1244055795}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.0031620883, w: 0.999995}
+  m_LocalPosition: {x: -0.031532288, y: 0.000030517578, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 544870556}
   - {fileID: 1819363324}
   m_Father: {fileID: 1446876881}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.36200002}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.03153268, y: 0.00003150969}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1244055797
@@ -8645,6 +8646,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1244055795}
+--- !u!95 &1244055799
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1244055795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c491d31772d3e5459940440d1621a3c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1248618399
 GameObject:
   m_ObjectHideFlags: 0
@@ -10788,6 +10806,7 @@ MonoBehaviour:
   ExperienceBar: {fileID: 1829447293}
   ExperienceText: {fileID: 295044588}
   MidLevelText: {fileID: 1819363326}
+  LevelChangeAnimator: {fileID: 1244055799}
   StatAttackText: {fileID: 2057441951}
   StatDefenseText: {fileID: 445575382}
   StatHealthText: {fileID: 1871000530}
