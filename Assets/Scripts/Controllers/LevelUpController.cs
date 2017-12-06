@@ -28,6 +28,7 @@ public class LevelUpController : MonoBehaviour {
 
 	private float _levelUpTimer;
 	private int _levelUpMax = 10;
+	private int _newLevel = 0;
 
 	private void Update() {
 		if(gameObject.activeSelf && IsWaitingForClose) {
@@ -55,8 +56,14 @@ public class LevelUpController : MonoBehaviour {
 	/// Sets the middle part of the level up panel, which is just a big number with the current level
 	/// </summary>
 	/// <param name="level"></param>
-	public void SetMidPanel(string level) {
-		MidLevelText.text = level;
+	public void SetMidPanel(int level) {
+		_newLevel = level;
+		MidLevelText.text = (level - 1).ToString();;
+	}
+
+	public IEnumerator SetNewLevel() {
+		yield return new WaitForSeconds(2f);
+		SetMidPanel(_newLevel + 1);
 	}
 
 	/// <summary>

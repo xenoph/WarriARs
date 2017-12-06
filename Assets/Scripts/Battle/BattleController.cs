@@ -259,7 +259,7 @@ public class BattleController : MonoBehaviour {
 		GameController.instance.InterfaceController.LevelledUp = true;
 		var luController = GameController.instance.InterfaceController.LevelUpCanvas.GetComponent<LevelUpController>();
 		luController.SetTopPanel(int.Parse(obj.data["currentXP"].str), int.Parse(obj.data["nextLevelXP"].str), obj.data["dragonName"].str);
-		luController.SetMidPanel(obj.data["dragonLevel"].str);
+		luController.SetMidPanel(int.Parse(obj.data["dragonLevel"].str));
 		luController.SetBottomPanel(obj.data["dragonAttack"].f, obj.data["dragonAttackGain"].f, 
 									obj.data["dragonDefense"].f, obj.data["dragonDefenseGain"].f,
 									obj.data["dragonHealth"].f, obj.data["dragonHealthGain"].f,

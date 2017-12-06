@@ -175,6 +175,7 @@ public class UserInterfaceController : MonoBehaviour {
 			var luController = LevelUpCanvas.GetComponent<LevelUpController>();
 			luController.IsWaitingForClose = true;
 			luController.LevelChangeAnimator.SetTrigger("LevelUp");
+			StartCoroutine(luController.SetNewLevel());
 		}
 	}
 

@@ -15,6 +15,8 @@ public class ShopController : MonoBehaviour {
 	public Button BuyHealthButton;
 	public Button BuyReviveButton;
 
+	public Text SuccessText;
+
 	private bool _shopActive = false;
 	private bool _currencyRespond;
 	private bool _currencyValidated;
@@ -98,11 +100,17 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private void ActivatePurchase() {
+		SuccessText.text = "Purchase Successful";
+		Invoke("RemoveSuccessText", 2f);
 		if (_purchase == "health") {
 			AddHealthToChampion ();
 		} else {
 			ReviveChampion ();
 		}
+	}
+
+	private void RemoveSuccessText() {
+		SuccessText.text = "";
 	}
 
 	private void ReviveChampion() {
