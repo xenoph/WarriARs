@@ -27,8 +27,6 @@ public class ShopController : MonoBehaviour {
 	private int _totalCurrency;
 	private int pid;
 
-	private SocketIOComponent _socket;
-
 	private void Awake() {
 		SetShopButtons();
 	}
@@ -44,7 +42,7 @@ public class ShopController : MonoBehaviour {
 	}
 
 	private void SetSocketReceivers() {
-		_socket.On("getCurrencyValidation", OnCurrencyValidation);
+		GameController.instance.Socket.On("getCurrencyValidation", OnCurrencyValidation);
 	}
 
 	private void SetShopButtons() {
@@ -65,7 +63,7 @@ public class ShopController : MonoBehaviour {
 		_purchase = obj;
 		var json = CreateJSON ();
 		json.AddField("type", obj);
-		_socket.Emit("checkForCurrency", json);
+		GameController.instance.Socket.Emit("checkForCurrency", json);
 		StartCoroutine(AwaitCurrencyCheck());
 	}
 
@@ -116,14 +114,14 @@ public class ShopController : MonoBehaviour {
 	private void ReviveChampion() {
 		var json = CreateJSON ();
 		json.AddField("pid", pid);
-		_socket.Emit ("reviveChampion", json);
+		GameController.instance.Socket.Emit ("reviveChampion", json);
 	}
 
 	private void AddHealthToChampion() {
 		var json = CreateJSON ();
 		json.AddField("pid", pid);
 		json.AddField ("healthAmount", 500);
-		_socket.Emit ("addHealth", json);
+		GameController.instance.Socket.Emit ("addHealth", json);
 	}
 
 	private void DisableButtons() {
